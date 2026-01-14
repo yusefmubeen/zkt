@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Badge } from "@/components/ui/badge"
 import {
   Wallet,
   Landmark,
@@ -216,7 +217,10 @@ export function ZakatCalculator() {
                 <div className="flex flex-col gap-1">
                   <span className="flex items-center gap-2 text-gray-300 font-medium">
                     <Gem className="w-4 h-4 text-gray-400" />
-                    Sølv <span className="text-xs text-green-600">(anbefalet)</span>
+                    Sølv{" "}
+                    <Badge variant="outline" className="text-xs text-green-600 border-green-600/50 ml-1">
+                      anbefalet
+                    </Badge>
                   </span>
                   <span className="text-sm text-gray-500">Baseret på 612,36g sølv</span>
                 </div>
@@ -286,7 +290,10 @@ export function ZakatCalculator() {
                 <div className="flex flex-col gap-1">
                   <span className="flex items-center gap-2 text-gray-300 font-medium">
                     <TrendingUp className="w-4 h-4 text-gray-400" />
-                    Amana-metoden <span className="text-xs text-green-600">(anbefalet)</span>
+                    Amana-metoden{" "}
+                    <Badge variant="outline" className="text-xs text-green-600 border-green-600/50 ml-1">
+                      anbefalet
+                    </Badge>
                   </span>
                   <span className="text-sm text-gray-500">10% zakat på årets gevinst</span>
                 </div>
