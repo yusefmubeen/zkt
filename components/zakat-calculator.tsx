@@ -194,7 +194,7 @@ export function ZakatCalculator() {
               variant="ghost"
               className="bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 cursor-pointer"
             >
-              <HelpCircle className="w-4 h-4 mr-2" />
+              <HelpCircle className="w-4 h-4 mr-1" />
               Hjælp
             </Button>
           </DialogTrigger>
@@ -705,7 +705,7 @@ function ResultItem({
       }`}
     >
       <p className={`text-sm mb-1 ${primary ? "text-green-100" : "text-gray-400"}`}>{label}</p>
-      <p className={`text-xl font-bold ${primary ? "text-white" : "text-white"}`}>{value}</p>
+      <p className={`text-xl font-bold text-white`}>{value}</p>
     </div>
   )
 }
