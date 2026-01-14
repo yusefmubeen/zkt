@@ -202,16 +202,20 @@ export function ZakatCalculator() {
             <DialogHeader>
               <DialogTitle className="text-xl font-bold text-white">Ofte stillede spørgsmål</DialogTitle>
             </DialogHeader>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="w-full cursor-pointer">
               <AccordionItem value="item-1" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white">Hvad er zakat?</AccordionTrigger>
+                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
+                  Hvad er zakat?
+                </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
                   Zakat er en af de fem søjler i islam og er en obligatorisk velgørenhedsafgift for muslimer. Det er en
                   årlig betaling på 2,5% af ens formue over nisab-tærsklen, som gives til dem i nød.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white">Hvad er nisab?</AccordionTrigger>
+                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
+                  Hvad er nisab?
+                </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
                   Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Nisab kan beregnes baseret
                   på enten guld (87,48g) eller sølv (612,36g). Sølv-nisab anbefales, da den resulterer i en lavere
@@ -219,7 +223,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white">
+                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
                   Hvad er forskellen på Amana-metoden og Kontant-metoden?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
@@ -243,7 +247,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white">
+                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
                   Skal jeg betale zakat af min bolig?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
@@ -252,7 +256,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white">
+                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
                   Hvornår skal jeg betale zakat?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
@@ -261,7 +265,9 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-6" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white">Hvem kan modtage zakat?</AccordionTrigger>
+                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
+                  Hvem kan modtage zakat?
+                </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
                   Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
                   muslimer, slaver (for at frigøre dem), gældsatte, i Allahs vej, og vejfarende. I dag gives zakat
@@ -269,7 +275,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-7" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white">
+                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
                   Er denne beregner 100% nøjagtig?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
