@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { Info, Gem, Scale } from "lucide-react"
+import { Info, Gem, Scale, FileText, HandCoins } from "lucide-react"
 import { useState, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -392,7 +392,7 @@ export function ZakatCalculator() {
               label="Tilgodehavender"
               value={assets.receivables}
               onChange={(v) => handleAssetChange("receivables", v)}
-              icon={<Gem className="w-4 h-4" />}
+              icon={<HandCoins className="w-4 h-4" />}
               tooltip="Penge som andre skylder dig og som du forventer at modtage"
             />
           </CardContent>
@@ -426,7 +426,7 @@ export function ZakatCalculator() {
               label="Andre forpligtelser"
               value={liabilities.otherLiabilities}
               onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
-              icon={<Gem className="w-4 h-4" />}
+              icon={<FileText className="w-4 h-4" />}
               tooltip="Andre økonomiske forpligtelser"
             />
           </CardContent>
