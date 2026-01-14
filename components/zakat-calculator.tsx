@@ -567,7 +567,7 @@ export function ZakatCalculator() {
           className="bg-green-800 text-white hover:bg-green-900 px-8 cursor-pointer"
         >
           <Calculator className="w-5 h-5 mr-2" />
-          Beregn Zakat
+          Beregn zakat
         </Button>
         <Button
           size="lg"
