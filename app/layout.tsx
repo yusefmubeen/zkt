@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "Zakat-beregner",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Zakat-beregner - Islamisk velgørenhedsberegner",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Zakat-beregner | Beregn din zakat nemt og præcist",
     description: "Gratis islamisk zakat-beregner. Beregn din zakat på guld, sølv, kontanter, aktier og investeringer.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   icons: {
     icon: [
