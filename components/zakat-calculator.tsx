@@ -32,6 +32,26 @@ const NISAB_SILVER_GRAMS = 612.36 // grams of silver
 const GOLD_PRICE_PER_GRAM = 550 // approximate DKK per gram
 const SILVER_PRICE_PER_GRAM = 7 // approximate DKK per gram
 
+function formatInputValue(value: string): string {
+  // Remove all non-digit characters except comma and minus
+  const cleanValue = value.replace(/[^\d,-]/g, "")
+
+  // Split by comma to handle decimals
+  const parts = cleanValue.split(",")
+  const integerPart = parts[0] || ""
+  const decimalPart = parts[1]
+
+  // Remove existing dots and format with thousand separators
+  const digits = integerPart.replace(/\./g, "")
+  const formatted = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+
+  // Return with decimal part if exists
+  if (decimalPart !== undefined) {
+    return `${formatted},${decimalPart}`
+  }
+  return formatted
+}
+
 function HandHeartIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -325,56 +345,56 @@ export function ZakatCalculator() {
           <CardContent className="space-y-4">
             <AssetInput
               label="Bankkonti"
-              value={assets.bankAccounts}
+              value={formatInputValue(assets.bankAccounts)}
               onChange={(v) => handleAssetChange("bankAccounts", v)}
               icon={<Landmark className="w-4 h-4" />}
               tooltip="Saldo på alle bankkonti (opsparing, løn, etc.)"
             />
             <AssetInput
               label="Fysiske kontanter"
-              value={assets.cash}
+              value={formatInputValue(assets.cash)}
               onChange={(v) => handleAssetChange("cash", v)}
               icon={<Banknote className="w-4 h-4" />}
               tooltip="Kontanter du har hjemme eller i pengeskab"
             />
             <AssetInput
               label="Guld"
-              value={assets.gold}
+              value={formatInputValue(assets.gold)}
               onChange={(v) => handleAssetChange("gold", v)}
               icon={<Cuboid className="w-4 h-4" />}
               tooltip="Værdi af guld smykker og guldbarrer"
             />
             <AssetInput
               label="Sølv"
-              value={assets.silver}
+              value={formatInputValue(assets.silver)}
               onChange={(v) => handleAssetChange("silver", v)}
               icon={<Gem className="w-4 h-4" />}
               tooltip="Værdi af sølv smykker og sølvbarrer"
             />
             <AssetInput
               label="Forretningsinventar"
-              value={assets.businessInventory}
+              value={formatInputValue(assets.businessInventory)}
               onChange={(v) => handleAssetChange("businessInventory", v)}
               icon={<Briefcase className="w-4 h-4" />}
               tooltip="Værdi af varer til salg i din virksomhed"
             />
             <AssetInput
               label="Investeringsejendomme"
-              value={assets.propertyInvestment}
+              value={formatInputValue(assets.propertyInvestment)}
               onChange={(v) => handleAssetChange("propertyInvestment", v)}
               icon={<Home className="w-4 h-4" />}
               tooltip="Ejendomme købt med henblik på udlejning eller salg"
             />
             <AssetInput
               label="Aktier og værdipapirer"
-              value={assets.stocks}
+              value={formatInputValue(assets.stocks)}
               onChange={(v) => handleAssetChange("stocks", v)}
               icon={<BarChart3 className="w-4 h-4" />}
               tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
             />
             <AssetInput
               label="Andre investeringer"
-              value={assets.otherInvestments}
+              value={formatInputValue(assets.otherInvestments)}
               onChange={(v) => handleAssetChange("otherInvestments", v)}
               icon={<Coins className="w-4 h-4" />}
               tooltip="Kryptovaluta, pensionsopsparing, etc."
@@ -382,7 +402,7 @@ export function ZakatCalculator() {
             {stockTreatment === "amana" && (
               <AssetInput
                 label="Afkast på aktier og investeringer"
-                value={assets.stockGains}
+                value={formatInputValue(assets.stockGains)}
                 onChange={(v) => handleAssetChange("stockGains", v)}
                 icon={<TrendingUp className="w-4 h-4" />}
                 tooltip="Årets gevinst på aktier og investeringer. Hvis du har haft tab, indtast 0."
@@ -390,7 +410,7 @@ export function ZakatCalculator() {
             )}
             <AssetInput
               label="Tilgodehavender"
-              value={assets.receivables}
+              value={formatInputValue(assets.receivables)}
               onChange={(v) => handleAssetChange("receivables", v)}
               icon={<HandCoins className="w-4 h-4" />}
               tooltip="Penge som andre skylder dig og som du forventer at modtage"
@@ -410,21 +430,21 @@ export function ZakatCalculator() {
           <CardContent className="space-y-4">
             <AssetInput
               label="Kortfristet gæld"
-              value={liabilities.debts}
+              value={formatInputValue(liabilities.debts)}
               onChange={(v) => handleLiabilityChange("debts", v)}
               icon={<CreditCard className="w-4 h-4" />}
               tooltip="Gæld der forfalder inden for et år (kreditkort, regninger)"
             />
             <AssetInput
               label="Lån"
-              value={liabilities.loans}
+              value={formatInputValue(liabilities.loans)}
               onChange={(v) => handleLiabilityChange("loans", v)}
               icon={<Landmark className="w-4 h-4" />}
               tooltip="Årligt afdrag på boliglån, billån, studielån, etc."
             />
             <AssetInput
               label="Andre forpligtelser"
-              value={liabilities.otherLiabilities}
+              value={formatInputValue(liabilities.otherLiabilities)}
               onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
               icon={<FileText className="w-4 h-4" />}
               tooltip="Andre økonomiske forpligtelser"
