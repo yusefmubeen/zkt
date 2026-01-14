@@ -195,7 +195,7 @@ export function ZakatCalculator() {
               variant="ghost"
               className="bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 cursor-pointer"
             >
-              <HelpCircle className="w-4 h-4 mr-2" />
+              <HelpCircle className="w-4 h-4 mr-1" />
               Hjælp
             </Button>
           </DialogTrigger>
