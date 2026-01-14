@@ -194,7 +194,7 @@ export function ZakatCalculator() {
             <div className="flex items-center gap-1">
               <Label className="text-sm font-medium text-gray-300">Vælg nisab-beregningsmetode</Label>
               <Popover>
-                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation">
+                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation cursor-pointer">
                   <Info className="w-4 h-4" />
                   <span className="sr-only">Info om nisab-beregningsmetode</span>
                 </PopoverTrigger>
@@ -257,7 +257,7 @@ export function ZakatCalculator() {
             <div className="flex items-center gap-1">
               <Label className="text-sm font-medium text-gray-300">Vælg beregningsmetode</Label>
               <Popover>
-                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation">
+                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation cursor-pointer">
                   <Info className="w-4 h-4" />
                   <span className="sr-only">Info om beregningsmetode for aktier og investeringer</span>
                 </PopoverTrigger>
@@ -537,7 +537,7 @@ function AssetInput({
           {label}
         </Label>
         <Popover>
-          <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation">
+          <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation cursor-pointer">
             <Info className="w-4 h-4" />
             <span className="sr-only">Info om {label}</span>
           </PopoverTrigger>
