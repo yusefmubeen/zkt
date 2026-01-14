@@ -338,9 +338,7 @@ export function ZakatCalculator() {
             >
               <label
                 htmlFor="silver"
-                className={`flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1 ${
-                  nisabType === "silver" ? "border-green-500" : "border-gray-600"
-                }`}
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="silver" id="silver" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -354,9 +352,7 @@ export function ZakatCalculator() {
               </label>
               <label
                 htmlFor="gold"
-                className={`flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1 ${
-                  nisabType === "gold" ? "border-green-500" : "border-gray-600"
-                }`}
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="gold" id="gold" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -413,9 +409,7 @@ export function ZakatCalculator() {
             >
               <label
                 htmlFor="amana"
-                className={`flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1 ${
-                  stockTreatment === "amana" ? "border-green-500" : "border-gray-600"
-                }`}
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="amana" id="amana" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -429,9 +423,7 @@ export function ZakatCalculator() {
               </label>
               <label
                 htmlFor="cash"
-                className={`flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1 ${
-                  stockTreatment === "cash" ? "border-green-500" : "border-gray-600"
-                }`}
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="cash" id="cash" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
