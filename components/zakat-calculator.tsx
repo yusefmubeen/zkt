@@ -563,9 +563,9 @@ export function ZakatCalculator() {
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
         <Button
-          size="lg"
           onClick={handleCalculate}
-          className="bg-green-500 text-white hover:bg-green-600 px-8 cursor-pointer"
+          size="lg"
+          className="bg-green-500 text-gray-900 hover:bg-green-600 px-8 cursor-pointer"
         >
           <Calculator className="w-5 h-5 mr-2" />
           Beregn zakat
@@ -676,7 +676,7 @@ function AssetInput({
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-gray-800 border border-gray-700 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-green-800 focus:border-green-800"
+        className="bg-gray-800 border border-gray-700 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-green-500 focus:border-green-500"
       />
     </div>
   )
