@@ -218,7 +218,7 @@ export function ZakatCalculator() {
                   <span className="flex items-center gap-2 text-gray-300 font-medium">
                     <Gem className="w-4 h-4 text-gray-400" />
                     Sølv
-                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">anbefalet</Badge>
+                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">Anbefalet</Badge>
                   </span>
                   <span className="text-sm text-gray-500">Baseret på 612,36g sølv</span>
                 </div>
@@ -289,7 +289,7 @@ export function ZakatCalculator() {
                   <span className="flex items-center gap-2 text-gray-300 font-medium">
                     <TrendingUp className="w-4 h-4 text-gray-400" />
                     Amana-metoden
-                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">anbefalet</Badge>
+                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">Anbefalet</Badge>
                   </span>
                   <span className="text-sm text-gray-500">10% zakat på årets gevinst</span>
                 </div>
