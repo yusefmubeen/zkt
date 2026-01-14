@@ -26,7 +26,6 @@ import {
   Calculator,
   Cuboid,
 } from "lucide-react"
-import { ResultItem } from "@/components/ui/result-item" // Import ResultItem
 
 const ZAKAT_RATE = 0.025 // 2.5%
 const AMANA_RATE = 0.1 // 10%
@@ -195,7 +194,7 @@ export function ZakatCalculator() {
               variant="ghost"
               className="bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 cursor-pointer"
             >
-              <HelpCircle className="w-4 h-4 mr-1" />
+              <HelpCircle className="w-4 h-4 mr-2" />
               Hjælp
             </Button>
           </DialogTrigger>
@@ -205,18 +204,14 @@ export function ZakatCalculator() {
             </DialogHeader>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
-                  Hvad er zakat?
-                </AccordionTrigger>
+                <AccordionTrigger className="text-gray-200 hover:text-white">Hvad er zakat?</AccordionTrigger>
                 <AccordionContent className="text-gray-400">
                   Zakat er en af de fem søjler i islam og er en obligatorisk velgørenhedsafgift for muslimer. Det er en
                   årlig betaling på 2,5% af ens formue over nisab-tærsklen, som gives til dem i nød.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
-                  Hvad er nisab?
-                </AccordionTrigger>
+                <AccordionTrigger className="text-gray-200 hover:text-white">Hvad er nisab?</AccordionTrigger>
                 <AccordionContent className="text-gray-400">
                   Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Nisab kan beregnes baseret
                   på enten guld (87,48g) eller sølv (612,36g). Sølv-nisab anbefales, da den resulterer i en lavere
@@ -224,7 +219,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
                   Hvad er forskellen på Amana-metoden og Kontant-metoden?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
@@ -248,7 +243,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
                   Skal jeg betale zakat af min bolig?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
@@ -257,7 +252,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
                   Hvornår skal jeg betale zakat?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
@@ -266,9 +261,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-6" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
-                  Hvem kan modtage zakat?
-                </AccordionTrigger>
+                <AccordionTrigger className="text-gray-200 hover:text-white">Hvem kan modtage zakat?</AccordionTrigger>
                 <AccordionContent className="text-gray-400">
                   Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
                   muslimer, slaver (for at frigøre dem), gældsatte, i Allahs vej, og vejfarende. I dag gives zakat
@@ -276,7 +269,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-7" className="border-gray-800">
-                <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
                   Er denne beregner 100% nøjagtig?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
@@ -293,7 +286,7 @@ export function ZakatCalculator() {
       {/* Header */}
       <div className="text-center mb-10">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-green-800/20 rounded-full mb-4">
-          <HandHeartIcon className="w-8 h-8 text-green-500" />
+          <HandHeartIcon className="w-8 h-8 text-green-700" />
         </div>
         <h1 className="text-4xl font-bold text-white mb-3 text-balance">Zakat-beregner</h1>
         <p className="text-gray-400 max-w-2xl mx-auto text-pretty">
@@ -338,7 +331,7 @@ export function ZakatCalculator() {
             >
               <label
                 htmlFor="silver"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="silver" id="silver" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -352,7 +345,7 @@ export function ZakatCalculator() {
               </label>
               <label
                 htmlFor="gold"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="gold" id="gold" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -409,7 +402,7 @@ export function ZakatCalculator() {
             >
               <label
                 htmlFor="amana"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="amana" id="amana" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -423,7 +416,7 @@ export function ZakatCalculator() {
               </label>
               <label
                 htmlFor="cash"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-green-500 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
               >
                 <RadioGroupItem value="cash" id="cash" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -563,12 +556,12 @@ export function ZakatCalculator() {
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
         <Button
-          onClick={handleCalculate}
           size="lg"
-          className="bg-green-500 text-gray-900 hover:bg-green-600 px-8 cursor-pointer"
+          onClick={handleCalculate}
+          className="bg-green-800 text-white hover:bg-green-900 px-8 cursor-pointer"
         >
           <Calculator className="w-5 h-5 mr-2" />
-          Beregn zakat
+          Beregn Zakat
         </Button>
         <Button
           size="lg"
@@ -673,12 +666,40 @@ function AssetInput({
           </PopoverContent>
         </Popover>
       </div>
-      <Input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="0"
-        className="bg-gray-800 border border-gray-700 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-green-500 focus:border-green-500"
-      />
+      <div className="relative">
+        <Input
+          type="text"
+          inputMode="decimal"
+          placeholder="0,00"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="pr-12 bg-gray-800 border-gray-600 text-white placeholder:text-gray-500 focus:border-green-700 focus:ring-green-700"
+        />
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">DKK</span>
+      </div>
+    </div>
+  )
+}
+
+function ResultItem({
+  label,
+  value,
+  highlight = false,
+  primary = false,
+}: {
+  label: string
+  value: string
+  highlight?: boolean
+  primary?: boolean
+}) {
+  return (
+    <div
+      className={`text-center p-4 rounded-lg ${
+        primary ? "bg-green-800 text-white" : highlight ? "bg-green-800/20 border border-green-800/30" : "bg-gray-800"
+      }`}
+    >
+      <p className={`text-sm mb-1 ${primary ? "text-green-100" : "text-gray-400"}`}>{label}</p>
+      <p className={`text-xl font-bold ${primary ? "text-white" : "text-white"}`}>{value}</p>
     </div>
   )
 }
