@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { Info, Gem, Scale, FileText, HandCoins } from "lucide-react"
+import { Info, Gem, Scale, FileText, HandCoins, HelpCircle } from "lucide-react"
 import { useState, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -11,6 +11,8 @@ import { Separator } from "@/components/ui/separator"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import {
   Wallet,
   Landmark,
@@ -77,6 +79,7 @@ function HandHeartIcon({ className }: { className?: string }) {
 export function ZakatCalculator() {
   const [nisabType, setNisabType] = useState<"silver" | "gold">("silver")
   const [stockTreatment, setStockTreatment] = useState<"amana" | "cash">("amana")
+  const [helpOpen, setHelpOpen] = useState(false)
   const [assets, setAssets] = useState({
     cash: "",
     bankAccounts: "",
@@ -183,6 +186,100 @@ export function ZakatCalculator() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      {/* Help link in top right corner */}
+      <div className="flex justify-end mb-4">
+        <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
+          <DialogTrigger asChild>
+            <Button variant="ghost" className="text-gray-400 hover:text-white hover:bg-gray-800 cursor-pointer">
+              <HelpCircle className="w-4 h-4 mr-2" />
+              Hjælp
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="bg-gray-900 border-gray-800 text-white max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-bold text-white">Ofte stillede spørgsmål</DialogTitle>
+            </DialogHeader>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1" className="border-gray-800">
+                <AccordionTrigger className="text-gray-200 hover:text-white">Hvad er zakat?</AccordionTrigger>
+                <AccordionContent className="text-gray-400">
+                  Zakat er en af de fem søjler i islam og er en obligatorisk velgørenhedsafgift for muslimer. Det er en
+                  årlig betaling på 2,5% af ens formue over nisab-tærsklen, som gives til dem i nød.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2" className="border-gray-800">
+                <AccordionTrigger className="text-gray-200 hover:text-white">Hvad er nisab?</AccordionTrigger>
+                <AccordionContent className="text-gray-400">
+                  Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Nisab kan beregnes baseret
+                  på enten guld (87,48g) eller sølv (612,36g). Sølv-nisab anbefales, da den resulterer i en lavere
+                  tærskel.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3" className="border-gray-800">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
+                  Hvad er forskellen på Amana-metoden og Kontant-metoden?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-400">
+                  <strong>Amana-metoden:</strong> Betragter aktier som "produktiv kapital" (som afgrøder). Du betaler
+                  10% zakat kun af årets gevinst.
+                  <br />
+                  <br />
+                  <strong>Kontant-metoden:</strong> Betragter aktier som kontanter. Du betaler 2,5% zakat af den samlede
+                  værdi af dine aktier.
+                  <br />
+                  <br />
+                  Amana-metoden anbefales af mange lærde.{" "}
+                  <a
+                    href="https://halal.ninja/zakat-on-stocks"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-green-500 hover:text-green-400 underline"
+                  >
+                    Læs mere
+                  </a>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-4" className="border-gray-800">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
+                  Skal jeg betale zakat af min bolig?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-400">
+                  Nej, du skal ikke betale zakat af din primære bolig, som du bor i. Du skal kun betale zakat af
+                  investeringsejendomme, som er købt med henblik på udlejning eller salg.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-5" className="border-gray-800">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
+                  Hvornår skal jeg betale zakat?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-400">
+                  Zakat skal betales én gang om året. Mange muslimer vælger at betale i Ramadan, men du kan vælge enhver
+                  dato som din årlige zakat-dato. Det vigtige er, at du er konsekvent og betaler hvert år på samme tid.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-6" className="border-gray-800">
+                <AccordionTrigger className="text-gray-200 hover:text-white">Hvem kan modtage zakat?</AccordionTrigger>
+                <AccordionContent className="text-gray-400">
+                  Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
+                  muslimer, slaver (for at frigøre dem), gældsatte, i Allahs vej, og vejfarende. I dag gives zakat
+                  typisk til fattige og nødlidende gennem velgørenhedsorganisationer.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-7" className="border-gray-800">
+                <AccordionTrigger className="text-gray-200 hover:text-white">
+                  Er denne beregner 100% nøjagtig?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-400">
+                  Denne beregner giver et estimat baseret på de oplysninger, du indtaster. For specifikke spørgsmål om
+                  din situation, anbefales det at konsultere en kvalificeret islamisk lærd. Guld- og sølvpriser kan
+                  variere, så tjek aktuelle priser for den mest nøjagtige beregning.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </DialogContent>
+        </Dialog>
+      </div>
+
       {/* Header */}
       <div className="text-center mb-10">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-green-800/20 rounded-full mb-4">
