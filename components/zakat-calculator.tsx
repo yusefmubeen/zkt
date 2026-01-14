@@ -26,6 +26,7 @@ import {
   Calculator,
   Cuboid,
 } from "lucide-react"
+import { ResultItem } from "@/components/ui/result-item" // Import ResultItem
 
 const ZAKAT_RATE = 0.025 // 2.5%
 const AMANA_RATE = 0.1 // 10%
@@ -202,7 +203,7 @@ export function ZakatCalculator() {
             <DialogHeader>
               <DialogTitle className="text-xl font-bold text-white">Ofte stillede spørgsmål</DialogTitle>
             </DialogHeader>
-            <Accordion type="single" collapsible className="w-full cursor-pointer">
+            <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1" className="border-gray-800">
                 <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
                   Hvad er zakat?
@@ -672,40 +673,11 @@ function AssetInput({
           </PopoverContent>
         </Popover>
       </div>
-      <div className="relative">
-        <Input
-          type="text"
-          inputMode="decimal"
-          placeholder="0,00"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="pr-12 bg-gray-800 border-gray-600 text-white placeholder:text-gray-500 focus:border-green-700 focus:ring-green-700"
-        />
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">DKK</span>
-      </div>
-    </div>
-  )
-}
-
-function ResultItem({
-  label,
-  value,
-  highlight = false,
-  primary = false,
-}: {
-  label: string
-  value: string
-  highlight?: boolean
-  primary?: boolean
-}) {
-  return (
-    <div
-      className={`text-center p-4 rounded-lg ${
-        primary ? "bg-green-800 text-white" : highlight ? "bg-green-800/20 border border-green-800/30" : "bg-gray-800"
-      }`}
-    >
-      <p className={`text-sm mb-1 ${primary ? "text-green-100" : "text-gray-400"}`}>{label}</p>
-      <p className={`text-xl font-bold ${primary ? "text-white" : "text-white"}`}>{value}</p>
+      <Input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="bg-gray-800 border border-gray-700 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-green-800 focus:border-green-800"
+      />
     </div>
   )
 }
