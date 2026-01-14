@@ -198,7 +198,10 @@ export function ZakatCalculator() {
               Hjælp
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-gray-900 border-gray-800 text-white max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogContent
+            variant="bottomSheet"
+            className="bg-gray-900 border-gray-800 text-white max-w-2xl max-h-[80vh] overflow-y-auto"
+          >
             <DialogHeader>
               <DialogTitle className="text-xl font-bold text-white">Ofte stillede spørgsmål</DialogTitle>
             </DialogHeader>
