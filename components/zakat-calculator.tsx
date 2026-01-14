@@ -1,8 +1,8 @@
 "use client"
 
 import type React from "react"
-import { Info, Gem, Scale, FileText, HandCoins, HelpCircle } from "lucide-react"
-import { useState, useMemo } from "react"
+import { Info, Gem, Scale, FileText, HandCoins, HelpCircle, Sun, Moon, Monitor } from "lucide-react"
+import { useState, useMemo, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import {
   Wallet,
   Landmark,
@@ -76,10 +77,13 @@ function HandHeartIcon({ className }: { className?: string }) {
   )
 }
 
+type Theme = "auto" | "light" | "dark"
+
 export function ZakatCalculator() {
   const [nisabType, setNisabType] = useState<"silver" | "gold">("silver")
   const [stockTreatment, setStockTreatment] = useState<"amana" | "cash">("amana")
   const [helpOpen, setHelpOpen] = useState(false)
+  const [theme, setTheme] = useState<Theme>("auto")
   const [assets, setAssets] = useState({
     cash: "",
     bankAccounts: "",
@@ -100,6 +104,47 @@ export function ZakatCalculator() {
   })
 
   const [calculated, setCalculated] = useState(false)
+
+  useEffect(() => {
+    const root = document.documentElement
+
+    const applyTheme = (selectedTheme: Theme) => {
+      if (selectedTheme === "auto") {
+        // Check system preference
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+        if (systemPrefersDark) {
+          root.classList.add("dark")
+        } else {
+          root.classList.remove("dark")
+        }
+      } else if (selectedTheme === "dark") {
+        root.classList.add("dark")
+      } else {
+        root.classList.remove("dark")
+      }
+    }
+
+    applyTheme(theme)
+
+    // Listen for system preference changes when in auto mode
+    if (theme === "auto") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+      const handleChange = () => applyTheme("auto")
+      mediaQuery.addEventListener("change", handleChange)
+      return () => mediaQuery.removeEventListener("change", handleChange)
+    }
+  }, [theme])
+
+  const getThemeIcon = () => {
+    switch (theme) {
+      case "light":
+        return <Sun className="w-4 h-4" />
+      case "dark":
+        return <Moon className="w-4 h-4" />
+      default:
+        return <Monitor className="w-4 h-4" />
+    }
+  }
 
   const parseValue = (value: string) => {
     const parsed = Number.parseFloat(value.replace(/[^\d.-]/g, ""))
@@ -187,7 +232,49 @@ export function ZakatCalculator() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Help link in top right corner */}
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end gap-2 mb-4">
+        {/* Theme Toggle */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 cursor-pointer"
+            >
+              {getThemeIcon()}
+              <span className="ml-1 hidden sm:inline">
+                {theme === "auto" ? "Auto" : theme === "light" ? "Lys" : "Mørk"}
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700">
+            <DropdownMenuItem
+              onClick={() => setTheme("auto")}
+              className={`cursor-pointer ${theme === "auto" ? "text-green-500" : "text-gray-300"} hover:text-white focus:text-white`}
+            >
+              <Monitor className="w-4 h-4 mr-2" />
+              Auto
+              {theme === "auto" && <span className="ml-auto text-xs text-green-500">✓</span>}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setTheme("light")}
+              className={`cursor-pointer ${theme === "light" ? "text-green-500" : "text-gray-300"} hover:text-white focus:text-white`}
+            >
+              <Sun className="w-4 h-4 mr-2" />
+              Lys
+              {theme === "light" && <span className="ml-auto text-xs text-green-500">✓</span>}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setTheme("dark")}
+              className={`cursor-pointer ${theme === "dark" ? "text-green-500" : "text-gray-300"} hover:text-white focus:text-white`}
+            >
+              <Moon className="w-4 h-4 mr-2" />
+              Mørk
+              {theme === "dark" && <span className="ml-auto text-xs text-green-500">✓</span>}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Help Dialog */}
         <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
           <DialogTrigger asChild>
             <Button
