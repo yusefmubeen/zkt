@@ -676,6 +676,7 @@ function AssetInput({
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        placeholder="0"
         className="bg-gray-800 border border-gray-700 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-green-500 focus:border-green-500"
       />
     </div>
