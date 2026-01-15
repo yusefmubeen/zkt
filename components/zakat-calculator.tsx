@@ -4,7 +4,6 @@ import { useState, useMemo } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
@@ -270,7 +269,7 @@ export function ZakatCalculator() {
       </div>
 
       {/* Nisab Section */}
-      <section className="mb-8">
+      <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Nisab</h2>
         <p className="text-sm text-muted-foreground mb-4">
           Den nuværende nisab-tærskel er cirka{" "}
@@ -323,10 +322,8 @@ export function ZakatCalculator() {
         </div>
       </section>
 
-      <Separator className="my-8" />
-
       {/* Assets Section */}
-      <section className="mb-8">
+      <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Aktiver</h2>
         <p className="text-sm text-muted-foreground mb-4">Indtast værdien af dine aktiver i DKK</p>
         <div className="space-y-6">
@@ -387,10 +384,8 @@ export function ZakatCalculator() {
         </div>
       </section>
 
-      <Separator className="my-8" />
-
       {/* Liabilities Section */}
-      <section className="mb-8">
+      <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
         <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser i DKK</p>
         <div className="space-y-6">
@@ -415,10 +410,8 @@ export function ZakatCalculator() {
         </div>
       </section>
 
-      <Separator className="my-8" />
-
       {/* Stock Treatment Section */}
-      <section className="mb-8">
+      <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Beregningsmetode for aktier</h2>
         <p className="text-sm text-muted-foreground mb-4">
           Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.
@@ -496,10 +489,8 @@ export function ZakatCalculator() {
         </div>
       </section>
 
-      <Separator className="my-8" />
-
       {/* Calculate Button */}
-      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8 mb-12">
         <Button size="lg" onClick={handleCalculate} className="text-white">
           <Calculator className="w-5 h-5 mr-2" />
           Beregn zakat
@@ -511,8 +502,7 @@ export function ZakatCalculator() {
 
       {/* Results Section */}
       {calculated && (
-        <section className="mt-8">
-          <Separator className="mb-8" />
+        <section className="mb-12">
           <h2 className="text-lg font-semibold mb-4 text-center">Beregningsresultat</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <ResultItem label="Samlede aktiver" value={formatCurrency(calculations.totalAssets)} />
