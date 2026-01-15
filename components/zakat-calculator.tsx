@@ -519,7 +519,7 @@ export function ZakatCalculator() {
               value={formatInputValue(assets.otherInvestments)}
               onChange={(v) => handleAssetChange("otherInvestments", v)}
               icon={<Coins className="w-4 h-4" />}
-              tooltip="Kryptovaluta, pensionsopsparing, etc."
+              tooltip="Bitcoin og andre kryptovalutaer"
             />
             <AssetInput
               label="Tilgodehavender"
