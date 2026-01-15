@@ -266,7 +266,7 @@ export function ZakatCalculator() {
           <HandHeartIcon className="w-8 h-8 text-primary" />
         </div>
         <h1 className="text-3xl font-semibold tracking-tight mb-2">Zakat-beregner</h1>
-        <p className="text-muted-foreground">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
+        <p className="text-sm text-muted-foreground">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
       </div>
 
       {/* Nisab Section */}
@@ -319,6 +319,98 @@ export function ZakatCalculator() {
               </div>
             </label>
           </RadioGroup>
+        </div>
+      </section>
+
+      <Separator className="my-8" />
+
+      {/* Assets Section */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-2">Aktiver</h2>
+        <p className="text-sm text-muted-foreground mb-4">Indtast værdien af dine aktiver i DKK</p>
+        <div className="space-y-6">
+          <AssetInput
+            label="Bankkonti"
+            value={formatInputValue(assets.bankAccounts)}
+            onChange={(v) => handleAssetChange("bankAccounts", v)}
+            tooltip="Saldo på alle bankkonti (opsparing, løn, etc.)"
+          />
+          <AssetInput
+            label="Fysiske kontanter"
+            value={formatInputValue(assets.cash)}
+            onChange={(v) => handleAssetChange("cash", v)}
+            tooltip="Kontanter du har hjemme eller i pengeskab"
+          />
+          <AssetInput
+            label="Guld"
+            value={formatInputValue(assets.gold)}
+            onChange={(v) => handleAssetChange("gold", v)}
+            tooltip="Værdi af guld smykker og guldbarrer"
+          />
+          <AssetInput
+            label="Sølv"
+            value={formatInputValue(assets.silver)}
+            onChange={(v) => handleAssetChange("silver", v)}
+            tooltip="Værdi af sølv smykker og sølvbarrer"
+          />
+          <AssetInput
+            label="Forretningsinventar"
+            value={formatInputValue(assets.businessInventory)}
+            onChange={(v) => handleAssetChange("businessInventory", v)}
+            tooltip="Værdi af varer til salg i din virksomhed"
+          />
+          <AssetInput
+            label="Investeringsejendomme"
+            value={formatInputValue(assets.propertyInvestment)}
+            onChange={(v) => handleAssetChange("propertyInvestment", v)}
+            tooltip="Ejendomme købt med henblik på udlejning eller salg"
+          />
+          <AssetInput
+            label="Aktier og værdipapirer"
+            value={formatInputValue(assets.stocks)}
+            onChange={(v) => handleAssetChange("stocks", v)}
+            tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
+          />
+          <AssetInput
+            label="Kryptovaluta"
+            value={formatInputValue(assets.otherInvestments)}
+            onChange={(v) => handleAssetChange("otherInvestments", v)}
+            tooltip="Bitcoin og andre kryptovalutaer"
+          />
+          <AssetInput
+            label="Tilgodehavender"
+            value={formatInputValue(assets.receivables)}
+            onChange={(v) => handleAssetChange("receivables", v)}
+            tooltip="Penge som andre skylder dig og som du forventer at modtage"
+          />
+        </div>
+      </section>
+
+      <Separator className="my-8" />
+
+      {/* Liabilities Section */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-2">Gæld</h2>
+        <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser i DKK</p>
+        <div className="space-y-6">
+          <AssetInput
+            label="Personlige lån"
+            value={formatInputValue(liabilities.debts)}
+            onChange={(v) => handleLiabilityChange("debts", v)}
+            tooltip="Lån fra familie, venner eller andre"
+          />
+          <AssetInput
+            label="Banklån og kreditkort"
+            value={formatInputValue(liabilities.loans)}
+            onChange={(v) => handleLiabilityChange("loans", v)}
+            tooltip="Udestående lån og kreditkortgæld"
+          />
+          <AssetInput
+            label="Andre forpligtelser"
+            value={formatInputValue(liabilities.otherLiabilities)}
+            onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
+            tooltip="Andre økonomiske forpligtelser"
+          />
         </div>
       </section>
 
@@ -390,108 +482,20 @@ export function ZakatCalculator() {
               </div>
             </label>
           </RadioGroup>
-        </div>
-      </section>
-
-      <Separator className="my-8" />
-
-      {/* Assets Section */}
-      <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-2">Aktiver</h2>
-        <p className="text-sm text-muted-foreground mb-4">Indtast værdien af dine aktiver i DKK</p>
-        <div className="space-y-6">
-          <AssetInput
-            label="Bankkonti"
-            value={formatInputValue(assets.bankAccounts)}
-            onChange={(v) => handleAssetChange("bankAccounts", v)}
-            tooltip="Saldo på alle bankkonti (opsparing, løn, etc.)"
-          />
-          <AssetInput
-            label="Fysiske kontanter"
-            value={formatInputValue(assets.cash)}
-            onChange={(v) => handleAssetChange("cash", v)}
-            tooltip="Kontanter du har hjemme eller i pengeskab"
-          />
-          <AssetInput
-            label="Guld"
-            value={formatInputValue(assets.gold)}
-            onChange={(v) => handleAssetChange("gold", v)}
-            tooltip="Værdi af guld smykker og guldbarrer"
-          />
-          <AssetInput
-            label="Sølv"
-            value={formatInputValue(assets.silver)}
-            onChange={(v) => handleAssetChange("silver", v)}
-            tooltip="Værdi af sølv smykker og sølvbarrer"
-          />
-          <AssetInput
-            label="Forretningsinventar"
-            value={formatInputValue(assets.businessInventory)}
-            onChange={(v) => handleAssetChange("businessInventory", v)}
-            tooltip="Værdi af varer til salg i din virksomhed"
-          />
-          <AssetInput
-            label="Investeringsejendomme"
-            value={formatInputValue(assets.propertyInvestment)}
-            onChange={(v) => handleAssetChange("propertyInvestment", v)}
-            tooltip="Ejendomme købt med henblik på udlejning eller salg"
-          />
-          <AssetInput
-            label="Aktier og værdipapirer"
-            value={formatInputValue(assets.stocks)}
-            onChange={(v) => handleAssetChange("stocks", v)}
-            tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
-          />
           {stockTreatment === "amana" && (
-            <AssetInput
-              label="Afkast på aktier og værdipapirer"
-              value={formatInputValue(assets.stockGains)}
-              onChange={(v) => handleAssetChange("stockGains", v)}
-              tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
-            />
+            <div className="mt-4 ml-7">
+              <AssetInput
+                label="Afkast på aktier og værdipapirer"
+                value={formatInputValue(assets.stockGains)}
+                onChange={(v) => handleAssetChange("stockGains", v)}
+                tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
+              />
+            </div>
           )}
-          <AssetInput
-            label="Kryptovaluta"
-            value={formatInputValue(assets.otherInvestments)}
-            onChange={(v) => handleAssetChange("otherInvestments", v)}
-            tooltip="Bitcoin og andre kryptovalutaer"
-          />
-          <AssetInput
-            label="Tilgodehavender"
-            value={formatInputValue(assets.receivables)}
-            onChange={(v) => handleAssetChange("receivables", v)}
-            tooltip="Penge som andre skylder dig og som du forventer at modtage"
-          />
         </div>
       </section>
 
       <Separator className="my-8" />
-
-      {/* Liabilities Section */}
-      <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-2">Gæld</h2>
-        <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser i DKK</p>
-        <div className="space-y-6">
-          <AssetInput
-            label="Kortfristet gæld"
-            value={formatInputValue(liabilities.debts)}
-            onChange={(v) => handleLiabilityChange("debts", v)}
-            tooltip="Gæld der forfalder inden for et år (kreditkort, regninger)"
-          />
-          <AssetInput
-            label="Lån"
-            value={formatInputValue(liabilities.loans)}
-            onChange={(v) => handleLiabilityChange("loans", v)}
-            tooltip="Årligt afdrag på boliglån, billån, studielån, etc."
-          />
-          <AssetInput
-            label="Andre forpligtelser"
-            value={formatInputValue(liabilities.otherLiabilities)}
-            onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
-            tooltip="Andre økonomiske forpligtelser"
-          />
-        </div>
-      </section>
 
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
