@@ -481,7 +481,7 @@ export function ZakatCalculator() {
                   label="Afkast på aktier og værdipapirer"
                   value={formatInputValue(assets.stockGains)}
                   onChange={(v) => handleAssetChange("stockGains", v)}
-                  tooltip="Din samlede gevinst fra aktier og værdipapirer i indeværende år"
+                  tooltip="Din samlede gevinst fra aktier og værdipapirer i indeværende år. Indtast 0, hvis du har haft tab."
                 />
               </div>
             )}
