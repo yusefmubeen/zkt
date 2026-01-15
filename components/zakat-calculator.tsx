@@ -199,46 +199,36 @@ export function ZakatCalculator() {
       <div className="flex justify-end mb-4">
         <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
           <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              className="text-muted-foreground hover:text-foreground cursor-pointer bg-transparent"
-            >
+            <Button variant="outline" className="cursor-pointer bg-transparent">
               <HelpCircle className="w-4 h-4 mr-1" />
               Hjælp
             </Button>
           </DialogTrigger>
-          <DialogContent
-            variant="bottomSheet"
-            className="bg-background border-border text-foreground max-w-2xl max-h-[80vh] overflow-y-auto"
-          >
+          <DialogContent variant="bottomSheet" className="max-w-2xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle className="text-xl font-bold text-foreground">Ofte stillede spørgsmål</DialogTitle>
+              <DialogTitle>Ofte stillede spørgsmål</DialogTitle>
             </DialogHeader>
             <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1" className="border-border">
-                <AccordionTrigger className="text-foreground hover:text-foreground cursor-pointer">
-                  Hvad er zakat?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="cursor-pointer">Hvad er zakat?</AccordionTrigger>
+                <AccordionContent>
                   Zakat er en af de fem søjler i islam og er en obligatorisk velgørenhedsafgift for muslimer. Det er en
                   årlig betaling på 2,5% af ens formue over nisab-tærsklen, som gives til dem i nød.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-2" className="border-border">
-                <AccordionTrigger className="text-foreground hover:text-foreground cursor-pointer">
-                  Hvad er nisab?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="cursor-pointer">Hvad er nisab?</AccordionTrigger>
+                <AccordionContent>
                   Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Nisab kan beregnes baseret
                   på enten guld (87,48g) eller sølv (612,36g). Sølv-nisab anbefales, da den resulterer i en lavere
                   tærskel.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-3" className="border-border">
-                <AccordionTrigger className="text-foreground hover:text-foreground cursor-pointer">
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="cursor-pointer">
                   Hvad er forskellen på Kvart-, Kontant- og Amana-metoden?
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+                <AccordionContent>
                   <strong>Kvart-metoden (anbefalet):</strong> Du betaler 2,5% zakat på kun 25% af din aktie- og
                   værdipapirbeholdning. Denne metode tager højde for, at en stor del af aktieværdien typisk er bundet i
                   virksomhedens faste aktiver.
@@ -257,45 +247,37 @@ export function ZakatCalculator() {
                     href="https://halal.ninja/zakat-on-stocks"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/80 underline"
+                    className="text-primary underline hover:text-primary/80"
                   >
                     Læs mere om zakat på aktier
                   </a>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-4" className="border-border">
-                <AccordionTrigger className="text-foreground hover:text-foreground cursor-pointer">
-                  Skal jeg betale zakat af min bolig?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+              <AccordionItem value="item-4">
+                <AccordionTrigger className="cursor-pointer">Skal jeg betale zakat af min bolig?</AccordionTrigger>
+                <AccordionContent>
                   Nej, du skal ikke betale zakat af din primære bolig, som du bor i. Du skal kun betale zakat af
                   investeringsejendomme, som er købt med henblik på udlejning eller salg.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-5" className="border-border">
-                <AccordionTrigger className="text-foreground hover:text-foreground cursor-pointer">
-                  Hvornår skal jeg betale zakat?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+              <AccordionItem value="item-5">
+                <AccordionTrigger className="cursor-pointer">Hvornår skal jeg betale zakat?</AccordionTrigger>
+                <AccordionContent>
                   Zakat skal betales én gang om året. Mange muslimer vælger at betale i Ramadan, men du kan vælge enhver
                   dato som din årlige zakat-dato. Det vigtige er, at du er konsekvent og betaler hvert år på samme tid.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-6" className="border-border">
-                <AccordionTrigger className="text-foreground hover:text-foreground cursor-pointer">
-                  Hvem kan modtage zakat?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+              <AccordionItem value="item-6">
+                <AccordionTrigger className="cursor-pointer">Hvem kan modtage zakat?</AccordionTrigger>
+                <AccordionContent>
                   Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
                   muslimer, slaver (for at frigøre dem), gældsatte, i Allahs vej, og vejfarende. I dag gives zakat
                   typisk til fattige og nødlidende gennem velgørenhedsorganisationer.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-7" className="border-border">
-                <AccordionTrigger className="text-foreground hover:text-foreground cursor-pointer">
-                  Er denne beregner 100% nøjagtig?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+              <AccordionItem value="item-7">
+                <AccordionTrigger className="cursor-pointer">Er denne beregner 100% nøjagtig?</AccordionTrigger>
+                <AccordionContent>
                   Denne beregner giver et estimat baseret på de oplysninger, du indtaster. For specifikke spørgsmål om
                   din situation, anbefales det at konsultere en kvalificeret islamisk lærd. Guld- og sølvpriser kan
                   variere, så tjek aktuelle priser for den mest nøjagtige beregning.
@@ -311,40 +293,37 @@ export function ZakatCalculator() {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
           <HandHeartIcon className="w-8 h-8 text-primary" />
         </div>
-        <h1 className="text-4xl font-bold text-foreground mb-3 text-balance">Zakat-beregner</h1>
+        <h1 className="text-4xl font-bold mb-3 text-balance">Zakat-beregner</h1>
         <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
           Beregn din årlige zakat (islamisk velgørenhed) baseret på dine aktiver og gæld. Zakat er 2,5% af din formue
           over nisab-tærsklen.
         </p>
       </div>
 
-      {/* Nisab Info */}
-      <Card className="mb-8 border-primary/30 bg-card">
+      {/* Nisab Info - Remove custom border/bg classes */}
+      <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
+          <CardTitle className="flex items-center gap-2">
             <Scale className="w-5 h-5 text-primary" />
             Nisab-tærskel
           </CardTitle>
-          <CardDescription className="text-muted-foreground">
+          <CardDescription>
             Den nuværende nisab-tærskel er cirka{" "}
             <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span> (baseret på{" "}
             {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}). Du skal kun betale zakat, hvis din nettoformue
             overstiger denne grænse.
           </CardDescription>
         </CardHeader>
-        <CardContent className="pt-0">
+        <CardContent>
           <div className="space-y-3">
             <div className="flex items-center gap-1">
-              <Label className="text-sm font-medium text-foreground">Vælg nisab-beregningsmetode</Label>
+              <Label className="text-sm font-medium">Vælg nisab-beregningsmetode</Label>
               <Popover>
-                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground active:text-foreground touch-manipulation cursor-pointer">
+                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground touch-manipulation cursor-pointer">
                   <Info className="w-4 h-4" />
                   <span className="sr-only">Info om nisab-beregningsmetode</span>
                 </PopoverTrigger>
-                <PopoverContent
-                  side="top"
-                  className="max-w-xs text-sm bg-popover border-border text-popover-foreground"
-                >
+                <PopoverContent side="top" className="max-w-xs text-sm">
                   Sølv anbefales, da det resulterer i en lavere nisab-tærskel, hvilket betyder at flere mennesker
                   kvalificerer til at betale zakat.
                 </PopoverContent>
@@ -357,25 +336,27 @@ export function ZakatCalculator() {
             >
               <label
                 htmlFor="silver"
-                className="flex items-start space-x-3 bg-muted/50 rounded-lg p-3 border border-border hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer flex-1"
               >
-                <RadioGroupItem value="silver" id="silver" className="border-border text-primary mt-1" />
+                <RadioGroupItem value="silver" id="silver" className="mt-1" />
                 <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-foreground font-medium">
+                  <span className="flex items-center gap-2 font-medium">
                     <Gem className="w-4 h-4 text-muted-foreground" />
                     Sølv
-                    <Badge className="text-xs bg-primary/10 text-primary border-0 px-2 py-0.5">Anbefalet</Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Anbefalet
+                    </Badge>
                   </span>
                   <span className="text-sm text-muted-foreground">Baseret på 612,36g sølv</span>
                 </div>
               </label>
               <label
                 htmlFor="gold"
-                className="flex items-start space-x-3 bg-muted/50 rounded-lg p-3 border border-border hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer flex-1"
               >
-                <RadioGroupItem value="gold" id="gold" className="border-border text-primary mt-1" />
+                <RadioGroupItem value="gold" id="gold" className="mt-1" />
                 <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-foreground font-medium">
+                  <span className="flex items-center gap-2 font-medium">
                     <Cuboid className="w-4 h-4 text-muted-foreground" />
                     Guld
                   </span>
@@ -387,37 +368,32 @@ export function ZakatCalculator() {
         </CardContent>
       </Card>
 
-      {/* Stock Treatment Section */}
-      <Card className="mb-8 border-primary/30 bg-card">
+      {/* Stock Treatment Section - Remove custom border/bg classes */}
+      <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
+          <CardTitle className="flex items-center gap-2">
             <BarChart3 className="w-5 h-5 text-primary" />
             Aktier og værdipapirer
           </CardTitle>
-          <CardDescription className="text-muted-foreground">
-            Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.
-          </CardDescription>
+          <CardDescription>Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.</CardDescription>
         </CardHeader>
-        <CardContent className="pt-0">
+        <CardContent>
           <div className="space-y-3">
             <div className="flex items-center gap-1">
-              <Label className="text-sm font-medium text-foreground">Vælg beregningsmetode</Label>
+              <Label className="text-sm font-medium">Vælg beregningsmetode</Label>
               <Popover>
-                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground active:text-foreground touch-manipulation cursor-pointer">
+                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground touch-manipulation cursor-pointer">
                   <Info className="w-4 h-4" />
                   <span className="sr-only">Info om beregningsmetode for aktier og værdipapirer</span>
                 </PopoverTrigger>
-                <PopoverContent
-                  side="top"
-                  className="max-w-xs text-sm bg-popover border-border text-popover-foreground"
-                >
+                <PopoverContent side="top" className="max-w-xs text-sm">
                   Der er forskellige holdninger til, hvordan zakat på aktier og værdipapirer skal beregnes.
                   Kvart-metoden (2,5% på 25%) anbefales som en balanceret tilgang.{" "}
                   <a
                     href="https://halal.ninja/zakat-on-stocks"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/80 underline"
+                    className="text-primary underline hover:text-primary/80"
                   >
                     Læs mere
                   </a>
@@ -431,25 +407,27 @@ export function ZakatCalculator() {
             >
               <label
                 htmlFor="quarter"
-                className="flex items-start space-x-3 bg-muted/50 rounded-lg p-3 border border-border hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/50 transition-colors cursor-pointer w-full"
+                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer"
               >
-                <RadioGroupItem value="quarter" id="quarter" className="border-border text-primary mt-1" />
+                <RadioGroupItem value="quarter" id="quarter" className="mt-1" />
                 <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-foreground font-medium">
+                  <span className="flex items-center gap-2 font-medium">
                     <PieChart className="w-4 h-4 text-muted-foreground" />
                     Kvart-metoden
-                    <Badge className="text-xs bg-primary/10 text-primary border-0 px-2 py-0.5">Anbefalet</Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Anbefalet
+                    </Badge>
                   </span>
                   <span className="text-sm text-muted-foreground">2,5% zakat på 25% af beholdningen</span>
                 </div>
               </label>
               <label
                 htmlFor="cash"
-                className="flex items-start space-x-3 bg-muted/50 rounded-lg p-3 border border-border hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/50 transition-colors cursor-pointer w-full"
+                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer"
               >
-                <RadioGroupItem value="cash" id="cash" className="border-border text-primary mt-1" />
+                <RadioGroupItem value="cash" id="cash" className="mt-1" />
                 <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-foreground font-medium">
+                  <span className="flex items-center gap-2 font-medium">
                     <Banknote className="w-4 h-4 text-muted-foreground" />
                     Kontant-metoden
                   </span>
@@ -458,11 +436,11 @@ export function ZakatCalculator() {
               </label>
               <label
                 htmlFor="amana"
-                className="flex items-start space-x-3 bg-muted/50 rounded-lg p-3 border border-border hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/50 transition-colors cursor-pointer w-full"
+                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer"
               >
-                <RadioGroupItem value="amana" id="amana" className="border-border text-primary mt-1" />
+                <RadioGroupItem value="amana" id="amana" className="mt-1" />
                 <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-foreground font-medium">
+                  <span className="flex items-center gap-2 font-medium">
                     <TrendingUp className="w-4 h-4 text-muted-foreground" />
                     Amana-metoden
                   </span>
@@ -475,14 +453,14 @@ export function ZakatCalculator() {
       </Card>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        {/* Assets Section */}
-        <Card className="bg-card border-border">
+        {/* Assets Section - Remove custom bg/border classes */}
+        <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-foreground">
+            <CardTitle className="flex items-center gap-2">
               <Wallet className="w-5 h-5 text-primary" />
               Aktiver
             </CardTitle>
-            <CardDescription className="text-muted-foreground">Indtast værdien af dine aktiver i DKK</CardDescription>
+            <CardDescription>Indtast værdien af dine aktiver i DKK</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <AssetInput
@@ -560,14 +538,14 @@ export function ZakatCalculator() {
           </CardContent>
         </Card>
 
-        {/* Liabilities Section */}
-        <Card className="bg-card border-border">
+        {/* Liabilities Section - Remove custom bg/border classes */}
+        <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-foreground">
+            <CardTitle className="flex items-center gap-2">
               <CreditCard className="w-5 h-5 text-primary" />
               Gæld
             </CardTitle>
-            <CardDescription className="text-muted-foreground">Indtast din gæld og forpligtelser i DKK</CardDescription>
+            <CardDescription>Indtast din gæld og forpligtelser i DKK</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <AssetInput
@@ -595,13 +573,9 @@ export function ZakatCalculator() {
         </Card>
       </div>
 
-      {/* Calculate Button */}
+      {/* Calculate Button - Use default Button styling */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-        <Button
-          size="lg"
-          onClick={handleCalculate}
-          className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 cursor-pointer"
-        >
+        <Button size="lg" onClick={handleCalculate} className="cursor-pointer">
           <Calculator className="w-5 h-5 mr-2" />
           Beregn zakat
         </Button>
@@ -610,11 +584,11 @@ export function ZakatCalculator() {
         </Button>
       </div>
 
-      {/* Results Section */}
+      {/* Results Section - Simplify styling */}
       {calculated && (
-        <Card className="mt-8 border-2 border-primary bg-card">
+        <Card className="mt-8">
           <CardHeader className="pb-2">
-            <CardTitle className="text-center text-2xl text-foreground">Beregningsresultat</CardTitle>
+            <CardTitle className="text-center text-2xl">Beregningsresultat</CardTitle>
           </CardHeader>
           <CardContent className="pt-4">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -628,12 +602,12 @@ export function ZakatCalculator() {
               <ResultItem label="Zakat at betale" value={formatCurrency(calculations.zakatDue)} primary />
             </div>
 
-            <Separator className="my-6 bg-border" />
+            <Separator className="my-6" />
 
             <div className="text-center">
               {calculations.meetsNisab ? (
-                <div className="bg-primary/10 rounded-lg p-4 border border-primary/30">
-                  <p className="text-lg font-semibold text-foreground mb-2">
+                <div className="bg-primary/10 rounded-lg p-4">
+                  <p className="text-lg font-semibold mb-2">
                     Din zakat for i år er <span className="text-primary">{formatCurrency(calculations.zakatDue)}</span>
                   </p>
                   <p className="text-sm text-muted-foreground">
@@ -653,8 +627,8 @@ export function ZakatCalculator() {
                   </p>
                 </div>
               ) : (
-                <div className="bg-muted rounded-lg p-4 border border-border">
-                  <p className="text-lg font-semibold text-foreground mb-2">Du skal ikke betale zakat i år</p>
+                <div className="bg-muted rounded-lg p-4">
+                  <p className="text-lg font-semibold mb-2">Du skal ikke betale zakat i år</p>
                   <p className="text-sm text-muted-foreground">
                     Din nettoformue ({formatCurrency(calculations.netWorth)}) er under nisab-tærsklen (
                     {formatCurrency(nisabThreshold)})
@@ -693,16 +667,16 @@ function AssetInput({
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-1">
-        <Label className="text-sm font-medium flex items-center gap-2 text-foreground">
+        <Label className="text-sm font-medium flex items-center gap-2">
           {icon}
           {label}
         </Label>
         <Popover>
-          <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground active:text-foreground touch-manipulation cursor-pointer">
+          <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground touch-manipulation cursor-pointer">
             <Info className="w-4 h-4" />
             <span className="sr-only">Info om {label}</span>
           </PopoverTrigger>
-          <PopoverContent side="top" className="max-w-xs text-sm bg-popover border-border text-popover-foreground">
+          <PopoverContent side="top" className="max-w-xs text-sm">
             {tooltip}
           </PopoverContent>
         </Popover>
@@ -714,7 +688,7 @@ function AssetInput({
           placeholder="0,00"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="pr-12 bg-background border-input text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
+          className="pr-12"
         />
         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">DKK</span>
       </div>
@@ -736,15 +710,11 @@ function ResultItem({
   return (
     <div
       className={`text-center p-4 rounded-lg ${
-        primary
-          ? "bg-primary text-primary-foreground"
-          : highlight
-            ? "bg-primary/10 border border-primary/30"
-            : "bg-muted"
+        primary ? "bg-primary text-primary-foreground" : highlight ? "bg-primary/10" : "bg-muted"
       }`}
     >
       <p className={`text-sm mb-1 ${primary ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{label}</p>
-      <p className={`text-xl font-bold ${primary ? "text-primary-foreground" : "text-foreground"}`}>{value}</p>
+      <p className={`text-xl font-bold ${primary ? "text-primary-foreground" : ""}`}>{value}</p>
     </div>
   )
 }
