@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { Info, Gem, Scale, FileText, HandCoins, HelpCircle } from "lucide-react"
+import { Info, Gem, Scale, FileText, HandCoins, HelpCircle, PieChart } from "lucide-react"
 import { useState, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -25,7 +25,6 @@ import {
   TrendingUp,
   Calculator,
   Cuboid,
-  Percent,
 } from "lucide-react"
 
 const ZAKAT_RATE = 0.025 // 2.5%
@@ -250,7 +249,7 @@ export function ZakatCalculator() {
                   <br />
                   <br />
                   <strong>Amana-metoden:</strong> Betragter aktier som "produktiv kapital" (som afgrøder). Du betaler
-                  10% zakat kun af årets afkast.
+                  10% zakat kun af årets gevinst.
                   <br />
                   <br />
                   Kvart-metoden anbefales som en balanceret tilgang.{" "}
@@ -385,6 +384,90 @@ export function ZakatCalculator() {
         </CardContent>
       </Card>
 
+      {/* Stock Treatment Section */}
+      <Card className="mb-8 border-green-800/30 bg-gray-900">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-white">
+            <BarChart3 className="w-5 h-5 text-green-600" />
+            Aktier og værdipapirer
+          </CardTitle>
+          <CardDescription className="text-gray-400">
+            Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="space-y-3">
+            <div className="flex items-center gap-1">
+              <Label className="text-sm font-medium text-gray-300">Vælg beregningsmetode</Label>
+              <Popover>
+                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation cursor-pointer">
+                  <Info className="w-4 h-4" />
+                  <span className="sr-only">Info om beregningsmetode for aktier og værdipapirer</span>
+                </PopoverTrigger>
+                <PopoverContent side="top" className="max-w-xs text-sm bg-gray-800 border-gray-700 text-gray-300">
+                  Der er forskellige holdninger til, hvordan zakat på aktier og værdipapirer skal beregnes.
+                  Kvart-metoden (2,5% på 25%) anbefales som en balanceret tilgang.{" "}
+                  <a
+                    href="https://halal.ninja/zakat-on-stocks"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-green-600 hover:text-green-500 underline"
+                  >
+                    Læs mere
+                  </a>
+                </PopoverContent>
+              </Popover>
+            </div>
+            <RadioGroup
+              value={stockTreatment}
+              onValueChange={(value) => setStockTreatment(value as "quarter" | "amana" | "cash")}
+              className="flex flex-col gap-4"
+            >
+              <label
+                htmlFor="quarter"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
+              >
+                <RadioGroupItem value="quarter" id="quarter" className="border-gray-500 text-green-600 mt-1" />
+                <div className="flex flex-col gap-1">
+                  <span className="flex items-center gap-2 text-gray-300 font-medium">
+                    <PieChart className="w-4 h-4 text-gray-400" />
+                    Kvart-metoden
+                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">Anbefalet</Badge>
+                  </span>
+                  <span className="text-sm text-gray-500">2,5% zakat på 25% af beholdningen</span>
+                </div>
+              </label>
+              <label
+                htmlFor="cash"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
+              >
+                <RadioGroupItem value="cash" id="cash" className="border-gray-500 text-green-600 mt-1" />
+                <div className="flex flex-col gap-1">
+                  <span className="flex items-center gap-2 text-gray-300 font-medium">
+                    <Banknote className="w-4 h-4 text-gray-400" />
+                    Kontant-metoden
+                  </span>
+                  <span className="text-sm text-gray-500">2,5% zakat på den samlede værdi</span>
+                </div>
+              </label>
+              <label
+                htmlFor="amana"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
+              >
+                <RadioGroupItem value="amana" id="amana" className="border-gray-500 text-green-600 mt-1" />
+                <div className="flex flex-col gap-1">
+                  <span className="flex items-center gap-2 text-gray-300 font-medium">
+                    <TrendingUp className="w-4 h-4 text-gray-400" />
+                    Amana-metoden
+                  </span>
+                  <span className="text-sm text-gray-500">10% zakat kun på årets afkast</span>
+                </div>
+              </label>
+            </RadioGroup>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Assets Section */}
         <Card className="bg-gray-900 border-gray-800">
@@ -439,6 +522,22 @@ export function ZakatCalculator() {
               tooltip="Ejendomme købt med henblik på udlejning eller salg"
             />
             <AssetInput
+              label="Aktier og værdipapirer"
+              value={formatInputValue(assets.stocks)}
+              onChange={(v) => handleAssetChange("stocks", v)}
+              icon={<BarChart3 className="w-4 h-4" />}
+              tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
+            />
+            {stockTreatment === "amana" && (
+              <AssetInput
+                label="Afkast på aktier og værdipapirer"
+                value={formatInputValue(assets.stockGains)}
+                onChange={(v) => handleAssetChange("stockGains", v)}
+                icon={<TrendingUp className="w-4 h-4" />}
+                tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
+              />
+            )}
+            <AssetInput
               label="Kryptovaluta"
               value={formatInputValue(assets.otherInvestments)}
               onChange={(v) => handleAssetChange("otherInvestments", v)}
@@ -489,111 +588,6 @@ export function ZakatCalculator() {
           </CardContent>
         </Card>
       </div>
-
-      {/* Stock Treatment Section */}
-      <Card className="mt-8 border-green-800/30 bg-gray-900">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <BarChart3 className="w-5 h-5 text-green-600" />
-            Aktier og værdipapirer
-          </CardTitle>
-          <CardDescription className="text-gray-400">
-            Indtast værdien af dine aktier og vælg beregningsmetode.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <AssetInput
-            label="Samlet værdi af aktier og værdipapirer"
-            value={formatInputValue(assets.stocks)}
-            onChange={(v) => handleAssetChange("stocks", v)}
-            icon={<BarChart3 className="w-4 h-4" />}
-            tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
-          />
-
-          <Separator className="bg-gray-800" />
-
-          <div className="space-y-3">
-            <div className="flex items-center gap-1">
-              <Label className="text-sm font-medium text-gray-300">Vælg beregningsmetode</Label>
-              <Popover>
-                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation cursor-pointer">
-                  <Info className="w-4 h-4" />
-                  <span className="sr-only">Info om beregningsmetode for aktier og værdipapirer</span>
-                </PopoverTrigger>
-                <PopoverContent side="top" className="max-w-xs text-sm bg-gray-800 border-gray-700 text-gray-300">
-                  Der er forskellige holdninger til, hvordan zakat på aktier og værdipapirer skal beregnes.
-                  Kvart-metoden (2,5% på 25%) anbefales som en balanceret tilgang.{" "}
-                  <a
-                    href="https://halal.ninja/zakat-on-stocks"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-green-600 hover:text-green-500 underline"
-                  >
-                    Læs mere
-                  </a>
-                </PopoverContent>
-              </Popover>
-            </div>
-            <RadioGroup
-              value={stockTreatment}
-              onValueChange={(value) => setStockTreatment(value as "quarter" | "amana" | "cash")}
-              className="flex flex-col gap-4"
-            >
-              <label
-                htmlFor="quarter"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
-              >
-                <RadioGroupItem value="quarter" id="quarter" className="border-gray-500 text-green-600 mt-1" />
-                <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-gray-300 font-medium">
-                    <Percent className="w-4 h-4 text-gray-400" />
-                    Kvart-metoden
-                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">Anbefalet</Badge>
-                  </span>
-                  <span className="text-sm text-gray-500">2,5% zakat på 25% af beholdningen</span>
-                </div>
-              </label>
-              <label
-                htmlFor="cash"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
-              >
-                <RadioGroupItem value="cash" id="cash" className="border-gray-500 text-green-600 mt-1" />
-                <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-gray-300 font-medium">
-                    <Banknote className="w-4 h-4 text-gray-400" />
-                    Kontant-metoden
-                  </span>
-                  <span className="text-sm text-gray-500">2,5% zakat på den samlede værdi</span>
-                </div>
-              </label>
-              <label
-                htmlFor="amana"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
-              >
-                <RadioGroupItem value="amana" id="amana" className="border-gray-500 text-green-600 mt-1" />
-                <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-gray-300 font-medium">
-                    <TrendingUp className="w-4 h-4 text-gray-400" />
-                    Amana-metoden
-                  </span>
-                  <span className="text-sm text-gray-500">10% zakat kun på årets afkast</span>
-                </div>
-              </label>
-              {stockTreatment === "amana" && (
-                <div className="ml-7 mt-2">
-                  <AssetInput
-                    label="Afkast på aktier og værdipapirer"
-                    value={formatInputValue(assets.stockGains)}
-                    onChange={(v) => handleAssetChange("stockGains", v)}
-                    icon={<TrendingUp className="w-4 h-4" />}
-                    tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
-                  />
-                </div>
-              )}
-            </RadioGroup>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
