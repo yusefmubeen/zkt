@@ -504,13 +504,6 @@ export function ZakatCalculator() {
               icon={<BarChart3 className="w-4 h-4" />}
               tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
             />
-            <AssetInput
-              label="Kryptovaluta"
-              value={formatInputValue(assets.otherInvestments)}
-              onChange={(v) => handleAssetChange("otherInvestments", v)}
-              icon={<Coins className="w-4 h-4" />}
-              tooltip="Kryptovaluta, pensionsopsparing, etc."
-            />
             {stockTreatment === "amana" && (
               <AssetInput
                 label="Afkast på aktier og investeringer"
@@ -520,6 +513,13 @@ export function ZakatCalculator() {
                 tooltip="Årets gevinst på aktier og investeringer. Hvis du har haft tab, indtast 0."
               />
             )}
+            <AssetInput
+              label="Kryptovaluta"
+              value={formatInputValue(assets.otherInvestments)}
+              onChange={(v) => handleAssetChange("otherInvestments", v)}
+              icon={<Coins className="w-4 h-4" />}
+              tooltip="Kryptovaluta, pensionsopsparing, etc."
+            />
             <AssetInput
               label="Tilgodehavender"
               value={formatInputValue(assets.receivables)}
