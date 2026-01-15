@@ -491,7 +491,7 @@ export function ZakatCalculator() {
 
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-        <Button size="lg" onClick={handleCalculate} className="text-white" disabled={isCalculating}>
+        <Button size="lg" onClick={handleCalculate} className="text-white cursor-pointer" disabled={isCalculating}>
           {isCalculating ? (
             <>
               <Loader2 className="w-5 h-5 mr-2 animate-spin" />
@@ -504,7 +504,13 @@ export function ZakatCalculator() {
             </>
           )}
         </Button>
-        <Button size="lg" variant="outline" onClick={handleReset} disabled={isCalculating}>
+        <Button
+          size="lg"
+          variant="outline"
+          onClick={handleReset}
+          disabled={isCalculating}
+          className="cursor-pointer bg-transparent"
+        >
           Nulstil
         </Button>
       </div>
