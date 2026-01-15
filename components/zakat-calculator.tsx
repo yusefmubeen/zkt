@@ -505,7 +505,7 @@ export function ZakatCalculator() {
               tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
             />
             <AssetInput
-              label="Andre investeringer"
+              label="Kryptovaluta"
               value={formatInputValue(assets.otherInvestments)}
               onChange={(v) => handleAssetChange("otherInvestments", v)}
               icon={<Coins className="w-4 h-4" />}
