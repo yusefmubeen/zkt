@@ -504,7 +504,7 @@ export function ZakatCalculator() {
             </>
           ) : (
             <>
-              <Calculator className="w-5 h-5 mr-2" />
+              <Calculator className="w-5 h-5 mr-1" />
               Beregn zakat
             </>
           )}
