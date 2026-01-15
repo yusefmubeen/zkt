@@ -183,7 +183,7 @@ export function ZakatCalculator() {
       <div className="flex justify-end mb-4">
         <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="cursor-pointer bg-transparent">
               <HelpCircle className="w-4 h-4 mr-1" />
               Hjælp
             </Button>
