@@ -434,19 +434,6 @@ export function ZakatCalculator() {
                 </div>
               </label>
               <label
-                htmlFor="amana"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
-              >
-                <RadioGroupItem value="amana" id="amana" className="border-gray-500 text-green-600 mt-1" />
-                <div className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 text-gray-300 font-medium">
-                    <TrendingUp className="w-4 h-4 text-gray-400" />
-                    Amana-metoden
-                  </span>
-                  <span className="text-sm text-gray-500">10% zakat på årets gevinst</span>
-                </div>
-              </label>
-              <label
                 htmlFor="cash"
                 className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
               >
@@ -457,6 +444,19 @@ export function ZakatCalculator() {
                     Kontant-metoden
                   </span>
                   <span className="text-sm text-gray-500">2,5% zakat på den samlede værdi</span>
+                </div>
+              </label>
+              <label
+                htmlFor="amana"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
+              >
+                <RadioGroupItem value="amana" id="amana" className="border-gray-500 text-green-600 mt-1" />
+                <div className="flex flex-col gap-1">
+                  <span className="flex items-center gap-2 text-gray-300 font-medium">
+                    <TrendingUp className="w-4 h-4 text-gray-400" />
+                    Amana-metoden
+                  </span>
+                  <span className="text-sm text-gray-500">10% zakat kun på årets afkast</span>
                 </div>
               </label>
             </RadioGroup>
