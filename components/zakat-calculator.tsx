@@ -1,9 +1,6 @@
 "use client"
-
-import type React from "react"
-import { Info, Gem, Scale, FileText, HandCoins, HelpCircle, PieChart } from "lucide-react"
+import { Info, HelpCircle } from "lucide-react"
 import { useState, useMemo } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -13,19 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import {
-  Wallet,
-  Landmark,
-  Banknote,
-  CreditCard,
-  Briefcase,
-  Home,
-  BarChart3,
-  Coins,
-  TrendingUp,
-  Calculator,
-  Cuboid,
-} from "lucide-react"
+import { Calculator } from "lucide-react"
 
 const ZAKAT_RATE = 0.025 // 2.5%
 const AMANA_RATE = 0.1 // 10%
@@ -181,7 +166,7 @@ export function ZakatCalculator() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-4 py-8 max-w-2xl">
       {/* Help link */}
       <div className="flex justify-end mb-4">
         <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
@@ -197,14 +182,14 @@ export function ZakatCalculator() {
             </DialogHeader>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
-                <AccordionTrigger>Hvad er zakat?</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer">Hvad er zakat?</AccordionTrigger>
                 <AccordionContent>
                   Zakat er en af de fem søjler i islam og er en obligatorisk velgørenhedsafgift for muslimer. Det er en
                   årlig betaling på 2,5% af ens formue over nisab-tærsklen, som gives til dem i nød.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
-                <AccordionTrigger>Hvad er nisab?</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer">Hvad er nisab?</AccordionTrigger>
                 <AccordionContent>
                   Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Nisab kan beregnes baseret
                   på enten guld (87,48g) eller sølv (612,36g). Sølv-nisab anbefales, da den resulterer i en lavere
@@ -212,19 +197,21 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger>Hvad er forskellen på Kvart-, Kontant- og Amana-metoden?</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer">
+                  Hvad er forskellen på Kvart-, Kontant- og Amana-metoden?
+                </AccordionTrigger>
                 <AccordionContent>
-                  <strong>Kvart-metoden (anbefalet):</strong> Du betaler 2,5% zakat på kun 25% af din aktie- og
-                  værdipapirbeholdning. Denne metode tager højde for, at en stor del af aktieværdien typisk er bundet i
-                  virksomhedens faste aktiver.
+                  <span className="font-semibold">Kvart-metoden (anbefalet):</span> Du betaler 2,5% zakat på kun 25% af
+                  din aktie- og værdipapirbeholdning. Denne metode tager højde for, at en stor del af aktieværdien
+                  typisk er bundet i virksomhedens faste aktiver.
                   <br />
                   <br />
-                  <strong>Kontant-metoden:</strong> Betragter aktier som kontanter. Du betaler 2,5% zakat af den samlede
-                  værdi af dine aktier.
+                  <span className="font-semibold">Kontant-metoden:</span> Betragter aktier som kontanter. Du betaler
+                  2,5% zakat af den samlede værdi af dine aktier.
                   <br />
                   <br />
-                  <strong>Amana-metoden:</strong> Betragter aktier som "produktiv kapital" (som afgrøder). Du betaler
-                  10% zakat kun af årets gevinst.
+                  <span className="font-semibold">Amana-metoden:</span> Betragter aktier som "produktiv kapital" (som
+                  afgrøder). Du betaler 10% zakat kun af årets gevinst.
                   <br />
                   <br />
                   Kvart-metoden anbefales som en balanceret tilgang.{" "}
@@ -239,21 +226,21 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
-                <AccordionTrigger>Skal jeg betale zakat af min bolig?</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer">Skal jeg betale zakat af min bolig?</AccordionTrigger>
                 <AccordionContent>
                   Nej, du skal ikke betale zakat af din primære bolig, som du bor i. Du skal kun betale zakat af
                   investeringsejendomme, som er købt med henblik på udlejning eller salg.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5">
-                <AccordionTrigger>Hvornår skal jeg betale zakat?</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer">Hvornår skal jeg betale zakat?</AccordionTrigger>
                 <AccordionContent>
                   Zakat skal betales én gang om året. Mange muslimer vælger at betale i Ramadan, men du kan vælge enhver
                   dato som din årlige zakat-dato. Det vigtige er, at du er konsekvent og betaler hvert år på samme tid.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-6">
-                <AccordionTrigger>Hvem kan modtage zakat?</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer">Hvem kan modtage zakat?</AccordionTrigger>
                 <AccordionContent>
                   Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
                   muslimer, slaver (for at frigøre dem), gældsatte, i Allahs vej, og vejfarende. I dag gives zakat
@@ -261,7 +248,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-7">
-                <AccordionTrigger>Er denne beregner 100% nøjagtig?</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer">Er denne beregner 100% nøjagtig?</AccordionTrigger>
                 <AccordionContent>
                   Denne beregner giver et estimat baseret på de oplysninger, du indtaster. For specifikke spørgsmål om
                   din situation, anbefales det at konsultere en kvalificeret islamisk lærd. Guld- og sølvpriser kan
@@ -273,287 +260,242 @@ export function ZakatCalculator() {
         </Dialog>
       </div>
 
-      {/* Header - Simplified styling */}
+      {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-muted rounded-full mb-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
           <HandHeartIcon className="w-8 h-8 text-primary" />
         </div>
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Zakat-beregner</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Beregn din årlige zakat (islamisk velgørenhed) baseret på dine aktiver og gæld. Zakat er 2,5% af din formue
-          over nisab-tærsklen.
-        </p>
+        <h1 className="text-3xl font-semibold tracking-tight mb-2">Zakat-beregner</h1>
+        <p className="text-muted-foreground">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
       </div>
 
-      {/* Nisab Info */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Scale className="w-5 h-5" />
-            Nisab-tærskel
-          </CardTitle>
-          <CardDescription>
-            Den nuværende nisab-tærskel er cirka{" "}
-            <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span> (baseret på{" "}
-            {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}).
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <div className="flex items-center gap-1">
-              <Label>Vælg nisab-beregningsmetode</Label>
-              <Popover>
-                <PopoverTrigger className="text-muted-foreground hover:text-foreground">
-                  <Info className="w-4 h-4" />
-                </PopoverTrigger>
-                <PopoverContent side="top" className="max-w-xs text-sm">
-                  Sølv anbefales, da det resulterer i en lavere nisab-tærskel, hvilket betyder at flere mennesker
-                  kvalificerer til at betale zakat.
-                </PopoverContent>
-              </Popover>
-            </div>
-            <RadioGroup
-              value={nisabType}
-              onValueChange={(value) => setNisabType(value as "silver" | "gold")}
-              className="flex flex-col sm:flex-row gap-3"
-            >
-              <label
-                htmlFor="silver"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
-              >
-                <RadioGroupItem value="silver" id="silver" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="flex items-center gap-2 font-medium">
-                    <Gem className="w-4 h-4" />
-                    Sølv
-                    <Badge variant="secondary">Anbefalet</Badge>
-                  </span>
-                  <span className="text-sm text-muted-foreground">Baseret på 612,36g sølv</span>
-                </div>
-              </label>
-              <label
-                htmlFor="gold"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
-              >
-                <RadioGroupItem value="gold" id="gold" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="flex items-center gap-2 font-medium">
-                    <Cuboid className="w-4 h-4" />
-                    Guld
-                  </span>
-                  <span className="text-sm text-muted-foreground">Baseret på 87,48g guld</span>
-                </div>
-              </label>
-            </RadioGroup>
+      {/* Nisab Section */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-2">Nisab-tærskel</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Den nuværende nisab-tærskel er cirka{" "}
+          <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span> (baseret på{" "}
+          {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}).
+        </p>
+        <div className="space-y-3">
+          <div className="flex items-center gap-1">
+            <Label className="text-sm">Vælg nisab-beregningsmetode</Label>
+            <Popover>
+              <PopoverTrigger className="text-muted-foreground hover:text-foreground cursor-pointer">
+                <Info className="w-4 h-4" />
+              </PopoverTrigger>
+              <PopoverContent side="top" className="max-w-xs text-sm">
+                Sølv anbefales, da det resulterer i en lavere nisab-tærskel, hvilket betyder at flere mennesker
+                kvalificerer til at betale zakat.
+              </PopoverContent>
+            </Popover>
           </div>
-        </CardContent>
-      </Card>
+          <RadioGroup
+            value={nisabType}
+            onValueChange={(value) => setNisabType(value as "silver" | "gold")}
+            className="flex flex-col sm:flex-row gap-3"
+          >
+            <label
+              htmlFor="silver"
+              className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
+            >
+              <RadioGroupItem value="silver" id="silver" />
+              <div className="flex flex-col gap-0.5">
+                <span className="flex items-center gap-2 text-sm font-medium">
+                  Sølv
+                  <Badge variant="secondary">Anbefalet</Badge>
+                </span>
+                <span className="text-sm text-muted-foreground">Baseret på 612,36g sølv</span>
+              </div>
+            </label>
+            <label
+              htmlFor="gold"
+              className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
+            >
+              <RadioGroupItem value="gold" id="gold" />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium">Guld</span>
+                <span className="text-sm text-muted-foreground">Baseret på 87,48g guld</span>
+              </div>
+            </label>
+          </RadioGroup>
+        </div>
+      </section>
+
+      <Separator className="my-8" />
 
       {/* Stock Treatment Section */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="w-5 h-5" />
-            Aktier og værdipapirer
-          </CardTitle>
-          <CardDescription>Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <div className="flex items-center gap-1">
-              <Label>Vælg beregningsmetode</Label>
-              <Popover>
-                <PopoverTrigger className="text-muted-foreground hover:text-foreground">
-                  <Info className="w-4 h-4" />
-                </PopoverTrigger>
-                <PopoverContent side="top" className="max-w-xs text-sm">
-                  Der er forskellige holdninger til, hvordan zakat på aktier og værdipapirer skal beregnes.
-                  Kvart-metoden (2,5% på 25%) anbefales som en balanceret tilgang.{" "}
-                  <a
-                    href="https://halal.ninja/zakat-on-stocks"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary underline hover:text-primary/80"
-                  >
-                    Læs mere
-                  </a>
-                </PopoverContent>
-              </Popover>
-            </div>
-            <RadioGroup
-              value={stockTreatment}
-              onValueChange={(value) => setStockTreatment(value as "quarter" | "amana" | "cash")}
-              className="flex flex-col gap-3"
-            >
-              <label
-                htmlFor="quarter"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
-              >
-                <RadioGroupItem value="quarter" id="quarter" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="flex items-center gap-2 font-medium">
-                    <PieChart className="w-4 h-4" />
-                    Kvart-metoden
-                    <Badge variant="secondary">Anbefalet</Badge>
-                  </span>
-                  <span className="text-sm text-muted-foreground">2,5% zakat på 25% af beholdningen</span>
-                </div>
-              </label>
-              <label
-                htmlFor="cash"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
-              >
-                <RadioGroupItem value="cash" id="cash" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="flex items-center gap-2 font-medium">
-                    <Banknote className="w-4 h-4" />
-                    Kontant-metoden
-                  </span>
-                  <span className="text-sm text-muted-foreground">2,5% zakat på den samlede værdi</span>
-                </div>
-              </label>
-              <label
-                htmlFor="amana"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
-              >
-                <RadioGroupItem value="amana" id="amana" />
-                <div className="flex flex-col gap-0.5">
-                  <span className="flex items-center gap-2 font-medium">
-                    <TrendingUp className="w-4 h-4" />
-                    Amana-metoden
-                  </span>
-                  <span className="text-sm text-muted-foreground">10% zakat kun på årets afkast</span>
-                </div>
-              </label>
-            </RadioGroup>
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-2">Aktier og værdipapirer</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.
+        </p>
+        <div className="space-y-3">
+          <div className="flex items-center gap-1">
+            <Label className="text-sm">Vælg beregningsmetode</Label>
+            <Popover>
+              <PopoverTrigger className="text-muted-foreground hover:text-foreground cursor-pointer">
+                <Info className="w-4 h-4" />
+              </PopoverTrigger>
+              <PopoverContent side="top" className="max-w-xs text-sm">
+                Der er forskellige holdninger til, hvordan zakat på aktier og værdipapirer skal beregnes. Kvart-metoden
+                (2,5% på 25%) anbefales som en balanceret tilgang.{" "}
+                <a
+                  href="https://halal.ninja/zakat-on-stocks"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline hover:text-primary/80"
+                >
+                  Læs mere
+                </a>
+              </PopoverContent>
+            </Popover>
           </div>
-        </CardContent>
-      </Card>
+          <RadioGroup
+            value={stockTreatment}
+            onValueChange={(value) => setStockTreatment(value as "quarter" | "amana" | "cash")}
+            className="flex flex-col gap-3"
+          >
+            <label
+              htmlFor="quarter"
+              className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
+            >
+              <RadioGroupItem value="quarter" id="quarter" />
+              <div className="flex flex-col gap-0.5">
+                <span className="flex items-center gap-2 text-sm font-medium">
+                  Kvart-metoden
+                  <Badge variant="secondary">Anbefalet</Badge>
+                </span>
+                <span className="text-sm text-muted-foreground">2,5% zakat på 25% af beholdningen</span>
+              </div>
+            </label>
+            <label
+              htmlFor="cash"
+              className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
+            >
+              <RadioGroupItem value="cash" id="cash" />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium">Kontant-metoden</span>
+                <span className="text-sm text-muted-foreground">2,5% zakat på den samlede værdi</span>
+              </div>
+            </label>
+            <label
+              htmlFor="amana"
+              className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
+            >
+              <RadioGroupItem value="amana" id="amana" />
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium">Amana-metoden</span>
+                <span className="text-sm text-muted-foreground">10% zakat kun på årets afkast</span>
+              </div>
+            </label>
+          </RadioGroup>
+        </div>
+      </section>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Assets Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Wallet className="w-5 h-5" />
-              Aktiver
-            </CardTitle>
-            <CardDescription>Indtast værdien af dine aktiver i DKK</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <AssetInput
-              label="Bankkonti"
-              value={formatInputValue(assets.bankAccounts)}
-              onChange={(v) => handleAssetChange("bankAccounts", v)}
-              icon={<Landmark className="w-4 h-4" />}
-              tooltip="Saldo på alle bankkonti (opsparing, løn, etc.)"
-            />
-            <AssetInput
-              label="Fysiske kontanter"
-              value={formatInputValue(assets.cash)}
-              onChange={(v) => handleAssetChange("cash", v)}
-              icon={<Banknote className="w-4 h-4" />}
-              tooltip="Kontanter du har hjemme eller i pengeskab"
-            />
-            <AssetInput
-              label="Guld"
-              value={formatInputValue(assets.gold)}
-              onChange={(v) => handleAssetChange("gold", v)}
-              icon={<Cuboid className="w-4 h-4" />}
-              tooltip="Værdi af guld smykker og guldbarrer"
-            />
-            <AssetInput
-              label="Sølv"
-              value={formatInputValue(assets.silver)}
-              onChange={(v) => handleAssetChange("silver", v)}
-              icon={<Gem className="w-4 h-4" />}
-              tooltip="Værdi af sølv smykker og sølvbarrer"
-            />
-            <AssetInput
-              label="Forretningsinventar"
-              value={formatInputValue(assets.businessInventory)}
-              onChange={(v) => handleAssetChange("businessInventory", v)}
-              icon={<Briefcase className="w-4 h-4" />}
-              tooltip="Værdi af varer til salg i din virksomhed"
-            />
-            <AssetInput
-              label="Investeringsejendomme"
-              value={formatInputValue(assets.propertyInvestment)}
-              onChange={(v) => handleAssetChange("propertyInvestment", v)}
-              icon={<Home className="w-4 h-4" />}
-              tooltip="Ejendomme købt med henblik på udlejning eller salg"
-            />
-            <AssetInput
-              label="Aktier og værdipapirer"
-              value={formatInputValue(assets.stocks)}
-              onChange={(v) => handleAssetChange("stocks", v)}
-              icon={<BarChart3 className="w-4 h-4" />}
-              tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
-            />
-            {stockTreatment === "amana" && (
-              <AssetInput
-                label="Afkast på aktier og værdipapirer"
-                value={formatInputValue(assets.stockGains)}
-                onChange={(v) => handleAssetChange("stockGains", v)}
-                icon={<TrendingUp className="w-4 h-4" />}
-                tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
-              />
-            )}
-            <AssetInput
-              label="Kryptovaluta"
-              value={formatInputValue(assets.otherInvestments)}
-              onChange={(v) => handleAssetChange("otherInvestments", v)}
-              icon={<Coins className="w-4 h-4" />}
-              tooltip="Bitcoin og andre kryptovalutaer"
-            />
-            <AssetInput
-              label="Tilgodehavender"
-              value={formatInputValue(assets.receivables)}
-              onChange={(v) => handleAssetChange("receivables", v)}
-              icon={<HandCoins className="w-4 h-4" />}
-              tooltip="Penge som andre skylder dig og som du forventer at modtage"
-            />
-          </CardContent>
-        </Card>
+      <Separator className="my-8" />
 
-        {/* Liabilities Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5" />
-              Gæld
-            </CardTitle>
-            <CardDescription>Indtast din gæld og forpligtelser i DKK</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      {/* Assets Section */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-2">Aktiver</h2>
+        <p className="text-sm text-muted-foreground mb-4">Indtast værdien af dine aktiver i DKK</p>
+        <div className="space-y-6">
+          <AssetInput
+            label="Bankkonti"
+            value={formatInputValue(assets.bankAccounts)}
+            onChange={(v) => handleAssetChange("bankAccounts", v)}
+            tooltip="Saldo på alle bankkonti (opsparing, løn, etc.)"
+          />
+          <AssetInput
+            label="Fysiske kontanter"
+            value={formatInputValue(assets.cash)}
+            onChange={(v) => handleAssetChange("cash", v)}
+            tooltip="Kontanter du har hjemme eller i pengeskab"
+          />
+          <AssetInput
+            label="Guld"
+            value={formatInputValue(assets.gold)}
+            onChange={(v) => handleAssetChange("gold", v)}
+            tooltip="Værdi af guld smykker og guldbarrer"
+          />
+          <AssetInput
+            label="Sølv"
+            value={formatInputValue(assets.silver)}
+            onChange={(v) => handleAssetChange("silver", v)}
+            tooltip="Værdi af sølv smykker og sølvbarrer"
+          />
+          <AssetInput
+            label="Forretningsinventar"
+            value={formatInputValue(assets.businessInventory)}
+            onChange={(v) => handleAssetChange("businessInventory", v)}
+            tooltip="Værdi af varer til salg i din virksomhed"
+          />
+          <AssetInput
+            label="Investeringsejendomme"
+            value={formatInputValue(assets.propertyInvestment)}
+            onChange={(v) => handleAssetChange("propertyInvestment", v)}
+            tooltip="Ejendomme købt med henblik på udlejning eller salg"
+          />
+          <AssetInput
+            label="Aktier og værdipapirer"
+            value={formatInputValue(assets.stocks)}
+            onChange={(v) => handleAssetChange("stocks", v)}
+            tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
+          />
+          {stockTreatment === "amana" && (
             <AssetInput
-              label="Kortfristet gæld"
-              value={formatInputValue(liabilities.debts)}
-              onChange={(v) => handleLiabilityChange("debts", v)}
-              icon={<CreditCard className="w-4 h-4" />}
-              tooltip="Gæld der forfalder inden for et år (kreditkort, regninger)"
+              label="Afkast på aktier og værdipapirer"
+              value={formatInputValue(assets.stockGains)}
+              onChange={(v) => handleAssetChange("stockGains", v)}
+              tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
             />
-            <AssetInput
-              label="Lån"
-              value={formatInputValue(liabilities.loans)}
-              onChange={(v) => handleLiabilityChange("loans", v)}
-              icon={<Landmark className="w-4 h-4" />}
-              tooltip="Årligt afdrag på boliglån, billån, studielån, etc."
-            />
-            <AssetInput
-              label="Andre forpligtelser"
-              value={formatInputValue(liabilities.otherLiabilities)}
-              onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
-              icon={<FileText className="w-4 h-4" />}
-              tooltip="Andre økonomiske forpligtelser"
-            />
-          </CardContent>
-        </Card>
-      </div>
+          )}
+          <AssetInput
+            label="Kryptovaluta"
+            value={formatInputValue(assets.otherInvestments)}
+            onChange={(v) => handleAssetChange("otherInvestments", v)}
+            tooltip="Bitcoin og andre kryptovalutaer"
+          />
+          <AssetInput
+            label="Tilgodehavender"
+            value={formatInputValue(assets.receivables)}
+            onChange={(v) => handleAssetChange("receivables", v)}
+            tooltip="Penge som andre skylder dig og som du forventer at modtage"
+          />
+        </div>
+      </section>
+
+      <Separator className="my-8" />
+
+      {/* Liabilities Section */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-2">Gæld</h2>
+        <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser i DKK</p>
+        <div className="space-y-6">
+          <AssetInput
+            label="Kortfristet gæld"
+            value={formatInputValue(liabilities.debts)}
+            onChange={(v) => handleLiabilityChange("debts", v)}
+            tooltip="Gæld der forfalder inden for et år (kreditkort, regninger)"
+          />
+          <AssetInput
+            label="Lån"
+            value={formatInputValue(liabilities.loans)}
+            onChange={(v) => handleLiabilityChange("loans", v)}
+            tooltip="Årligt afdrag på boliglån, billån, studielån, etc."
+          />
+          <AssetInput
+            label="Andre forpligtelser"
+            value={formatInputValue(liabilities.otherLiabilities)}
+            onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
+            tooltip="Andre økonomiske forpligtelser"
+          />
+        </div>
+      </section>
 
       {/* Calculate Button */}
-      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-        <Button size="lg" onClick={handleCalculate}>
+      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+        <Button size="lg" onClick={handleCalculate} className="text-white">
           <Calculator className="w-5 h-5 mr-2" />
           Beregn zakat
         </Button>
@@ -564,58 +506,53 @@ export function ZakatCalculator() {
 
       {/* Results Section */}
       {calculated && (
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle className="text-center">Beregningsresultat</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <ResultItem label="Samlede aktiver" value={formatCurrency(calculations.totalAssets)} />
-              <ResultItem label="Samlet gæld" value={formatCurrency(calculations.totalLiabilities)} />
-              <ResultItem
-                label="Nettoformue"
-                value={formatCurrency(calculations.netWorth)}
-                highlight={calculations.meetsNisab}
-              />
-              <ResultItem label="Zakat at betale" value={formatCurrency(calculations.zakatDue)} primary />
-            </div>
+        <section className="mt-8">
+          <Separator className="mb-8" />
+          <h2 className="text-lg font-semibold mb-4 text-center">Beregningsresultat</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <ResultItem label="Samlede aktiver" value={formatCurrency(calculations.totalAssets)} />
+            <ResultItem label="Samlet gæld" value={formatCurrency(calculations.totalLiabilities)} />
+            <ResultItem
+              label="Nettoformue"
+              value={formatCurrency(calculations.netWorth)}
+              highlight={calculations.meetsNisab}
+            />
+            <ResultItem label="Zakat at betale" value={formatCurrency(calculations.zakatDue)} primary />
+          </div>
 
-            <Separator className="my-6" />
-
-            <div className="text-center">
-              {calculations.meetsNisab ? (
-                <div className="bg-muted rounded-lg p-4">
-                  <p className="text-lg font-semibold mb-2">
-                    Din zakat for i år er <span className="text-primary">{formatCurrency(calculations.zakatDue)}</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {stockTreatment === "quarter" ? (
-                      <>
-                        Beregnet med 2,5% på øvrige aktiver og 2,5% på 25% af aktiebeholdningen (
-                        {formatCurrency(calculations.stockZakat)})
-                      </>
-                    ) : stockTreatment === "amana" ? (
-                      <>
-                        Beregnet med 2,5% på øvrige aktiver og 10% på aktiegevinst (
-                        {formatCurrency(calculations.stockZakat)})
-                      </>
-                    ) : (
-                      <>Dette beløb er 2,5% af din nettoformue på {formatCurrency(calculations.netWorth)}</>
-                    )}
-                  </p>
-                </div>
-              ) : (
-                <div className="bg-muted rounded-lg p-4">
-                  <p className="text-lg font-semibold mb-2">Du skal ikke betale zakat i år</p>
-                  <p className="text-sm text-muted-foreground">
-                    Din nettoformue ({formatCurrency(calculations.netWorth)}) er under nisab-tærsklen (
-                    {formatCurrency(nisabThreshold)})
-                  </p>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+          <div className="mt-6 text-center">
+            {calculations.meetsNisab ? (
+              <div className="bg-muted rounded-lg p-4">
+                <p className="text-base font-semibold mb-2">
+                  Din zakat for i år er <span className="text-primary">{formatCurrency(calculations.zakatDue)}</span>
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {stockTreatment === "quarter" ? (
+                    <>
+                      Beregnet med 2,5% på øvrige aktiver og 2,5% på 25% af aktiebeholdningen (
+                      {formatCurrency(calculations.stockZakat)})
+                    </>
+                  ) : stockTreatment === "amana" ? (
+                    <>
+                      Beregnet med 2,5% på øvrige aktiver og 10% på aktiegevinst (
+                      {formatCurrency(calculations.stockZakat)})
+                    </>
+                  ) : (
+                    <>Dette beløb er 2,5% af din nettoformue på {formatCurrency(calculations.netWorth)}</>
+                  )}
+                </p>
+              </div>
+            ) : (
+              <div className="bg-muted rounded-lg p-4">
+                <p className="text-base font-semibold mb-2">Du skal ikke betale zakat i år</p>
+                <p className="text-sm text-muted-foreground">
+                  Din nettoformue ({formatCurrency(calculations.netWorth)}) er under nisab-tærsklen (
+                  {formatCurrency(nisabThreshold)})
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
       )}
 
       {/* Footer */}
@@ -633,24 +570,19 @@ function AssetInput({
   label,
   value,
   onChange,
-  icon,
   tooltip,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
-  icon: React.ReactNode
   tooltip: string
 }) {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-1">
-        <Label className="flex items-center gap-2">
-          {icon}
-          {label}
-        </Label>
+        <Label className="text-sm">{label}</Label>
         <Popover>
-          <PopoverTrigger className="text-muted-foreground hover:text-foreground">
+          <PopoverTrigger className="text-muted-foreground hover:text-foreground cursor-pointer">
             <Info className="w-4 h-4" />
           </PopoverTrigger>
           <PopoverContent side="top" className="max-w-xs text-sm">
@@ -685,13 +617,9 @@ function ResultItem({
   primary?: boolean
 }) {
   return (
-    <div
-      className={`text-center p-4 rounded-lg ${
-        primary ? "bg-primary text-primary-foreground" : highlight ? "bg-muted" : "bg-muted"
-      }`}
-    >
-      <p className={`text-sm mb-1 ${primary ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{label}</p>
-      <p className={`text-xl font-bold`}>{value}</p>
+    <div className={`text-center p-4 rounded-lg ${primary ? "bg-primary" : "bg-muted"}`}>
+      <p className={`text-sm mb-1 ${primary ? "text-white/80" : "text-muted-foreground"}`}>{label}</p>
+      <p className={`text-xl font-semibold ${primary ? "text-white" : ""}`}>{value}</p>
     </div>
   )
 }
