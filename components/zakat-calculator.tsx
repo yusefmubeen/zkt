@@ -308,10 +308,7 @@ export function ZakatCalculator() {
             onValueChange={(value) => setNisabType(value as "silver" | "gold")}
             className="flex flex-col sm:flex-row gap-3"
           >
-            <label
-              htmlFor="silver"
-              className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
-            >
+            <label htmlFor="silver" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer flex-1">
               <RadioGroupItem value="silver" id="silver" />
               <div className="flex flex-col gap-0.5">
                 <span className="flex items-center gap-2 text-sm font-medium">
@@ -321,10 +318,7 @@ export function ZakatCalculator() {
                 <span className="text-sm text-muted-foreground">Baseret på 612,36g sølv</span>
               </div>
             </label>
-            <label
-              htmlFor="gold"
-              className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
-            >
+            <label htmlFor="gold" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer flex-1">
               <RadioGroupItem value="gold" id="gold" />
               <div className="flex flex-col gap-0.5">
                 <span className="text-sm font-medium">Guld</span>
@@ -456,10 +450,7 @@ export function ZakatCalculator() {
               onValueChange={(value) => setStockTreatment(value as "quarter" | "amana" | "cash")}
               className="flex flex-col gap-3"
             >
-              <label
-                htmlFor="quarter"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
-              >
+              <label htmlFor="quarter" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer">
                 <RadioGroupItem value="quarter" id="quarter" />
                 <div className="flex flex-col gap-0.5">
                   <span className="flex items-center gap-2 text-sm font-medium">
@@ -469,20 +460,14 @@ export function ZakatCalculator() {
                   <span className="text-sm text-muted-foreground">2,5% zakat på 25% af aktiebeholdningen</span>
                 </div>
               </label>
-              <label
-                htmlFor="cash"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
-              >
+              <label htmlFor="cash" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer">
                 <RadioGroupItem value="cash" id="cash" />
                 <div className="flex flex-col gap-0.5">
                   <span className="text-sm font-medium">Kontant-metoden</span>
                   <span className="text-sm text-muted-foreground">2,5% zakat på den samlede aktieværdi</span>
                 </div>
               </label>
-              <label
-                htmlFor="amana"
-                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
-              >
+              <label htmlFor="amana" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer">
                 <RadioGroupItem value="amana" id="amana" />
                 <div className="flex flex-col gap-0.5">
                   <span className="text-sm font-medium">Amana-metoden</span>
