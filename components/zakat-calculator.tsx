@@ -36,19 +36,12 @@ const GOLD_PRICE_PER_GRAM = 550 // approximate DKK per gram
 const SILVER_PRICE_PER_GRAM = 7 // approximate DKK per gram
 
 function formatInputValue(value: string): string {
-  // Remove all non-digit characters except comma and minus
   const cleanValue = value.replace(/[^\d,-]/g, "")
-
-  // Split by comma to handle decimals
   const parts = cleanValue.split(",")
   const integerPart = parts[0] || ""
   const decimalPart = parts[1]
-
-  // Remove existing dots and format with thousand separators
   const digits = integerPart.replace(/\./g, "")
   const formatted = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-
-  // Return with decimal part if exists
   if (decimalPart !== undefined) {
     return `${formatted},${decimalPart}`
   }
@@ -67,11 +60,9 @@ function HandHeartIcon({ className }: { className?: string }) {
       strokeLinejoin="round"
       className={className}
     >
-      {/* Hand */}
       <path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16" />
       <path d="M7 20l1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
       <path d="M2 15l6 6" />
-      {/* Heart */}
       <path d="M19.5 8.5c.7-1 1-2.5.5-4-1.5-1-3-.5-4 .5-1-1-2.5-1.5-4-.5-.5 1.5 0 3 .5 4l3.5 4 3.5-4z" />
     </svg>
   )
@@ -103,9 +94,7 @@ export function ZakatCalculator() {
   const [calculated, setCalculated] = useState(false)
 
   const parseValue = (value: string) => {
-    const cleanValue = value
-      .replace(/\./g, "") // Remove thousand separators (dots)
-      .replace(",", ".") // Replace decimal separator (comma) with dot
+    const cleanValue = value.replace(/\./g, "").replace(",", ".")
     const parsed = Number.parseFloat(cleanValue)
     return isNaN(parsed) ? 0 : parsed
   }
@@ -138,10 +127,8 @@ export function ZakatCalculator() {
     if (stockTreatment === "cash") {
       stockZakat = stocksValue * ZAKAT_RATE
     } else if (stockTreatment === "quarter") {
-      // 2.5% zakat on 25% of stock value
       stockZakat = stocksValue * QUARTER_RATE * ZAKAT_RATE
     } else {
-      // amana method
       stockZakat = stockGainsValue > 0 ? stockGainsValue * AMANA_RATE : 0
     }
 
@@ -195,11 +182,11 @@ export function ZakatCalculator() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Help link in top right corner */}
+      {/* Help link */}
       <div className="flex justify-end mb-4">
         <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" className="cursor-pointer bg-transparent">
+            <Button variant="outline" size="sm">
               <HelpCircle className="w-4 h-4 mr-1" />
               Hjælp
             </Button>
@@ -210,14 +197,14 @@ export function ZakatCalculator() {
             </DialogHeader>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
-                <AccordionTrigger className="cursor-pointer">Hvad er zakat?</AccordionTrigger>
+                <AccordionTrigger>Hvad er zakat?</AccordionTrigger>
                 <AccordionContent>
                   Zakat er en af de fem søjler i islam og er en obligatorisk velgørenhedsafgift for muslimer. Det er en
                   årlig betaling på 2,5% af ens formue over nisab-tærsklen, som gives til dem i nød.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
-                <AccordionTrigger className="cursor-pointer">Hvad er nisab?</AccordionTrigger>
+                <AccordionTrigger>Hvad er nisab?</AccordionTrigger>
                 <AccordionContent>
                   Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Nisab kan beregnes baseret
                   på enten guld (87,48g) eller sølv (612,36g). Sølv-nisab anbefales, da den resulterer i en lavere
@@ -225,9 +212,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger className="cursor-pointer">
-                  Hvad er forskellen på Kvart-, Kontant- og Amana-metoden?
-                </AccordionTrigger>
+                <AccordionTrigger>Hvad er forskellen på Kvart-, Kontant- og Amana-metoden?</AccordionTrigger>
                 <AccordionContent>
                   <strong>Kvart-metoden (anbefalet):</strong> Du betaler 2,5% zakat på kun 25% af din aktie- og
                   værdipapirbeholdning. Denne metode tager højde for, at en stor del af aktieværdien typisk er bundet i
@@ -254,21 +239,21 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
-                <AccordionTrigger className="cursor-pointer">Skal jeg betale zakat af min bolig?</AccordionTrigger>
+                <AccordionTrigger>Skal jeg betale zakat af min bolig?</AccordionTrigger>
                 <AccordionContent>
                   Nej, du skal ikke betale zakat af din primære bolig, som du bor i. Du skal kun betale zakat af
                   investeringsejendomme, som er købt med henblik på udlejning eller salg.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5">
-                <AccordionTrigger className="cursor-pointer">Hvornår skal jeg betale zakat?</AccordionTrigger>
+                <AccordionTrigger>Hvornår skal jeg betale zakat?</AccordionTrigger>
                 <AccordionContent>
                   Zakat skal betales én gang om året. Mange muslimer vælger at betale i Ramadan, men du kan vælge enhver
                   dato som din årlige zakat-dato. Det vigtige er, at du er konsekvent og betaler hvert år på samme tid.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-6">
-                <AccordionTrigger className="cursor-pointer">Hvem kan modtage zakat?</AccordionTrigger>
+                <AccordionTrigger>Hvem kan modtage zakat?</AccordionTrigger>
                 <AccordionContent>
                   Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
                   muslimer, slaver (for at frigøre dem), gældsatte, i Allahs vej, og vejfarende. I dag gives zakat
@@ -276,7 +261,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-7">
-                <AccordionTrigger className="cursor-pointer">Er denne beregner 100% nøjagtig?</AccordionTrigger>
+                <AccordionTrigger>Er denne beregner 100% nøjagtig?</AccordionTrigger>
                 <AccordionContent>
                   Denne beregner giver et estimat baseret på de oplysninger, du indtaster. For specifikke spørgsmål om
                   din situation, anbefales det at konsultere en kvalificeret islamisk lærd. Guld- og sølvpriser kan
@@ -288,40 +273,38 @@ export function ZakatCalculator() {
         </Dialog>
       </div>
 
-      {/* Header */}
-      <div className="text-center mb-10">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+      {/* Header - Simplified styling */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-muted rounded-full mb-4">
           <HandHeartIcon className="w-8 h-8 text-primary" />
         </div>
-        <h1 className="text-4xl font-bold mb-3 text-balance">Zakat-beregner</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Zakat-beregner</h1>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
           Beregn din årlige zakat (islamisk velgørenhed) baseret på dine aktiver og gæld. Zakat er 2,5% af din formue
           over nisab-tærsklen.
         </p>
       </div>
 
-      {/* Nisab Info - Remove custom border/bg classes */}
-      <Card className="mb-8">
+      {/* Nisab Info */}
+      <Card className="mb-6">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Scale className="w-5 h-5 text-primary" />
+            <Scale className="w-5 h-5" />
             Nisab-tærskel
           </CardTitle>
           <CardDescription>
             Den nuværende nisab-tærskel er cirka{" "}
             <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span> (baseret på{" "}
-            {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}). Du skal kun betale zakat, hvis din nettoformue
-            overstiger denne grænse.
+            {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}).
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-center gap-1">
-              <Label className="text-sm font-medium">Vælg nisab-beregningsmetode</Label>
+              <Label>Vælg nisab-beregningsmetode</Label>
               <Popover>
-                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground touch-manipulation cursor-pointer">
+                <PopoverTrigger className="text-muted-foreground hover:text-foreground">
                   <Info className="w-4 h-4" />
-                  <span className="sr-only">Info om nisab-beregningsmetode</span>
                 </PopoverTrigger>
                 <PopoverContent side="top" className="max-w-xs text-sm">
                   Sølv anbefales, da det resulterer i en lavere nisab-tærskel, hvilket betyder at flere mennesker
@@ -332,32 +315,30 @@ export function ZakatCalculator() {
             <RadioGroup
               value={nisabType}
               onValueChange={(value) => setNisabType(value as "silver" | "gold")}
-              className="flex flex-col md:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3"
             >
               <label
                 htmlFor="silver"
-                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer flex-1"
+                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
               >
-                <RadioGroupItem value="silver" id="silver" className="mt-1" />
-                <div className="flex flex-col gap-1">
+                <RadioGroupItem value="silver" id="silver" />
+                <div className="flex flex-col gap-0.5">
                   <span className="flex items-center gap-2 font-medium">
-                    <Gem className="w-4 h-4 text-muted-foreground" />
+                    <Gem className="w-4 h-4" />
                     Sølv
-                    <Badge variant="secondary" className="text-xs">
-                      Anbefalet
-                    </Badge>
+                    <Badge variant="secondary">Anbefalet</Badge>
                   </span>
                   <span className="text-sm text-muted-foreground">Baseret på 612,36g sølv</span>
                 </div>
               </label>
               <label
                 htmlFor="gold"
-                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer flex-1"
+                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent flex-1"
               >
-                <RadioGroupItem value="gold" id="gold" className="mt-1" />
-                <div className="flex flex-col gap-1">
+                <RadioGroupItem value="gold" id="gold" />
+                <div className="flex flex-col gap-0.5">
                   <span className="flex items-center gap-2 font-medium">
-                    <Cuboid className="w-4 h-4 text-muted-foreground" />
+                    <Cuboid className="w-4 h-4" />
                     Guld
                   </span>
                   <span className="text-sm text-muted-foreground">Baseret på 87,48g guld</span>
@@ -368,11 +349,11 @@ export function ZakatCalculator() {
         </CardContent>
       </Card>
 
-      {/* Stock Treatment Section - Remove custom border/bg classes */}
-      <Card className="mb-8">
+      {/* Stock Treatment Section */}
+      <Card className="mb-6">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-primary" />
+            <BarChart3 className="w-5 h-5" />
             Aktier og værdipapirer
           </CardTitle>
           <CardDescription>Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.</CardDescription>
@@ -380,11 +361,10 @@ export function ZakatCalculator() {
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-center gap-1">
-              <Label className="text-sm font-medium">Vælg beregningsmetode</Label>
+              <Label>Vælg beregningsmetode</Label>
               <Popover>
-                <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground touch-manipulation cursor-pointer">
+                <PopoverTrigger className="text-muted-foreground hover:text-foreground">
                   <Info className="w-4 h-4" />
-                  <span className="sr-only">Info om beregningsmetode for aktier og værdipapirer</span>
                 </PopoverTrigger>
                 <PopoverContent side="top" className="max-w-xs text-sm">
                   Der er forskellige holdninger til, hvordan zakat på aktier og værdipapirer skal beregnes.
@@ -403,32 +383,30 @@ export function ZakatCalculator() {
             <RadioGroup
               value={stockTreatment}
               onValueChange={(value) => setStockTreatment(value as "quarter" | "amana" | "cash")}
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-3"
             >
               <label
                 htmlFor="quarter"
-                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer"
+                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
               >
-                <RadioGroupItem value="quarter" id="quarter" className="mt-1" />
-                <div className="flex flex-col gap-1">
+                <RadioGroupItem value="quarter" id="quarter" />
+                <div className="flex flex-col gap-0.5">
                   <span className="flex items-center gap-2 font-medium">
-                    <PieChart className="w-4 h-4 text-muted-foreground" />
+                    <PieChart className="w-4 h-4" />
                     Kvart-metoden
-                    <Badge variant="secondary" className="text-xs">
-                      Anbefalet
-                    </Badge>
+                    <Badge variant="secondary">Anbefalet</Badge>
                   </span>
                   <span className="text-sm text-muted-foreground">2,5% zakat på 25% af beholdningen</span>
                 </div>
               </label>
               <label
                 htmlFor="cash"
-                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer"
+                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
               >
-                <RadioGroupItem value="cash" id="cash" className="mt-1" />
-                <div className="flex flex-col gap-1">
+                <RadioGroupItem value="cash" id="cash" />
+                <div className="flex flex-col gap-0.5">
                   <span className="flex items-center gap-2 font-medium">
-                    <Banknote className="w-4 h-4 text-muted-foreground" />
+                    <Banknote className="w-4 h-4" />
                     Kontant-metoden
                   </span>
                   <span className="text-sm text-muted-foreground">2,5% zakat på den samlede værdi</span>
@@ -436,12 +414,12 @@ export function ZakatCalculator() {
               </label>
               <label
                 htmlFor="amana"
-                className="flex items-start space-x-3 rounded-lg p-3 border hover:bg-accent cursor-pointer"
+                className="flex items-center gap-3 rounded-md border p-3 cursor-pointer hover:bg-accent"
               >
-                <RadioGroupItem value="amana" id="amana" className="mt-1" />
-                <div className="flex flex-col gap-1">
+                <RadioGroupItem value="amana" id="amana" />
+                <div className="flex flex-col gap-0.5">
                   <span className="flex items-center gap-2 font-medium">
-                    <TrendingUp className="w-4 h-4 text-muted-foreground" />
+                    <TrendingUp className="w-4 h-4" />
                     Amana-metoden
                   </span>
                   <span className="text-sm text-muted-foreground">10% zakat kun på årets afkast</span>
@@ -452,12 +430,12 @@ export function ZakatCalculator() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-8 lg:grid-cols-2">
-        {/* Assets Section - Remove custom bg/border classes */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Assets Section */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Wallet className="w-5 h-5 text-primary" />
+              <Wallet className="w-5 h-5" />
               Aktiver
             </CardTitle>
             <CardDescription>Indtast værdien af dine aktiver i DKK</CardDescription>
@@ -538,11 +516,11 @@ export function ZakatCalculator() {
           </CardContent>
         </Card>
 
-        {/* Liabilities Section - Remove custom bg/border classes */}
+        {/* Liabilities Section */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-primary" />
+              <CreditCard className="w-5 h-5" />
               Gæld
             </CardTitle>
             <CardDescription>Indtast din gæld og forpligtelser i DKK</CardDescription>
@@ -573,25 +551,25 @@ export function ZakatCalculator() {
         </Card>
       </div>
 
-      {/* Calculate Button - Use default Button styling */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-        <Button size="lg" onClick={handleCalculate} className="cursor-pointer">
+      {/* Calculate Button */}
+      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+        <Button size="lg" onClick={handleCalculate}>
           <Calculator className="w-5 h-5 mr-2" />
           Beregn zakat
         </Button>
-        <Button size="lg" variant="outline" onClick={handleReset} className="cursor-pointer bg-transparent">
+        <Button size="lg" variant="outline" onClick={handleReset}>
           Nulstil
         </Button>
       </div>
 
-      {/* Results Section - Simplify styling */}
+      {/* Results Section */}
       {calculated && (
-        <Card className="mt-8">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-center text-2xl">Beregningsresultat</CardTitle>
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle className="text-center">Beregningsresultat</CardTitle>
           </CardHeader>
-          <CardContent className="pt-4">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <CardContent>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <ResultItem label="Samlede aktiver" value={formatCurrency(calculations.totalAssets)} />
               <ResultItem label="Samlet gæld" value={formatCurrency(calculations.totalLiabilities)} />
               <ResultItem
@@ -606,7 +584,7 @@ export function ZakatCalculator() {
 
             <div className="text-center">
               {calculations.meetsNisab ? (
-                <div className="bg-primary/10 rounded-lg p-4">
+                <div className="bg-muted rounded-lg p-4">
                   <p className="text-lg font-semibold mb-2">
                     Din zakat for i år er <span className="text-primary">{formatCurrency(calculations.zakatDue)}</span>
                   </p>
@@ -641,7 +619,7 @@ export function ZakatCalculator() {
       )}
 
       {/* Footer */}
-      <footer className="mt-12 text-center text-sm text-muted-foreground">
+      <footer className="mt-8 text-center text-sm text-muted-foreground">
         <p>
           Denne beregner er kun vejledende. Konsulter venligst en kvalificeret islamisk lærd for præcis vejledning om
           zakat.
@@ -667,14 +645,13 @@ function AssetInput({
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-1">
-        <Label className="text-sm font-medium flex items-center gap-2">
+        <Label className="flex items-center gap-2">
           {icon}
           {label}
         </Label>
         <Popover>
-          <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-muted-foreground hover:text-foreground touch-manipulation cursor-pointer">
+          <PopoverTrigger className="text-muted-foreground hover:text-foreground">
             <Info className="w-4 h-4" />
-            <span className="sr-only">Info om {label}</span>
           </PopoverTrigger>
           <PopoverContent side="top" className="max-w-xs text-sm">
             {tooltip}
@@ -685,7 +662,7 @@ function AssetInput({
         <Input
           type="text"
           inputMode="decimal"
-          placeholder="0,00"
+          placeholder="0"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="pr-12"
@@ -710,11 +687,11 @@ function ResultItem({
   return (
     <div
       className={`text-center p-4 rounded-lg ${
-        primary ? "bg-primary text-primary-foreground" : highlight ? "bg-primary/10" : "bg-muted"
+        primary ? "bg-primary text-primary-foreground" : highlight ? "bg-muted" : "bg-muted"
       }`}
     >
       <p className={`text-sm mb-1 ${primary ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{label}</p>
-      <p className={`text-xl font-bold ${primary ? "text-primary-foreground" : ""}`}>{value}</p>
+      <p className={`text-xl font-bold`}>{value}</p>
     </div>
   )
 }
