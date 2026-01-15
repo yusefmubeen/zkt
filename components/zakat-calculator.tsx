@@ -1,6 +1,6 @@
 "use client"
-import { Info, HelpCircle } from "lucide-react"
-import { useState, useMemo } from "react"
+import { Info, HelpCircle, Loader2 } from "lucide-react"
+import { useState, useMemo, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
@@ -56,6 +56,8 @@ export function ZakatCalculator() {
   const [nisabType, setNisabType] = useState<"silver" | "gold">("silver")
   const [stockTreatment, setStockTreatment] = useState<"quarter" | "amana" | "cash">("quarter")
   const [helpOpen, setHelpOpen] = useState(false)
+  const [isCalculating, setIsCalculating] = useState(false)
+  const resultsRef = useRef<HTMLElement>(null)
   const [assets, setAssets] = useState({
     cash: "",
     bankAccounts: "",
@@ -140,7 +142,18 @@ export function ZakatCalculator() {
   }
 
   const handleCalculate = () => {
-    setCalculated(true)
+    setIsCalculating(true)
+    setCalculated(false)
+
+    setTimeout(() => {
+      setCalculated(true)
+      setIsCalculating(false)
+
+      // Scroll to results after a short delay to allow render
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+      }, 100)
+    }, 800)
   }
 
   const handleReset = () => {
@@ -491,18 +504,27 @@ export function ZakatCalculator() {
 
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-        <Button size="lg" onClick={handleCalculate} className="text-white">
-          <Calculator className="w-5 h-5 mr-2" />
-          Beregn zakat
+        <Button size="lg" onClick={handleCalculate} className="text-white" disabled={isCalculating}>
+          {isCalculating ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              Beregner...
+            </>
+          ) : (
+            <>
+              <Calculator className="w-5 h-5 mr-2" />
+              Beregn zakat
+            </>
+          )}
         </Button>
-        <Button size="lg" variant="outline" onClick={handleReset}>
+        <Button size="lg" variant="outline" onClick={handleReset} disabled={isCalculating}>
           Nulstil
         </Button>
       </div>
 
       {/* Results Section */}
       {calculated && (
-        <section className="mt-8">
+        <section className="mt-8" ref={resultsRef}>
           <h2 className="text-lg font-semibold mb-4 text-center">Beregningsresultat</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <ResultItem label="Samlede aktiver" value={formatCurrency(calculations.totalAssets)} />
