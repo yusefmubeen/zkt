@@ -406,7 +406,7 @@ export function ZakatCalculator() {
             label="Banklån og kreditkort"
             value={formatInputValue(liabilities.loans)}
             onChange={(v) => handleLiabilityChange("loans", v)}
-            tooltip="Udestående lån og kreditkortgæld"
+            tooltip="Udestående lån og kreditkortgæld, der forfalder inden for et år"
           />
           <AssetInput
             label="Andre forpligtelser"
