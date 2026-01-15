@@ -617,7 +617,7 @@ function ResultItem({
   primary?: boolean
 }) {
   return (
-    <div className={`text-center p-4 rounded-lg ${primary ? "bg-primary" : "bg-muted"}`}>
+    <div className={`text-center p-4 rounded-lg ${primary ? "bg-black" : "bg-muted"}`}>
       <p className={`text-sm mb-1 ${primary ? "text-white/80" : "text-muted-foreground"}`}>{label}</p>
       <p className={`text-xl font-semibold ${primary ? "text-white" : ""}`}>{value}</p>
     </div>
