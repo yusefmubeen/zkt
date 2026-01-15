@@ -123,25 +123,26 @@ export function ZakatCalculator() {
   const calculations = useMemo(() => {
     const stocksValue = parseValue(assets.stocks)
     const stockGainsValue = parseValue(assets.stockGains)
+    const cryptoValue = parseValue(assets.otherInvestments)
 
-    const assetsWithoutStocks = Object.entries(assets)
-      .filter(([key]) => key !== "stocks" && key !== "stockGains")
+    const assetsWithoutStocksAndCrypto = Object.entries(assets)
+      .filter(([key]) => key !== "stocks" && key !== "stockGains" && key !== "otherInvestments")
       .reduce((sum, [, val]) => sum + parseValue(val), 0)
 
     const totalLiabilities = Object.values(liabilities).reduce((sum, val) => sum + parseValue(val), 0)
 
     let stockZakat = 0
-    const totalAssetsForDisplay = assetsWithoutStocks + stocksValue
+    const totalAssetsForDisplay = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue
 
     if (stockTreatment === "cash") {
-      const netWorthWithStocks = assetsWithoutStocks + stocksValue - totalLiabilities
       stockZakat = stocksValue * ZAKAT_RATE
     } else {
       stockZakat = stockGainsValue > 0 ? stockGainsValue * AMANA_RATE : 0
     }
 
-    const netWorth = assetsWithoutStocks + stocksValue - totalLiabilities
-    const baseZakat = netWorth >= nisabThreshold ? (assetsWithoutStocks - totalLiabilities) * ZAKAT_RATE : 0
+    const netWorth = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue - totalLiabilities
+    const baseZakat =
+      netWorth >= nisabThreshold ? (assetsWithoutStocksAndCrypto + cryptoValue - totalLiabilities) * ZAKAT_RATE : 0
     const zakatDue = netWorth >= nisabThreshold ? Math.max(0, baseZakat + stockZakat) : 0
 
     return {
