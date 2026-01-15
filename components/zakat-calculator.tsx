@@ -211,7 +211,7 @@ export function ZakatCalculator() {
                   <br />
                   <br />
                   <span className="font-semibold">Amana-metoden:</span> Betragter aktier som "produktiv kapital" (som
-                  afgrøder). Du betaler 10% zakat kun af årets gevinst.
+                  afgrøder). Du betaler 10% zakat kun af årets afkast.
                   <br />
                   <br />
                   Kvart-metoden anbefales som en balanceret tilgang.{" "}
@@ -483,7 +483,7 @@ export function ZakatCalculator() {
             </label>
           </RadioGroup>
           {stockTreatment === "amana" && (
-            <div className="mt-4 ml-7">
+            <div className="mt-4">
               <AssetInput
                 label="Afkast på aktier og værdipapirer"
                 value={formatInputValue(assets.stockGains)}
