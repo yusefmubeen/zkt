@@ -250,7 +250,7 @@ export function ZakatCalculator() {
                   <br />
                   <br />
                   <strong>Amana-metoden:</strong> Betragter aktier som "produktiv kapital" (som afgrøder). Du betaler
-                  10% zakat kun af årets gevinst.
+                  10% zakat kun af årets afkast.
                   <br />
                   <br />
                   Kvart-metoden anbefales som en balanceret tilgang.{" "}
@@ -385,18 +385,133 @@ export function ZakatCalculator() {
         </CardContent>
       </Card>
 
+      <div className="grid gap-8 lg:grid-cols-2">
+        {/* Assets Section */}
+        <Card className="bg-gray-900 border-gray-800">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Wallet className="w-5 h-5 text-green-600" />
+              Aktiver
+            </CardTitle>
+            <CardDescription className="text-gray-400">Indtast værdien af dine aktiver i DKK</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <AssetInput
+              label="Bankkonti"
+              value={formatInputValue(assets.bankAccounts)}
+              onChange={(v) => handleAssetChange("bankAccounts", v)}
+              icon={<Landmark className="w-4 h-4" />}
+              tooltip="Saldo på alle bankkonti (opsparing, løn, etc.)"
+            />
+            <AssetInput
+              label="Fysiske kontanter"
+              value={formatInputValue(assets.cash)}
+              onChange={(v) => handleAssetChange("cash", v)}
+              icon={<Banknote className="w-4 h-4" />}
+              tooltip="Kontanter du har hjemme eller i pengeskab"
+            />
+            <AssetInput
+              label="Guld"
+              value={formatInputValue(assets.gold)}
+              onChange={(v) => handleAssetChange("gold", v)}
+              icon={<Cuboid className="w-4 h-4" />}
+              tooltip="Værdi af guld smykker og guldbarrer"
+            />
+            <AssetInput
+              label="Sølv"
+              value={formatInputValue(assets.silver)}
+              onChange={(v) => handleAssetChange("silver", v)}
+              icon={<Gem className="w-4 h-4" />}
+              tooltip="Værdi af sølv smykker og sølvbarrer"
+            />
+            <AssetInput
+              label="Forretningsinventar"
+              value={formatInputValue(assets.businessInventory)}
+              onChange={(v) => handleAssetChange("businessInventory", v)}
+              icon={<Briefcase className="w-4 h-4" />}
+              tooltip="Værdi af varer til salg i din virksomhed"
+            />
+            <AssetInput
+              label="Investeringsejendomme"
+              value={formatInputValue(assets.propertyInvestment)}
+              onChange={(v) => handleAssetChange("propertyInvestment", v)}
+              icon={<Home className="w-4 h-4" />}
+              tooltip="Ejendomme købt med henblik på udlejning eller salg"
+            />
+            <AssetInput
+              label="Kryptovaluta"
+              value={formatInputValue(assets.otherInvestments)}
+              onChange={(v) => handleAssetChange("otherInvestments", v)}
+              icon={<Coins className="w-4 h-4" />}
+              tooltip="Bitcoin og andre kryptovalutaer"
+            />
+            <AssetInput
+              label="Tilgodehavender"
+              value={formatInputValue(assets.receivables)}
+              onChange={(v) => handleAssetChange("receivables", v)}
+              icon={<HandCoins className="w-4 h-4" />}
+              tooltip="Penge som andre skylder dig og som du forventer at modtage"
+            />
+          </CardContent>
+        </Card>
+
+        {/* Liabilities Section */}
+        <Card className="bg-gray-900 border-gray-800">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <CreditCard className="w-5 h-5 text-green-600" />
+              Gæld
+            </CardTitle>
+            <CardDescription className="text-gray-400">Indtast din gæld og forpligtelser i DKK</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <AssetInput
+              label="Kortfristet gæld"
+              value={formatInputValue(liabilities.debts)}
+              onChange={(v) => handleLiabilityChange("debts", v)}
+              icon={<CreditCard className="w-4 h-4" />}
+              tooltip="Gæld der forfalder inden for et år (kreditkort, regninger)"
+            />
+            <AssetInput
+              label="Lån"
+              value={formatInputValue(liabilities.loans)}
+              onChange={(v) => handleLiabilityChange("loans", v)}
+              icon={<Landmark className="w-4 h-4" />}
+              tooltip="Årligt afdrag på boliglån, billån, studielån, etc."
+            />
+            <AssetInput
+              label="Andre forpligtelser"
+              value={formatInputValue(liabilities.otherLiabilities)}
+              onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
+              icon={<FileText className="w-4 h-4" />}
+              tooltip="Andre økonomiske forpligtelser"
+            />
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Stock Treatment Section */}
-      <Card className="mb-8 border-green-800/30 bg-gray-900">
+      <Card className="mt-8 border-green-800/30 bg-gray-900">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
             <BarChart3 className="w-5 h-5 text-green-600" />
             Aktier og værdipapirer
           </CardTitle>
           <CardDescription className="text-gray-400">
-            Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.
+            Indtast værdien af dine aktier og vælg beregningsmetode.
           </CardDescription>
         </CardHeader>
-        <CardContent className="pt-0">
+        <CardContent className="space-y-6">
+          <AssetInput
+            label="Samlet værdi af aktier og værdipapirer"
+            value={formatInputValue(assets.stocks)}
+            onChange={(v) => handleAssetChange("stocks", v)}
+            icon={<BarChart3 className="w-4 h-4" />}
+            tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
+          />
+
+          <Separator className="bg-gray-800" />
+
           <div className="space-y-3">
             <div className="flex items-center gap-1">
               <Label className="text-sm font-medium text-gray-300">Vælg beregningsmetode</Label>
@@ -464,131 +579,21 @@ export function ZakatCalculator() {
                   <span className="text-sm text-gray-500">10% zakat kun på årets afkast</span>
                 </div>
               </label>
+              {stockTreatment === "amana" && (
+                <div className="ml-7 mt-2">
+                  <AssetInput
+                    label="Afkast på aktier og værdipapirer"
+                    value={formatInputValue(assets.stockGains)}
+                    onChange={(v) => handleAssetChange("stockGains", v)}
+                    icon={<TrendingUp className="w-4 h-4" />}
+                    tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
+                  />
+                </div>
+              )}
             </RadioGroup>
           </div>
         </CardContent>
       </Card>
-
-      <div className="grid gap-8 lg:grid-cols-2">
-        {/* Assets Section */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <Wallet className="w-5 h-5 text-green-600" />
-              Aktiver
-            </CardTitle>
-            <CardDescription className="text-gray-400">Indtast værdien af dine aktiver i DKK</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <AssetInput
-              label="Bankkonti"
-              value={formatInputValue(assets.bankAccounts)}
-              onChange={(v) => handleAssetChange("bankAccounts", v)}
-              icon={<Landmark className="w-4 h-4" />}
-              tooltip="Saldo på alle bankkonti (opsparing, løn, etc.)"
-            />
-            <AssetInput
-              label="Fysiske kontanter"
-              value={formatInputValue(assets.cash)}
-              onChange={(v) => handleAssetChange("cash", v)}
-              icon={<Banknote className="w-4 h-4" />}
-              tooltip="Kontanter du har hjemme eller i pengeskab"
-            />
-            <AssetInput
-              label="Guld"
-              value={formatInputValue(assets.gold)}
-              onChange={(v) => handleAssetChange("gold", v)}
-              icon={<Cuboid className="w-4 h-4" />}
-              tooltip="Værdi af guld smykker og guldbarrer"
-            />
-            <AssetInput
-              label="Sølv"
-              value={formatInputValue(assets.silver)}
-              onChange={(v) => handleAssetChange("silver", v)}
-              icon={<Gem className="w-4 h-4" />}
-              tooltip="Værdi af sølv smykker og sølvbarrer"
-            />
-            <AssetInput
-              label="Forretningsinventar"
-              value={formatInputValue(assets.businessInventory)}
-              onChange={(v) => handleAssetChange("businessInventory", v)}
-              icon={<Briefcase className="w-4 h-4" />}
-              tooltip="Værdi af varer til salg i din virksomhed"
-            />
-            <AssetInput
-              label="Investeringsejendomme"
-              value={formatInputValue(assets.propertyInvestment)}
-              onChange={(v) => handleAssetChange("propertyInvestment", v)}
-              icon={<Home className="w-4 h-4" />}
-              tooltip="Ejendomme købt med henblik på udlejning eller salg"
-            />
-            <AssetInput
-              label="Aktier og værdipapirer"
-              value={formatInputValue(assets.stocks)}
-              onChange={(v) => handleAssetChange("stocks", v)}
-              icon={<BarChart3 className="w-4 h-4" />}
-              tooltip="Samlet værdi af aktier, obligationer, fonde og andre værdipapirer"
-            />
-            {stockTreatment === "amana" && (
-              <AssetInput
-                label="Afkast på aktier og værdipapirer"
-                value={formatInputValue(assets.stockGains)}
-                onChange={(v) => handleAssetChange("stockGains", v)}
-                icon={<TrendingUp className="w-4 h-4" />}
-                tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
-              />
-            )}
-            <AssetInput
-              label="Kryptovaluta"
-              value={formatInputValue(assets.otherInvestments)}
-              onChange={(v) => handleAssetChange("otherInvestments", v)}
-              icon={<Coins className="w-4 h-4" />}
-              tooltip="Bitcoin og andre kryptovalutaer"
-            />
-            <AssetInput
-              label="Tilgodehavender"
-              value={formatInputValue(assets.receivables)}
-              onChange={(v) => handleAssetChange("receivables", v)}
-              icon={<HandCoins className="w-4 h-4" />}
-              tooltip="Penge som andre skylder dig og som du forventer at modtage"
-            />
-          </CardContent>
-        </Card>
-
-        {/* Liabilities Section */}
-        <Card className="bg-gray-900 border-gray-800">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <CreditCard className="w-5 h-5 text-green-600" />
-              Gæld
-            </CardTitle>
-            <CardDescription className="text-gray-400">Indtast din gæld og forpligtelser i DKK</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <AssetInput
-              label="Kortfristet gæld"
-              value={formatInputValue(liabilities.debts)}
-              onChange={(v) => handleLiabilityChange("debts", v)}
-              icon={<CreditCard className="w-4 h-4" />}
-              tooltip="Gæld der forfalder inden for et år (kreditkort, regninger)"
-            />
-            <AssetInput
-              label="Lån"
-              value={formatInputValue(liabilities.loans)}
-              onChange={(v) => handleLiabilityChange("loans", v)}
-              icon={<Landmark className="w-4 h-4" />}
-              tooltip="Årligt afdrag på boliglån, billån, studielån, etc."
-            />
-            <AssetInput
-              label="Andre forpligtelser"
-              value={formatInputValue(liabilities.otherLiabilities)}
-              onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
-              icon={<FileText className="w-4 h-4" />}
-              tooltip="Andre økonomiske forpligtelser"
-            />
-          </CardContent>
-        </Card>
-      </div>
 
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
