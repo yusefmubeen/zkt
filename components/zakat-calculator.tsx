@@ -379,10 +379,10 @@ export function ZakatCalculator() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
             <BarChart3 className="w-5 h-5 text-green-600" />
-            Aktier og investeringer
+            Aktier og værdipapirer
           </CardTitle>
           <CardDescription className="text-gray-400">
-            Vælg hvordan zakat på dine aktier og investeringer skal beregnes.
+            Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0">
@@ -392,10 +392,10 @@ export function ZakatCalculator() {
               <Popover>
                 <PopoverTrigger className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] -m-2 text-gray-500 hover:text-gray-300 active:text-gray-300 touch-manipulation cursor-pointer">
                   <Info className="w-4 h-4" />
-                  <span className="sr-only">Info om beregningsmetode for aktier og investeringer</span>
+                  <span className="sr-only">Info om beregningsmetode for aktier og værdipapirer</span>
                 </PopoverTrigger>
                 <PopoverContent side="top" className="max-w-xs text-sm bg-gray-800 border-gray-700 text-gray-300">
-                  Amana-metoden anbefales, da aktier og investeringer betragtes som "produktiv kapital" på linje med
+                  Amana-metoden anbefales, da aktier og værdipapirer betragtes som "produktiv kapital" på linje med
                   afgrøder fra jorden. Zakat betales derfor kun af gevinsten (10%), ikke af selve kapitalen.{" "}
                   <a
                     href="https://halal.ninja/zakat-on-stocks"
@@ -507,11 +507,11 @@ export function ZakatCalculator() {
             />
             {stockTreatment === "amana" && (
               <AssetInput
-                label="Afkast på aktier og investeringer"
+                label="Afkast på aktier og værdipapirer"
                 value={formatInputValue(assets.stockGains)}
                 onChange={(v) => handleAssetChange("stockGains", v)}
                 icon={<TrendingUp className="w-4 h-4" />}
-                tooltip="Årets gevinst på aktier og investeringer. Hvis du har haft tab, indtast 0."
+                tooltip="Årets gevinst på aktier og værdipapirer. Hvis du har haft tab, indtast 0."
               />
             )}
             <AssetInput
