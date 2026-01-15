@@ -491,7 +491,12 @@ export function ZakatCalculator() {
 
       {/* Calculate Button */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-        <Button size="lg" onClick={handleCalculate} className="text-white cursor-pointer" disabled={isCalculating}>
+        <Button
+          size="lg"
+          onClick={handleCalculate}
+          className="bg-lime-700 hover:bg-lime-800 text-white cursor-pointer"
+          disabled={isCalculating}
+        >
           {isCalculating ? (
             <>
               <Loader2 className="w-5 h-5 mr-2 animate-spin" />
