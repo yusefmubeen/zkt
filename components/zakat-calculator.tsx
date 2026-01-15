@@ -237,25 +237,30 @@ export function ZakatCalculator() {
               </AccordionItem>
               <AccordionItem value="item-3" className="border-gray-800">
                 <AccordionTrigger className="text-gray-200 hover:text-white cursor-pointer">
-                  Hvad er forskellen på Amana-metoden og Kontant-metoden?
+                  Hvad er forskellen på Kvart-, Kontant- og Amana-metoden?
                 </AccordionTrigger>
                 <AccordionContent className="text-gray-400">
-                  <strong>Amana-metoden:</strong> Betragter aktier som "produktiv kapital" (som afgrøder). Du betaler
-                  10% zakat kun af årets gevinst.
+                  <strong>Kvart-metoden (anbefalet):</strong> Du betaler 2,5% zakat på kun 25% af din aktie- og
+                  værdipapirbeholdning. Denne metode tager højde for, at en stor del af aktieværdien typisk er bundet i
+                  virksomhedens faste aktiver.
                   <br />
                   <br />
                   <strong>Kontant-metoden:</strong> Betragter aktier som kontanter. Du betaler 2,5% zakat af den samlede
                   værdi af dine aktier.
                   <br />
                   <br />
-                  Amana-metoden anbefales af mange lærde.{" "}
+                  <strong>Amana-metoden:</strong> Betragter aktier som "produktiv kapital" (som afgrøder). Du betaler
+                  10% zakat kun af årets gevinst.
+                  <br />
+                  <br />
+                  Kvart-metoden anbefales som en balanceret tilgang.{" "}
                   <a
                     href="https://halal.ninja/zakat-on-stocks"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-green-500 hover:text-green-400 underline"
                   >
-                    Læs mere
+                    Læs mere om zakat på aktier
                   </a>
                 </AccordionContent>
               </AccordionItem>
