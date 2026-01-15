@@ -326,7 +326,7 @@ export function ZakatCalculator() {
 
       {/* Stock Treatment Section */}
       <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-2">Aktier og værdipapirer</h2>
+        <h2 className="text-lg font-semibold mb-2">Beregningsmetode for aktier</h2>
         <p className="text-sm text-muted-foreground mb-4">
           Vælg hvordan zakat på dine aktier og værdipapirer skal beregnes.
         </p>
