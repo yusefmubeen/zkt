@@ -539,7 +539,7 @@ export function ZakatCalculator() {
             {calculations.meetsNisab ? (
               <div className="bg-muted rounded-lg p-4">
                 <p className="text-base font-semibold mb-2">
-                  Din zakat for i år er <span className="text-primary">{formatCurrency(calculations.zakatDue)}</span>
+                  Din zakat for i år er <span className="text-lime-700">{formatCurrency(calculations.zakatDue)}</span>
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {stockTreatment === "quarter" ? (
