@@ -25,10 +25,12 @@ import {
   TrendingUp,
   Calculator,
   Cuboid,
+  Percent,
 } from "lucide-react"
 
 const ZAKAT_RATE = 0.025 // 2.5%
 const AMANA_RATE = 0.1 // 10%
+const QUARTER_RATE = 0.25 // 25% of stock value
 const NISAB_GOLD_GRAMS = 87.48 // grams of gold
 const NISAB_SILVER_GRAMS = 612.36 // grams of silver
 const GOLD_PRICE_PER_GRAM = 550 // approximate DKK per gram
@@ -78,7 +80,7 @@ function HandHeartIcon({ className }: { className?: string }) {
 
 export function ZakatCalculator() {
   const [nisabType, setNisabType] = useState<"silver" | "gold">("silver")
-  const [stockTreatment, setStockTreatment] = useState<"amana" | "cash">("amana")
+  const [stockTreatment, setStockTreatment] = useState<"quarter" | "amana" | "cash">("quarter")
   const [helpOpen, setHelpOpen] = useState(false)
   const [assets, setAssets] = useState({
     cash: "",
@@ -136,7 +138,11 @@ export function ZakatCalculator() {
 
     if (stockTreatment === "cash") {
       stockZakat = stocksValue * ZAKAT_RATE
+    } else if (stockTreatment === "quarter") {
+      // 2.5% zakat on 25% of stock value
+      stockZakat = stocksValue * QUARTER_RATE * ZAKAT_RATE
     } else {
+      // amana method
       stockZakat = stockGainsValue > 0 ? stockGainsValue * AMANA_RATE : 0
     }
 
@@ -395,8 +401,8 @@ export function ZakatCalculator() {
                   <span className="sr-only">Info om beregningsmetode for aktier og værdipapirer</span>
                 </PopoverTrigger>
                 <PopoverContent side="top" className="max-w-xs text-sm bg-gray-800 border-gray-700 text-gray-300">
-                  Amana-metoden anbefales, da aktier og værdipapirer betragtes som "produktiv kapital" på linje med
-                  afgrøder fra jorden. Zakat betales derfor kun af gevinsten (10%), ikke af selve kapitalen.{" "}
+                  Der er forskellige holdninger til, hvordan zakat på aktier og værdipapirer skal beregnes.
+                  Kvart-metoden (2,5% på 25%) anbefales som en balanceret tilgang.{" "}
                   <a
                     href="https://halal.ninja/zakat-on-stocks"
                     target="_blank"
@@ -410,26 +416,39 @@ export function ZakatCalculator() {
             </div>
             <RadioGroup
               value={stockTreatment}
-              onValueChange={(value) => setStockTreatment(value as "amana" | "cash")}
-              className="flex flex-col md:flex-row gap-4"
+              onValueChange={(value) => setStockTreatment(value as "quarter" | "amana" | "cash")}
+              className="flex flex-col gap-4"
             >
               <label
+                htmlFor="quarter"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
+              >
+                <RadioGroupItem value="quarter" id="quarter" className="border-gray-500 text-green-600 mt-1" />
+                <div className="flex flex-col gap-1">
+                  <span className="flex items-center gap-2 text-gray-300 font-medium">
+                    <Percent className="w-4 h-4 text-gray-400" />
+                    Kvart-metoden
+                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">Anbefalet</Badge>
+                  </span>
+                  <span className="text-sm text-gray-500">2,5% zakat på 25% af beholdningen</span>
+                </div>
+              </label>
+              <label
                 htmlFor="amana"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
               >
                 <RadioGroupItem value="amana" id="amana" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
                   <span className="flex items-center gap-2 text-gray-300 font-medium">
                     <TrendingUp className="w-4 h-4 text-gray-400" />
                     Amana-metoden
-                    <Badge className="text-xs bg-green-800/30 text-green-500 border-0 px-2 py-0.5">Anbefalet</Badge>
                   </span>
                   <span className="text-sm text-gray-500">10% zakat på årets gevinst</span>
                 </div>
               </label>
               <label
                 htmlFor="cash"
-                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full flex-1"
+                className="flex items-start space-x-3 bg-gray-800 rounded-lg p-3 border border-gray-500 hover:border-green-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/50 transition-colors cursor-pointer w-full"
               >
                 <RadioGroupItem value="cash" id="cash" className="border-gray-500 text-green-600 mt-1" />
                 <div className="flex flex-col gap-1">
@@ -614,7 +633,12 @@ export function ZakatCalculator() {
                     <span className="text-green-500">{formatCurrency(calculations.zakatDue)}</span>
                   </p>
                   <p className="text-sm text-gray-400">
-                    {stockTreatment === "amana" ? (
+                    {stockTreatment === "quarter" ? (
+                      <>
+                        Beregnet med 2,5% på øvrige aktiver og 2,5% på 25% af aktiebeholdningen (
+                        {formatCurrency(calculations.stockZakat)})
+                      </>
+                    ) : stockTreatment === "amana" ? (
                       <>
                         Beregnet med 2,5% på øvrige aktiver og 10% på aktiegevinst (
                         {formatCurrency(calculations.stockZakat)})
