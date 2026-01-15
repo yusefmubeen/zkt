@@ -271,15 +271,16 @@ export function ZakatCalculator() {
 
       {/* Nisab Section */}
       <section className="mb-8">
-        <h2 className="text-lg font-semibold mb-2">Nisab-tærskel</h2>
+        <h2 className="text-lg font-semibold mb-2">Nisab</h2>
         <p className="text-sm text-muted-foreground mb-4">
           Den nuværende nisab-tærskel er cirka{" "}
           <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span> (baseret på{" "}
-          {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}).
+          {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}). Du skal kun betale zakat, hvis din nettoformue
+          overstiger denne grænse.
         </p>
         <div className="space-y-3">
           <div className="flex items-center gap-1">
-            <Label className="text-sm">Vælg nisab-beregningsmetode</Label>
+            <Label className="text-sm">Vælg beregningsmetode</Label>
             <Popover>
               <PopoverTrigger className="text-muted-foreground hover:text-foreground cursor-pointer">
                 <Info className="w-4 h-4" />
