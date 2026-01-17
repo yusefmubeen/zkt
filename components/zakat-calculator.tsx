@@ -1,5 +1,5 @@
 "use client"
-import { Info, HelpCircle, Loader2, Settings } from "lucide-react"
+import { Info, HelpCircle, Loader2, Settings, AlertCircle } from "lucide-react"
 import { useState, useMemo, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Calculator } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 type Madhab = "hanafi" | "maliki" | "shafii" | "hanbali"
 type PropertyIntent = "rental" | "resale"
@@ -648,6 +648,8 @@ export function ZakatCalculator() {
         <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser.</p>
         {(madhab === "shafii" || madhab === "hanbali") && (
           <Alert className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Bemærk</AlertTitle>
             <AlertDescription>
               Under {MADHAB_NAMES[madhab]}-fiqh fratrækkes kun gæld, der forfalder nu (kortfristet gæld).
             </AlertDescription>
