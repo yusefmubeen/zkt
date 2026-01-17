@@ -1,5 +1,5 @@
 "use client"
-import { Info, HelpCircle, Loader2 } from "lucide-react"
+import { Info, HelpCircle, Loader2, Settings } from "lucide-react"
 import { useState, useMemo, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -56,6 +56,7 @@ export function ZakatCalculator() {
   const [nisabType, setNisabType] = useState<"silver" | "gold">("silver")
   const [stockTreatment, setStockTreatment] = useState<"quarter" | "amana" | "cash">("quarter")
   const [helpOpen, setHelpOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const [isCalculating, setIsCalculating] = useState(false)
   const resultsRef = useRef<HTMLElement>(null)
   const [assets, setAssets] = useState({
@@ -149,7 +150,6 @@ export function ZakatCalculator() {
       setCalculated(true)
       setIsCalculating(false)
 
-      // Scroll to results after a short delay to allow render
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
       }, 100)
@@ -179,8 +179,58 @@ export function ZakatCalculator() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
-      {/* Help link */}
-      <div className="flex justify-end mb-4">
+      {/* Settings and Help buttons */}
+      <div className="flex justify-end gap-2 mb-4">
+        <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm" className="cursor-pointer bg-transparent">
+              <Settings className="w-4 h-4 mr-1" />
+              Indstillinger
+            </Button>
+          </DialogTrigger>
+          <DialogContent variant="bottomSheet" className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Indstillinger</DialogTitle>
+            </DialogHeader>
+            <div className="py-4">
+              <h3 className="text-sm font-semibold mb-2">Nisab-beregningsmetode</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Sølv anbefales, da det
+                resulterer i en lavere tærskel.
+              </p>
+              <RadioGroup
+                value={nisabType}
+                onValueChange={(value) => setNisabType(value as "silver" | "gold")}
+                className="flex flex-col gap-3"
+              >
+                <label
+                  htmlFor="silver-setting"
+                  className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+                >
+                  <RadioGroupItem value="silver" id="silver-setting" />
+                  <div className="flex flex-col gap-0.5">
+                    <span className="flex items-center gap-2 text-sm font-medium">
+                      Sølv
+                      <Badge variant="secondary">Anbefalet</Badge>
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      Baseret på 612,36g sølv ({formatCurrency(NISAB_SILVER_GRAMS * SILVER_PRICE_PER_GRAM)})
+                    </span>
+                  </div>
+                </label>
+                <label htmlFor="gold-setting" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer">
+                  <RadioGroupItem value="gold" id="gold-setting" />
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-sm font-medium">Guld</span>
+                    <span className="text-sm text-muted-foreground">
+                      Baseret på 87,48g guld ({formatCurrency(NISAB_GOLD_GRAMS * GOLD_PRICE_PER_GRAM)})
+                    </span>
+                  </div>
+                </label>
+              </RadioGroup>
+            </div>
+          </DialogContent>
+        </Dialog>
         <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="cursor-pointer bg-transparent">
@@ -279,55 +329,11 @@ export function ZakatCalculator() {
         </div>
         <h1 className="text-3xl font-semibold tracking-tight mb-2">Zakat-beregner</h1>
         <p className="text-sm text-muted-foreground">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
-      </div>
-
-      {/* Nisab Section */}
-      <section className="mb-12">
-        <h2 className="text-lg font-semibold mb-2">Nisab</h2>
-        <p className="text-sm text-muted-foreground mb-4">
-          Den nuværende nisab-tærskel er cirka{" "}
-          <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span> (baseret på{" "}
-          {nisabType === "silver" ? "612,36g sølv" : "87,48g guld"}). Du skal kun betale zakat, hvis din nettoformue
-          overstiger denne grænse.
+        <p className="text-sm text-muted-foreground mt-2">
+          Nisab-tærskel: <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span>{" "}
+          (baseret på {nisabType === "silver" ? "sølv" : "guld"})
         </p>
-        <div className="space-y-3">
-          <div className="flex items-center gap-1">
-            <Label className="text-sm">Vælg beregningsmetode</Label>
-            <Popover>
-              <PopoverTrigger className="text-muted-foreground hover:text-foreground cursor-pointer">
-                <Info className="w-4 h-4" />
-              </PopoverTrigger>
-              <PopoverContent side="top" className="max-w-xs text-sm">
-                Sølv anbefales, da det resulterer i en lavere nisab-tærskel, hvilket betyder at flere mennesker
-                kvalificerer til at betale zakat.
-              </PopoverContent>
-            </Popover>
-          </div>
-          <RadioGroup
-            value={nisabType}
-            onValueChange={(value) => setNisabType(value as "silver" | "gold")}
-            className="flex flex-col sm:flex-row gap-3"
-          >
-            <label htmlFor="silver" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer flex-1">
-              <RadioGroupItem value="silver" id="silver" />
-              <div className="flex flex-col gap-0.5">
-                <span className="flex items-center gap-2 text-sm font-medium">
-                  Sølv
-                  <Badge variant="secondary">Anbefalet</Badge>
-                </span>
-                <span className="text-sm text-muted-foreground">Baseret på 612,36g sølv</span>
-              </div>
-            </label>
-            <label htmlFor="gold" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer flex-1">
-              <RadioGroupItem value="gold" id="gold" />
-              <div className="flex flex-col gap-0.5">
-                <span className="text-sm font-medium">Guld</span>
-                <span className="text-sm text-muted-foreground">Baseret på 87,48g guld</span>
-              </div>
-            </label>
-          </RadioGroup>
-        </div>
-      </section>
+      </div>
 
       {/* Assets Section */}
       <section className="mb-12">
@@ -499,7 +505,7 @@ export function ZakatCalculator() {
         >
           {isCalculating ? (
             <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              <Loader2 className="w-5 h-5 mr-1 animate-spin" />
               Beregner...
             </>
           ) : (
