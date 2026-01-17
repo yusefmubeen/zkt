@@ -361,9 +361,8 @@ export function ZakatCalculator() {
         </Dialog>
         <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="cursor-pointer bg-transparent">
-              <HelpCircle className="w-4 h-4 mr-1" />
-              Hjælp
+            <Button variant="outline" size="icon" className="cursor-pointer bg-transparent">
+              <HelpCircle className="w-4 h-4" />
             </Button>
           </DialogTrigger>
           <DialogContent variant="bottomSheet" className="max-w-2xl max-h-[80vh] overflow-y-auto">
