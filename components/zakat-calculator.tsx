@@ -494,7 +494,7 @@ export function ZakatCalculator() {
           <HandHeartIcon className="w-8 h-8 text-primary" />
         </div>
         <h1 className="text-3xl font-semibold tracking-tight mb-2">Zakat-beregner</h1>
-        <p className="text-sm text-muted-foreground">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
+        <p className="text-sm text-muted-foreground mb-4">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
         <p className="text-sm text-muted-foreground mt-2">
           Nisab-tærskel: <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span>{" "}
           (baseret på {nisabType === "silver" ? "sølv" : "guld"})
@@ -773,7 +773,7 @@ export function ZakatCalculator() {
       {calculated && (
         <section className="mt-8" ref={resultsRef}>
           <h2 className="text-lg font-semibold mb-4 text-center">Beregningsresultat</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <ResultItem label="Samlede aktiver" value={formatCurrency(calculations.totalAssets)} />
             <ResultItem
               label="Samlet gæld"
@@ -893,9 +893,9 @@ function ResultItem({
   subtext?: string
 }) {
   return (
-    <div className={`text-center p-4 rounded-lg ${primary ? "bg-black" : "bg-muted"}`}>
+    <div className={`text-center p-5 rounded-lg min-w-0 ${primary ? "bg-black" : "bg-muted"}`}>
       <p className={`text-sm mb-1 ${primary ? "text-white/80" : "text-muted-foreground"}`}>{label}</p>
-      <p className={`text-xl font-semibold ${primary ? "text-white" : ""}`}>{value}</p>
+      <p className={`text-xl font-semibold break-words ${primary ? "text-white" : ""}`}>{value}</p>
       {subtext && <p className="text-xs text-muted-foreground mt-1">{subtext}</p>}
     </div>
   )
