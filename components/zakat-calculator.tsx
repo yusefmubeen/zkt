@@ -47,13 +47,13 @@ const DEBT_RULES: Record<Madhab, { personal: boolean; business: boolean; deferre
     personal: false,
     business: true,
     deferred: false,
-    description: "Kun kortfristet gæld fratrækkes. Langfristet gæld fratrækkes ikke",
+    description: "Kun kortfristet gæld fratrækkes",
   },
   hanbali: {
     personal: true,
     business: true,
     deferred: true,
-    description: "Kortfristet gæld og langfristet gæld (hvis betaling forventes snart) fratrækkes",
+    description: "Kun kortfristet gæld fratrækkes",
   },
 }
 
