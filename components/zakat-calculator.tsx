@@ -39,21 +39,21 @@ const DEBT_RULES: Record<Madhab, { personal: boolean; business: boolean; deferre
   },
   maliki: {
     personal: false,
-    business: true,
+    business: false, // Maliki: no debts are deducted
     deferred: false,
-    description: "Kun erhvervsgæld fratrækkes. Personlig gæld fratrækkes ikke",
+    description: "Gæld fratrækkes ikke fra zakat-beregningen",
   },
   shafii: {
-    personal: true,
+    personal: false,
     business: true,
     deferred: false,
-    description: "Kun umiddelbar gæld fratrækkes. Udskudt gæld fratrækkes ikke",
+    description: "Kun kortfristet gæld fratrækkes. Langfristet gæld fratrækkes ikke",
   },
   hanbali: {
     personal: true,
     business: true,
     deferred: true,
-    description: "Umiddelbar gæld fratrækkes. Udskudt gæld fratrækkes, hvis betaling forventes snart",
+    description: "Kortfristet gæld og langfristet gæld (hvis betaling forventes snart) fratrækkes",
   },
 }
 
@@ -176,9 +176,9 @@ export function ZakatCalculator() {
     if (madhab === "hanafi") {
       deductibleLiabilities = personalDebt + bankLoans + otherLiabilities
     } else if (madhab === "maliki") {
-      deductibleLiabilities = bankLoans + otherLiabilities
+      deductibleLiabilities = 0 // No debts are deducted under Maliki fiqh
     } else if (madhab === "shafii") {
-      deductibleLiabilities = bankLoans + otherLiabilities
+      deductibleLiabilities = bankLoans + otherLiabilities // Only immediate debts
     } else if (madhab === "hanbali") {
       deductibleLiabilities = personalDebt + bankLoans + otherLiabilities
     }
@@ -261,6 +261,8 @@ export function ZakatCalculator() {
   }
 
   const isPersonalDebtDeducted = madhab !== "maliki"
+  const isAnyDebtDeducted = madhab !== "maliki"
+  const showDebtNote = madhab === "shafii" || madhab === "hanbali"
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -308,7 +310,7 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="maliki" id="maliki-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Maliki</span>
-                      <span className="text-sm text-muted-foreground">Kun erhvervsgæld fratrækkes</span>
+                      <span className="text-sm text-muted-foreground">Gæld fratrækkes ikke fra zakat-beregningen</span>
                     </div>
                   </label>
                   <label
@@ -318,7 +320,9 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="shafii" id="shafii-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Shafi'i</span>
-                      <span className="text-sm text-muted-foreground">Kun umiddelbar gæld fratrækkes</span>
+                      <span className="text-sm text-muted-foreground">
+                        Kun kortfristet gæld fratrækkes. Langfristet gæld fratrækkes ikke
+                      </span>
                     </div>
                   </label>
                   <label
@@ -328,7 +332,9 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="hanbali" id="hanbali-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Hanbali</span>
-                      <span className="text-sm text-muted-foreground">Umiddelbar og forventet gæld fratrækkes</span>
+                      <span className="text-sm text-muted-foreground">
+                        Kortfristet gæld og langfristet gæld (hvis betaling forventes snart) fratrækkes
+                      </span>
                     </div>
                   </label>
                 </RadioGroup>
@@ -413,13 +419,12 @@ export function ZakatCalculator() {
                   <br />
                   <span className="font-semibold">Hanafi:</span> Alle typer gæld fratrækkes fra formuen.
                   <br />
-                  <span className="font-semibold">Maliki:</span> Kun erhvervsgæld fratrækkes. Personlig gæld fratrækkes
-                  ikke.
+                  <span className="font-semibold">Maliki:</span> Gæld fratrækkes ikke fra zakat-beregningen.
                   <br />
-                  <span className="font-semibold">Shafi'i:</span> Kun umiddelbar gæld fratrækkes. Udskudt gæld
+                  <span className="font-semibold">Shafi'i:</span> Kun kortfristet gæld fratrækkes. Langfristet gæld
                   fratrækkes ikke.
                   <br />
-                  <span className="font-semibold">Hanbali:</span> Umiddelbar gæld og udskudt gæld (hvis betaling
+                  <span className="font-semibold">Hanbali:</span> Kortfristet gæld og langfristet gæld (hvis betaling
                   forventes snart) fratrækkes.
                 </AccordionContent>
               </AccordionItem>
@@ -596,7 +601,7 @@ export function ZakatCalculator() {
                 >
                   <label htmlFor="rental" className="flex items-center gap-2 cursor-pointer">
                     <RadioGroupItem value="rental" id="rental" />
-                    <span className="text-sm">Udlejning (kun lejeindtægt er zakatpligtig)</span>
+                    <span className="text-sm">Udlejning (kun lejeindtægt er zakatpligtigt)</span>
                   </label>
                   <label htmlFor="resale" className="flex items-center gap-2 cursor-pointer">
                     <RadioGroupItem value="resale" id="resale" />
@@ -631,38 +636,49 @@ export function ZakatCalculator() {
       {/* Liabilities Section */}
       <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
-        <p className="text-sm text-muted-foreground mb-4">
-          Indtast din gæld og forpligtelser i DKK
-          {madhab !== "hanafi" && (
-            <span className="block mt-1 text-xs">
-              ({DEBT_RULES[madhab].description} ifølge {MADHAB_NAMES[madhab]}-fiqh)
-            </span>
-          )}
-        </p>
+        <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser.</p>
+        {madhab === "maliki" && (
+          <p className="text-sm text-amber-600 mb-4">Under Maliki-fiqh fratrækkes gæld ikke fra zakat-beregningen.</p>
+        )}
+        {(madhab === "shafii" || madhab === "hanbali") && (
+          <p className="text-sm text-amber-600 mb-4">
+            Under {MADHAB_NAMES[madhab]}-fiqh fratrækkes kun gæld, der forfalder nu (kortfristet gæld).
+          </p>
+        )}
         <div className="space-y-6">
-          <div className="space-y-2">
+          <div>
             <AssetInput
-              label="Personlige lån"
+              label="Personlig gæld"
               value={formatInputValue(liabilities.debts)}
               onChange={(v) => handleLiabilityChange("debts", v)}
-              tooltip="Lån fra familie, venner eller andre"
+              tooltip="Personlig gæld til familie, venner eller andre privatpersoner"
             />
             {!isPersonalDebtDeducted && parseValue(liabilities.debts) > 0 && (
               <p className="text-xs text-amber-600 pl-1">Fratrækkes ikke under {MADHAB_NAMES[madhab]}-fiqh</p>
             )}
           </div>
-          <AssetInput
-            label="Banklån og kreditkort"
-            value={formatInputValue(liabilities.loans)}
-            onChange={(v) => handleLiabilityChange("loans", v)}
-            tooltip="Udestående lån og kreditkortgæld, der forfalder inden for et år"
-          />
-          <AssetInput
-            label="Andre forpligtelser"
-            value={formatInputValue(liabilities.otherLiabilities)}
-            onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
-            tooltip="Andre økonomiske forpligtelser"
-          />
+          <div>
+            <AssetInput
+              label="Banklån og kreditkort"
+              value={formatInputValue(liabilities.loans)}
+              onChange={(v) => handleLiabilityChange("loans", v)}
+              tooltip="Udestående lån og kreditkortgæld, der forfalder inden for et år"
+            />
+            {madhab === "maliki" && parseValue(liabilities.loans) > 0 && (
+              <p className="text-xs text-amber-600 pl-1">Fratrækkes ikke under {MADHAB_NAMES[madhab]}-fiqh</p>
+            )}
+          </div>
+          <div>
+            <AssetInput
+              label="Andre forpligtelser"
+              value={formatInputValue(liabilities.otherLiabilities)}
+              onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
+              tooltip="Andre økonomiske forpligtelser"
+            />
+            {madhab === "maliki" && parseValue(liabilities.otherLiabilities) > 0 && (
+              <p className="text-xs text-amber-600 pl-1">Fratrækkes ikke under {MADHAB_NAMES[madhab]}-fiqh</p>
+            )}
+          </div>
         </div>
       </section>
 
