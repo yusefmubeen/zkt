@@ -845,16 +845,16 @@ export function ZakatCalculator() {
                     <>Dette beløb er 2,5% af din nettoformue på {formatCurrency(calculations.netWorth)}</>
                   )}
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Beregnet efter {MADHAB_NAMES[madhab]}-fiqh{" "}
-                  <button
-                    onClick={() => setSettingsOpen(true)}
-                    className="text-lime-700 hover:underline cursor-pointer inline-flex items-center gap-1"
-                  >
-                    <Pencil className="w-3 h-3" />
-                    Justér
-                  </button>
-                </p>
+                <p className="text-sm text-muted-foreground mt-2">ifølge {MADHAB_NAMES[madhab]}-fiqh</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSettingsOpen(true)}
+                  className="cursor-pointer mt-2"
+                >
+                  <Pencil className="w-3 h-3 mr-1" />
+                  Justér
+                </Button>
               </div>
             ) : (
               <div className="bg-muted rounded-lg p-4">
@@ -863,16 +863,16 @@ export function ZakatCalculator() {
                   Din nettoformue ({formatCurrency(calculations.netWorth)}) er under nisab-tærsklen (
                   {formatCurrency(nisabThreshold)})
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Beregnet efter {MADHAB_NAMES[madhab]}-fiqh{" "}
-                  <button
-                    onClick={() => setSettingsOpen(true)}
-                    className="text-lime-700 hover:underline cursor-pointer font-medium inline-flex items-center gap-1"
-                  >
-                    <Pencil className="w-3 h-3" />
-                    Justér
-                  </button>
-                </p>
+                <p className="text-sm text-muted-foreground mt-2">ifølge {MADHAB_NAMES[madhab]}-fiqh</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSettingsOpen(true)}
+                  className="cursor-pointer mt-2"
+                >
+                  <Pencil className="w-3 h-3 mr-1" />
+                  Justér
+                </Button>
               </div>
             )}
           </div>
