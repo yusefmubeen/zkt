@@ -647,7 +647,7 @@ export function ZakatCalculator() {
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
         <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser.</p>
         {madhab === "maliki" && (
-          <Alert className="mb-4">
+          <Alert className="mb-4 bg-sidebar-primary-foreground">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Bemærk</AlertTitle>
             <AlertDescription>Under Maliki-fiqh fratrækkes gæld ikke fra zakat-beregningen.</AlertDescription>
@@ -846,7 +846,7 @@ export function ZakatCalculator() {
                   Din nettoformue ({formatCurrency(calculations.netWorth)}) er under nisab-tærsklen (
                   {formatCurrency(nisabThreshold)})
                 </p>
-                <p className="text-xs text-muted-foreground mt-2">Beregnet efter {MADHAB_NAMES[madhab]}-fiqh</p>
+                <p className="text-muted-foreground mt-2 text-sm">Beregnet efter {MADHAB_NAMES[madhab]}-fiqh</p>
               </div>
             )}
           </div>
