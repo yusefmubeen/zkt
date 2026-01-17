@@ -1,5 +1,5 @@
 "use client"
-import { Info, HelpCircle, Loader2, Settings, AlertCircle } from "lucide-react"
+import { Info, HelpCircle, Loader2, Settings, AlertCircle, Pencil } from "lucide-react"
 import { useState, useMemo, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -849,8 +849,9 @@ export function ZakatCalculator() {
                   Beregnet efter {MADHAB_NAMES[madhab]}-fiqh.{" "}
                   <button
                     onClick={() => setSettingsOpen(true)}
-                    className="text-lime-700 hover:underline cursor-pointer"
+                    className="text-lime-700 hover:underline cursor-pointer inline-flex items-center gap-1"
                   >
+                    <Pencil className="w-3 h-3" />
                     Justér
                   </button>
                 </p>
@@ -866,8 +867,9 @@ export function ZakatCalculator() {
                   Beregnet efter {MADHAB_NAMES[madhab]}-fiqh.{" "}
                   <button
                     onClick={() => setSettingsOpen(true)}
-                    className="text-lime-700 hover:underline cursor-pointer font-medium"
+                    className="text-lime-700 hover:underline cursor-pointer font-medium inline-flex items-center gap-1"
                   >
+                    <Pencil className="w-3 h-3" />
                     Justér
                   </button>
                 </p>
