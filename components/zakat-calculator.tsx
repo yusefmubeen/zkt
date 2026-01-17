@@ -95,8 +95,8 @@ export function ZakatCalculator() {
   const [stockTreatment, setStockTreatment] = useState<"quarter" | "amana" | "cash">("quarter")
   const [madhab, setMadhab] = useState<Madhab>("hanafi")
   const [propertyIntent, setPropertyIntent] = useState<PropertyIntent>("rental")
-  const [goldPurpose, setGoldPurpose] = useState<JewelryPurpose>("savings")
-  const [silverPurpose, setSilverPurpose] = useState<JewelryPurpose>("savings")
+  const [goldPurpose, setGoldPurpose] = useState<JewelryPurpose>("personal")
+  const [silverPurpose, setSilverPurpose] = useState<JewelryPurpose>("personal")
   const [helpOpen, setHelpOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [isCalculating, setIsCalculating] = useState(false)
@@ -256,8 +256,8 @@ export function ZakatCalculator() {
       otherLiabilities: "",
     })
     setCalculated(false)
-    setGoldPurpose("savings")
-    setSilverPurpose("savings")
+    setGoldPurpose("personal")
+    setSilverPurpose("personal")
   }
 
   const isPersonalDebtDeducted = madhab !== "maliki"
