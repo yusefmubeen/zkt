@@ -646,6 +646,13 @@ export function ZakatCalculator() {
       <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
         <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser.</p>
+        {madhab === "maliki" && (
+          <Alert className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Bemærk</AlertTitle>
+            <AlertDescription>Under Maliki-fiqh fratrækkes gæld ikke fra zakat-beregningen.</AlertDescription>
+          </Alert>
+        )}
         {(madhab === "shafii" || madhab === "hanbali") && (
           <Alert className="mb-4">
             <AlertCircle className="h-4 w-4" />
@@ -663,9 +670,6 @@ export function ZakatCalculator() {
               onChange={(v) => handleLiabilityChange("debts", v)}
               tooltip="Personlig gæld til familie, venner eller andre privatpersoner"
             />
-            {!isPersonalDebtDeducted && parseValue(liabilities.debts) > 0 && (
-              <p className="text-xs text-amber-600 pl-1">Fratrækkes ikke under {MADHAB_NAMES[madhab]}-fiqh</p>
-            )}
           </div>
           <div>
             <AssetInput
@@ -674,9 +678,6 @@ export function ZakatCalculator() {
               onChange={(v) => handleLiabilityChange("loans", v)}
               tooltip="Udestående lån og kreditkortgæld, der forfalder inden for et år"
             />
-            {madhab === "maliki" && parseValue(liabilities.loans) > 0 && (
-              <p className="text-xs text-amber-600 pl-1">Fratrækkes ikke under {MADHAB_NAMES[madhab]}-fiqh</p>
-            )}
           </div>
           <div>
             <AssetInput
@@ -685,9 +686,6 @@ export function ZakatCalculator() {
               onChange={(v) => handleLiabilityChange("otherLiabilities", v)}
               tooltip="Andre økonomiske forpligtelser"
             />
-            {madhab === "maliki" && parseValue(liabilities.otherLiabilities) > 0 && (
-              <p className="text-xs text-amber-600 pl-1">Fratrækkes ikke under {MADHAB_NAMES[madhab]}-fiqh</p>
-            )}
           </div>
         </div>
       </section>
