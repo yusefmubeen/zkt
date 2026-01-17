@@ -41,7 +41,7 @@ const DEBT_RULES: Record<Madhab, { personal: boolean; business: boolean; deferre
     personal: false,
     business: false, // Maliki: no debts are deducted
     deferred: false,
-    description: "Gæld fratrækkes ikke fra zakat-beregningen",
+    description: "Gæld fratrækkes ikke",
   },
   shafii: {
     personal: false,
@@ -310,7 +310,7 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="maliki" id="maliki-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Maliki</span>
-                      <span className="text-sm text-muted-foreground">Gæld fratrækkes ikke fra zakat-beregningen</span>
+                      <span className="text-sm text-muted-foreground">Gæld fratrækkes ikke</span>
                     </div>
                   </label>
                   <label
@@ -320,9 +320,7 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="shafii" id="shafii-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Shafi'i</span>
-                      <span className="text-sm text-muted-foreground">
-                        Kun kortfristet gæld fratrækkes. Langfristet gæld fratrækkes ikke
-                      </span>
+                      <span className="text-sm text-muted-foreground">Kun kortfristet gæld fratrækkes</span>
                     </div>
                   </label>
                   <label
@@ -332,9 +330,7 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="hanbali" id="hanbali-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Hanbali</span>
-                      <span className="text-sm text-muted-foreground">
-                        Kortfristet gæld og langfristet gæld (hvis betaling forventes snart) fratrækkes
-                      </span>
+                      <span className="text-sm text-muted-foreground">Kun kortfristet gæld fratrækkes</span>
                     </div>
                   </label>
                 </RadioGroup>
@@ -419,13 +415,11 @@ export function ZakatCalculator() {
                   <br />
                   <span className="font-semibold">Hanafi:</span> Alle typer gæld fratrækkes fra formuen.
                   <br />
-                  <span className="font-semibold">Maliki:</span> Gæld fratrækkes ikke fra zakat-beregningen.
+                  <span className="font-semibold">Maliki:</span> Gæld fratrækkes ikke.
                   <br />
-                  <span className="font-semibold">Shafi'i:</span> Kun kortfristet gæld fratrækkes. Langfristet gæld
-                  fratrækkes ikke.
+                  <span className="font-semibold">Shafi'i:</span> Kun kortfristet gæld fratrækkes.
                   <br />
-                  <span className="font-semibold">Hanbali:</span> Kortfristet gæld og langfristet gæld (hvis betaling
-                  forventes snart) fratrækkes.
+                  <span className="font-semibold">Hanbali:</span> Kun kortfristet gæld fratrækkes.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
