@@ -460,33 +460,6 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
-                
-                <AccordionContent>
-                  <span className="font-semibold">Kvart-metoden (anbefalet):</span> Du betaler 2,5% zakat på kun 25% af
-                  din aktie- og værdipapirbeholdning. Denne metode tager højde for, at en stor del af aktieværdien
-                  typisk er bundet i virksomhedens faste aktiver.
-                  <br />
-                  <br />
-                  <span className="font-semibold">Kontant-metoden:</span> Betragter aktier som kontanter. Du betaler
-                  2,5% zakat af den samlede værdi af dine aktier.
-                  <br />
-                  <br />
-                  <span className="font-semibold">Amana-metoden:</span> Betragter aktier som "produktiv kapital" (som
-                  afgrøder). Du betaler 10% zakat kun af årets afkast.
-                  <br />
-                  <br />
-                  Kvart-metoden anbefales som en balanceret tilgang.{" "}
-                  <a
-                    href="https://halal.ninja/zakat-on-stocks"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary underline hover:text-primary/80"
-                  >
-                    Læs mere om zakat på aktier
-                  </a>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-5">
                 <AccordionTrigger className="cursor-pointer">Skal jeg betale zakat af min bolig?</AccordionTrigger>
                 <AccordionContent>
                   Nej, du skal ikke betale zakat af din primære bolig, som du bor i. Du skal kun betale zakat af
@@ -494,14 +467,14 @@ export function ZakatCalculator() {
                   zakatpligtig. Hvis den er købt med henblik på udlejning, er kun lejeindtægten zakatpligtig.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-6">
+              <AccordionItem value="item-5">
                 <AccordionTrigger className="cursor-pointer">Hvornår skal jeg betale zakat?</AccordionTrigger>
                 <AccordionContent>
                   Zakat skal betales én gang om året. Mange muslimer vælger at betale i Ramadan, men du kan vælge enhver
                   dato som din årlige zakat-dato. Det vigtige er, at du er konsekvent og betaler hvert år på samme tid.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-7">
+              <AccordionItem value="item-6">
                 <AccordionTrigger className="cursor-pointer">Hvem kan modtage zakat?</AccordionTrigger>
                 <AccordionContent>
                   Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
@@ -509,7 +482,7 @@ export function ZakatCalculator() {
                   typisk til fattige og nødlidende gennem velgørenhedsorganisationer.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-8">
+              <AccordionItem value="item-7">
                 <AccordionTrigger className="cursor-pointer">Er denne beregner 100% nøjagtig?</AccordionTrigger>
                 <AccordionContent>
                   Denne beregner giver et estimat baseret på de oplysninger, du indtaster. For specifikke spørgsmål om
