@@ -743,7 +743,7 @@ export function ZakatCalculator() {
         <Button
           size="lg"
           onClick={handleCalculate}
-          className="bg-lime-700 hover:bg-lime-800 text-white cursor-pointer"
+          className="hover:bg-lime-800 text-white cursor-pointer bg-primary"
           disabled={isCalculating}
         >
           {isCalculating ? (
