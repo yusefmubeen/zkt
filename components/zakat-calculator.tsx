@@ -858,7 +858,9 @@ export function ZakatCalculator() {
       {/* Footer */}
       <footer className="mt-8 text-center text-sm text-muted-foreground">
         <p>
-          Udviklet af Abu HibaDenne beregner er kun vejledende. Konsulter venligst en kvalificeret islamisk lærd for præcis vejledning om zakat.
+          Denne beregner er kun vejledende. Konsulter venligst en kvalificeret islamisk lærd for præcis vejledning om zakat.
+        </p>
+        <p>&copy; Abu Hiba. Al lovprisning tilkommer Allah.
         </p>
       </footer>
     </div>
