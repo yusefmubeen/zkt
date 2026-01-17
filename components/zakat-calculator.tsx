@@ -294,9 +294,8 @@ export function ZakatCalculator() {
       <div className="flex justify-end gap-2 mb-4">
         <Dialog open={settingsOpen} onOpenChange={handleSettingsOpenChange}>
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="cursor-pointer bg-transparent">
-              <Settings className="w-4 h-4 mr-1" />
-              Indstillinger
+            <Button variant="outline" size="icon" className="cursor-pointer bg-transparent">
+              <Settings className="w-4 h-4" />
             </Button>
           </DialogTrigger>
           <DialogContent variant="bottomSheet" className="max-w-2xl max-h-[80vh] overflow-y-auto">
@@ -532,7 +531,6 @@ export function ZakatCalculator() {
         </div>
         <h1 className="text-3xl font-semibold tracking-tight mb-2">Zakat-beregner</h1>
         <p className="text-sm text-muted-foreground mb-4">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
-        
       </div>
 
       {/* Assets Section */}
