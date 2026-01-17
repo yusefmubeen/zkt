@@ -13,6 +13,7 @@ import { Calculator } from "lucide-react"
 
 type Madhab = "hanafi" | "maliki" | "shafii" | "hanbali"
 type PropertyIntent = "rental" | "resale"
+type JewelryPurpose = "personal" | "savings"
 
 const ZAKAT_RATE = 0.025 // 2.5%
 const AMANA_RATE = 0.1 // 10%
@@ -94,6 +95,8 @@ export function ZakatCalculator() {
   const [stockTreatment, setStockTreatment] = useState<"quarter" | "amana" | "cash">("quarter")
   const [madhab, setMadhab] = useState<Madhab>("hanafi")
   const [propertyIntent, setPropertyIntent] = useState<PropertyIntent>("rental")
+  const [goldPurpose, setGoldPurpose] = useState<JewelryPurpose>("savings")
+  const [silverPurpose, setSilverPurpose] = useState<JewelryPurpose>("savings")
   const [helpOpen, setHelpOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [isCalculating, setIsCalculating] = useState(false)
@@ -143,12 +146,25 @@ export function ZakatCalculator() {
 
     const propertyValue = propertyIntent === "resale" ? parseValue(assets.propertyInvestment) : 0
 
+    const goldValue = parseValue(assets.gold)
+    const silverValue = parseValue(assets.silver)
+
+    const zakatableGold = madhab === "hanafi" ? goldValue : goldPurpose === "savings" ? goldValue : 0
+    const zakatableSilver = madhab === "hanafi" ? silverValue : silverPurpose === "savings" ? silverValue : 0
+
     const assetsWithoutStocksAndCrypto = Object.entries(assets)
       .filter(
         ([key]) =>
-          key !== "stocks" && key !== "stockGains" && key !== "otherInvestments" && key !== "propertyInvestment",
+          key !== "stocks" &&
+          key !== "stockGains" &&
+          key !== "otherInvestments" &&
+          key !== "propertyInvestment" &&
+          key !== "gold" &&
+          key !== "silver",
       )
       .reduce((sum, [, val]) => sum + parseValue(val), 0)
+
+    const zakatableAssetsWithoutStocks = assetsWithoutStocksAndCrypto + zakatableGold + zakatableSilver
 
     const personalDebt = parseValue(liabilities.debts)
     const bankLoans = parseValue(liabilities.loans)
@@ -170,7 +186,8 @@ export function ZakatCalculator() {
     const totalLiabilitiesDisplay = personalDebt + bankLoans + otherLiabilities
 
     let stockZakat = 0
-    const totalAssetsForDisplay = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue + propertyValue
+    const totalAssetsForDisplay =
+      assetsWithoutStocksAndCrypto + goldValue + silverValue + stocksValue + cryptoValue + propertyValue
 
     if (stockTreatment === "cash") {
       stockZakat = stocksValue * ZAKAT_RATE
@@ -180,10 +197,10 @@ export function ZakatCalculator() {
       stockZakat = stockGainsValue > 0 ? stockGainsValue * AMANA_RATE : 0
     }
 
-    const netWorth = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue + propertyValue - deductibleLiabilities
+    const netWorth = zakatableAssetsWithoutStocks + stocksValue + cryptoValue + propertyValue - deductibleLiabilities
     const baseZakat =
       netWorth >= nisabThreshold
-        ? (assetsWithoutStocksAndCrypto + cryptoValue + propertyValue - deductibleLiabilities) * ZAKAT_RATE
+        ? (zakatableAssetsWithoutStocks + cryptoValue + propertyValue - deductibleLiabilities) * ZAKAT_RATE
         : 0
     const zakatDue = netWorth >= nisabThreshold ? Math.max(0, baseZakat + stockZakat) : 0
 
@@ -196,7 +213,7 @@ export function ZakatCalculator() {
       stockZakat,
       meetsNisab: netWorth >= nisabThreshold,
     }
-  }, [assets, liabilities, nisabThreshold, stockTreatment, madhab, propertyIntent])
+  }, [assets, liabilities, nisabThreshold, stockTreatment, madhab, propertyIntent, goldPurpose, silverPurpose])
 
   const handleAssetChange = (field: keyof typeof assets, value: string) => {
     setAssets((prev) => ({ ...prev, [field]: value }))
@@ -239,6 +256,8 @@ export function ZakatCalculator() {
       otherLiabilities: "",
     })
     setCalculated(false)
+    setGoldPurpose("savings")
+    setSilverPurpose("savings")
   }
 
   const isPersonalDebtDeducted = madhab !== "maliki"
@@ -499,18 +518,60 @@ export function ZakatCalculator() {
             onChange={(v) => handleAssetChange("cash", v)}
             tooltip="Kontanter du har hjemme eller i pengeskab"
           />
-          <AssetInput
-            label="Guld"
-            value={formatInputValue(assets.gold)}
-            onChange={(v) => handleAssetChange("gold", v)}
-            tooltip="Værdi af guld smykker og guldbarrer"
-          />
-          <AssetInput
-            label="Sølv"
-            value={formatInputValue(assets.silver)}
-            onChange={(v) => handleAssetChange("silver", v)}
-            tooltip="Værdi af sølv smykker og sølvbarrer"
-          />
+          <div className="space-y-3">
+            <AssetInput
+              label="Guld"
+              value={formatInputValue(assets.gold)}
+              onChange={(v) => handleAssetChange("gold", v)}
+              tooltip="Værdi af guld smykker og guldbarrer"
+            />
+            {parseValue(assets.gold) > 0 && madhab !== "hanafi" && (
+              <div className="ml-0 pl-4 border-l-2 border-muted">
+                <Label className="text-sm text-muted-foreground mb-2 block">Formål med guldet:</Label>
+                <RadioGroup
+                  value={goldPurpose}
+                  onValueChange={(value) => setGoldPurpose(value as JewelryPurpose)}
+                  className="flex flex-col gap-2"
+                >
+                  <label htmlFor="gold-personal" className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="personal" id="gold-personal" />
+                    <span className="text-sm">Personligt brug (ikke zakatpligtigt)</span>
+                  </label>
+                  <label htmlFor="gold-savings" className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="savings" id="gold-savings" />
+                    <span className="text-sm">Opsparing eller handel (zakatpligtigt)</span>
+                  </label>
+                </RadioGroup>
+              </div>
+            )}
+          </div>
+          <div className="space-y-3">
+            <AssetInput
+              label="Sølv"
+              value={formatInputValue(assets.silver)}
+              onChange={(v) => handleAssetChange("silver", v)}
+              tooltip="Værdi af sølv smykker og sølvbarrer"
+            />
+            {parseValue(assets.silver) > 0 && madhab !== "hanafi" && (
+              <div className="ml-0 pl-4 border-l-2 border-muted">
+                <Label className="text-sm text-muted-foreground mb-2 block">Formål med sølvet:</Label>
+                <RadioGroup
+                  value={silverPurpose}
+                  onValueChange={(value) => setSilverPurpose(value as JewelryPurpose)}
+                  className="flex flex-col gap-2"
+                >
+                  <label htmlFor="silver-personal" className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="personal" id="silver-personal" />
+                    <span className="text-sm">Personligt brug (ikke zakatpligtigt)</span>
+                  </label>
+                  <label htmlFor="silver-savings" className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="savings" id="silver-savings" />
+                    <span className="text-sm">Opsparing eller handel (zakatpligtigt)</span>
+                  </label>
+                </RadioGroup>
+              </div>
+            )}
+          </div>
           <AssetInput
             label="Forretningsinventar"
             value={formatInputValue(assets.businessInventory)}
