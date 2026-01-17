@@ -647,7 +647,7 @@ export function ZakatCalculator() {
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
         <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser.</p>
         {madhab === "maliki" && (
-          <Alert className="mb-4 bg-sidebar-primary-foreground">
+          <Alert variant="default" className="mb-4 bg-background">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Bemærk</AlertTitle>
             <AlertDescription>Under Maliki-fiqh fratrækkes gæld ikke fra zakat-beregningen.</AlertDescription>
