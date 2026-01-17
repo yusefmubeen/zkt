@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Calculator } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 type Madhab = "hanafi" | "maliki" | "shafii" | "hanbali"
 type PropertyIntent = "rental" | "resale"
@@ -645,16 +646,12 @@ export function ZakatCalculator() {
       <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
         <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser.</p>
-        {madhab === "maliki" && (
-          <p className="text-sm text-amber-600 mb-4">
-            Under Maliki-fiqh fratrækkes gæld ikke fra zakat-beregningen. Personlige smykker er fritaget for zakat.
-          </p>
-        )}
         {(madhab === "shafii" || madhab === "hanbali") && (
-          <p className="text-sm text-amber-600 mb-4">
-            Under {MADHAB_NAMES[madhab]}-fiqh fratrækkes kun gæld, der forfalder nu (kortfristet gæld). Personlige
-            smykker er fritaget.
-          </p>
+          <Alert className="mb-4">
+            <AlertDescription>
+              Under {MADHAB_NAMES[madhab]}-fiqh fratrækkes kun gæld, der forfalder nu (kortfristet gæld).
+            </AlertDescription>
+          </Alert>
         )}
         <div className="space-y-6">
           <div>
