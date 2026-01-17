@@ -35,25 +35,25 @@ const DEBT_RULES: Record<Madhab, { personal: boolean; business: boolean; deferre
     personal: true,
     business: true,
     deferred: true,
-    description: "Alle typer gæld fratrækkes",
+    description: "Al gæld fratrækkes. Personlige smykker medregnes.",
   },
   maliki: {
     personal: false,
     business: false, // Maliki: no debts are deducted
     deferred: false,
-    description: "Gæld fratrækkes ikke",
+    description: "Gæld fratrækkes ikke. Personlige smykker fritages.",
   },
   shafii: {
     personal: false,
     business: true,
     deferred: false,
-    description: "Kun kortfristet gæld fratrækkes",
+    description: "Kun kortfristet gæld fratrækkes. Personlige smykker fritages.",
   },
   hanbali: {
     personal: true,
     business: true,
     deferred: true,
-    description: "Kun kortfristet gæld fratrækkes",
+    description: "Kortfristet gæld fratrækkes. Personlige smykker fritages.",
   },
 }
 
@@ -283,7 +283,8 @@ export function ZakatCalculator() {
               <div>
                 <h3 className="text-sm font-semibold mb-2">Lovskole (Madhab)</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Vælg den islamiske lovskole, som beregningen skal følge. Dette påvirker, hvordan gæld fratrækkes.
+                  Vælg den islamiske lovskole, som beregningen skal følge. Dette påvirker, hvordan gæld og personlige
+                  smykker behandles.
                 </p>
                 <RadioGroup
                   value={madhab}
@@ -300,7 +301,9 @@ export function ZakatCalculator() {
                         Hanafi
                         <Badge variant="secondary">Standard</Badge>
                       </span>
-                      <span className="text-sm text-muted-foreground">Alle typer gæld fratrækkes</span>
+                      <span className="text-sm text-muted-foreground">
+                        Al gæld fratrækkes. Personlige smykker medregnes.
+                      </span>
                     </div>
                   </label>
                   <label
@@ -310,7 +313,9 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="maliki" id="maliki-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Maliki</span>
-                      <span className="text-sm text-muted-foreground">Gæld fratrækkes ikke</span>
+                      <span className="text-sm text-muted-foreground">
+                        Gæld fratrækkes ikke. Personlige smykker fritages.
+                      </span>
                     </div>
                   </label>
                   <label
@@ -320,7 +325,9 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="shafii" id="shafii-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Shafi'i</span>
-                      <span className="text-sm text-muted-foreground">Kun kortfristet gæld fratrækkes</span>
+                      <span className="text-sm text-muted-foreground">
+                        Kun kortfristet gæld fratrækkes. Personlige smykker fritages.
+                      </span>
                     </div>
                   </label>
                   <label
@@ -330,7 +337,9 @@ export function ZakatCalculator() {
                     <RadioGroupItem value="hanbali" id="hanbali-setting" />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-sm font-medium">Hanbali</span>
-                      <span className="text-sm text-muted-foreground">Kun kortfristet gæld fratrækkes</span>
+                      <span className="text-sm text-muted-foreground">
+                        Kortfristet gæld fratrækkes. Personlige smykker fritages.
+                      </span>
                     </div>
                   </label>
                 </RadioGroup>
@@ -410,16 +419,21 @@ export function ZakatCalculator() {
                 <AccordionTrigger className="cursor-pointer">Hvad er en madhab (lovskole)?</AccordionTrigger>
                 <AccordionContent>
                   En madhab er en islamisk lovskole. De fire store sunni-lovskoler er Hanafi, Maliki, Shafi'i og
-                  Hanbali. De har forskellige fortolkninger af, hvordan gæld skal fratrækkes ved zakat-beregning:
+                  Hanbali. De har forskellige fortolkninger af, hvordan gæld og personlige smykker skal behandles ved
+                  zakat-beregning:
                   <br />
                   <br />
-                  <span className="font-semibold">Hanafi:</span> Alle typer gæld fratrækkes fra formuen.
+                  <span className="font-semibold">Hanafi:</span> Al gæld fratrækkes. Personlige guld- og sølvsmykker
+                  medregnes som zakatpligtige aktiver.
                   <br />
-                  <span className="font-semibold">Maliki:</span> Gæld fratrækkes ikke.
+                  <span className="font-semibold">Maliki:</span> Gæld fratrækkes ikke. Personlige smykker er fritaget
+                  for zakat.
                   <br />
-                  <span className="font-semibold">Shafi'i:</span> Kun kortfristet gæld fratrækkes.
+                  <span className="font-semibold">Shafi'i:</span> Kun kortfristet gæld fratrækkes. Personlige smykker er
+                  fritaget.
                   <br />
-                  <span className="font-semibold">Hanbali:</span> Kun kortfristet gæld fratrækkes.
+                  <span className="font-semibold">Hanbali:</span> Kortfristet gæld fratrækkes. Personlige smykker er
+                  fritaget.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
@@ -632,11 +646,14 @@ export function ZakatCalculator() {
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
         <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser.</p>
         {madhab === "maliki" && (
-          <p className="text-sm text-amber-600 mb-4">Under Maliki-fiqh fratrækkes gæld ikke fra zakat-beregningen.</p>
+          <p className="text-sm text-amber-600 mb-4">
+            Under Maliki-fiqh fratrækkes gæld ikke fra zakat-beregningen. Personlige smykker er fritaget for zakat.
+          </p>
         )}
         {(madhab === "shafii" || madhab === "hanbali") && (
           <p className="text-sm text-amber-600 mb-4">
-            Under {MADHAB_NAMES[madhab]}-fiqh fratrækkes kun gæld, der forfalder nu (kortfristet gæld).
+            Under {MADHAB_NAMES[madhab]}-fiqh fratrækkes kun gæld, der forfalder nu (kortfristet gæld). Personlige
+            smykker er fritaget.
           </p>
         )}
         <div className="space-y-6">
