@@ -460,9 +460,7 @@ export function ZakatCalculator() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger className="cursor-pointer">
-                  <button type="button" aria-controls="radix-_r_4j_" aria-expanded="false" data-state="closed" data-orientation="vertical" id="radix-_r_4i_" data-slot="accordion-trigger" class="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&amp;[data-state=open]&gt;svg]:rotate-180 cursor-pointer" data-radix-collection-item="">Hvordan skal jeg betale zakat af mine aktier?<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200"><path d="m6 9 6 6 6-6"></path></svg></button>
-                </AccordionTrigger>
+                
                 <AccordionContent>
                   <span className="font-semibold">Kvart-metoden (anbefalet):</span> Du betaler 2,5% zakat på kun 25% af
                   din aktie- og værdipapirbeholdning. Denne metode tager højde for, at en stor del af aktieværdien
