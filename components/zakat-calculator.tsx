@@ -1,5 +1,5 @@
 "use client"
-import { Info, HelpCircle, Loader2, Settings, AlertCircle } from "lucide-react"
+import { Info, HelpCircle, Loader2, Settings, AlertCircle, Pencil } from "lucide-react"
 import { useState, useMemo, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -845,7 +845,13 @@ export function ZakatCalculator() {
                     <>Dette beløb er 2,5% af din nettoformue på {formatCurrency(calculations.netWorth)}</>
                   )}
                 </p>
-                <p className="text-xs text-muted-foreground mt-2">Beregnet efter {MADHAB_NAMES[madhab]}-fiqh</p>
+                <button
+                  onClick={() => setSettingsOpen(true)}
+                  className="text-sm text-muted-foreground mt-2 flex items-center gap-1 hover:text-foreground transition-colors cursor-pointer"
+                >
+                  ifølge {MADHAB_NAMES[madhab]}-fiqh
+                  <Pencil className="w-3 h-3" />
+                </button>
               </div>
             ) : (
               <div className="bg-muted rounded-lg p-4">
@@ -854,7 +860,13 @@ export function ZakatCalculator() {
                   Din nettoformue ({formatCurrency(calculations.netWorth)}) er under nisab-tærsklen (
                   {formatCurrency(nisabThreshold)})
                 </p>
-                <p className="text-muted-foreground mt-2 text-sm">Beregnet efter {MADHAB_NAMES[madhab]}-fiqh</p>
+                <button
+                  onClick={() => setSettingsOpen(true)}
+                  className="text-sm text-muted-foreground mt-2 flex items-center gap-1 hover:text-foreground transition-colors cursor-pointer"
+                >
+                  ifølge {MADHAB_NAMES[madhab]}-fiqh
+                  <Pencil className="w-3 h-3" />
+                </button>
               </div>
             )}
           </div>
