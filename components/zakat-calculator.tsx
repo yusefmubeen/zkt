@@ -523,7 +523,7 @@ export function ZakatCalculator() {
               label="Guld"
               value={formatInputValue(assets.gold)}
               onChange={(v) => handleAssetChange("gold", v)}
-              tooltip="Værdi af guld smykker og guldbarrer"
+              tooltip="Værdi af guldsmykker og guldbarrer"
             />
             {parseValue(assets.gold) > 0 && madhab !== "hanafi" && (
               <div className="ml-0 pl-4 border-l-2 border-muted">
@@ -550,7 +550,7 @@ export function ZakatCalculator() {
               label="Sølv"
               value={formatInputValue(assets.silver)}
               onChange={(v) => handleAssetChange("silver", v)}
-              tooltip="Værdi af sølv smykker og sølvbarrer"
+              tooltip="Værdi af sølvsmykker og sølvbarrer"
             />
             {parseValue(assets.silver) > 0 && madhab !== "hanafi" && (
               <div className="ml-0 pl-4 border-l-2 border-muted">
