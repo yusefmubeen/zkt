@@ -107,7 +107,6 @@ export function ZakatCalculator() {
     stockGains: "",
     businessInventory: "",
     propertyInvestment: "",
-    rentalIncome: "",
     otherInvestments: "",
     receivables: "",
   })
@@ -143,16 +142,11 @@ export function ZakatCalculator() {
     const cryptoValue = parseValue(assets.otherInvestments)
 
     const propertyValue = propertyIntent === "resale" ? parseValue(assets.propertyInvestment) : 0
-    const rentalIncomeValue = propertyIntent === "rental" ? parseValue(assets.rentalIncome) : 0
 
     const assetsWithoutStocksAndCrypto = Object.entries(assets)
       .filter(
         ([key]) =>
-          key !== "stocks" &&
-          key !== "stockGains" &&
-          key !== "otherInvestments" &&
-          key !== "propertyInvestment" &&
-          key !== "rentalIncome",
+          key !== "stocks" && key !== "stockGains" && key !== "otherInvestments" && key !== "propertyInvestment",
       )
       .reduce((sum, [, val]) => sum + parseValue(val), 0)
 
@@ -164,26 +158,19 @@ export function ZakatCalculator() {
     const rules = DEBT_RULES[madhab]
 
     if (madhab === "hanafi") {
-      // Hanafi: Deduct all debts
       deductibleLiabilities = personalDebt + bankLoans + otherLiabilities
     } else if (madhab === "maliki") {
-      // Maliki: Only business-related debts (bank loans for business, other business liabilities)
-      // Personal debts are NOT deducted
-      deductibleLiabilities = bankLoans + otherLiabilities // Assuming bank loans are business-related
+      deductibleLiabilities = bankLoans + otherLiabilities
     } else if (madhab === "shafii") {
-      // Shafi'i: Only immediate debts (not deferred)
-      // Bank loans and credit cards that are due now
       deductibleLiabilities = bankLoans + otherLiabilities
     } else if (madhab === "hanbali") {
-      // Hanbali: Immediate debts + deferred if expected soon
       deductibleLiabilities = personalDebt + bankLoans + otherLiabilities
     }
 
     const totalLiabilitiesDisplay = personalDebt + bankLoans + otherLiabilities
 
     let stockZakat = 0
-    const totalAssetsForDisplay =
-      assetsWithoutStocksAndCrypto + stocksValue + cryptoValue + propertyValue + rentalIncomeValue
+    const totalAssetsForDisplay = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue + propertyValue
 
     if (stockTreatment === "cash") {
       stockZakat = stocksValue * ZAKAT_RATE
@@ -193,17 +180,10 @@ export function ZakatCalculator() {
       stockZakat = stockGainsValue > 0 ? stockGainsValue * AMANA_RATE : 0
     }
 
-    const netWorth =
-      assetsWithoutStocksAndCrypto +
-      stocksValue +
-      cryptoValue +
-      propertyValue +
-      rentalIncomeValue -
-      deductibleLiabilities
+    const netWorth = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue + propertyValue - deductibleLiabilities
     const baseZakat =
       netWorth >= nisabThreshold
-        ? (assetsWithoutStocksAndCrypto + cryptoValue + propertyValue + rentalIncomeValue - deductibleLiabilities) *
-          ZAKAT_RATE
+        ? (assetsWithoutStocksAndCrypto + cryptoValue + propertyValue - deductibleLiabilities) * ZAKAT_RATE
         : 0
     const zakatDue = netWorth >= nisabThreshold ? Math.max(0, baseZakat + stockZakat) : 0
 
@@ -250,7 +230,6 @@ export function ZakatCalculator() {
       stockGains: "",
       businessInventory: "",
       propertyInvestment: "",
-      rentalIncome: "",
       otherInvestments: "",
       receivables: "",
     })
@@ -564,16 +543,6 @@ export function ZakatCalculator() {
                     <span className="text-sm">Videresalg (hele værdien er zakatpligtig)</span>
                   </label>
                 </RadioGroup>
-                {propertyIntent === "rental" && (
-                  <div className="mt-3">
-                    <AssetInput
-                      label="Årlig lejeindtægt"
-                      value={formatInputValue(assets.rentalIncome)}
-                      onChange={(v) => handleAssetChange("rentalIncome", v)}
-                      tooltip="Din årlige lejeindtægt fra ejendommen"
-                    />
-                  </div>
-                )}
               </div>
             )}
           </div>
