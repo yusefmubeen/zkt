@@ -846,7 +846,7 @@ export function ZakatCalculator() {
                   )}
                 </p>
                 <p className="text-sm text-muted-foreground mt-2">
-                  ifølge {MADHAB_NAMES[madhab]}-fiqh.{" "}
+                  Beregnet efter {MADHAB_NAMES[madhab]}-fiqh.{" "}
                   <button
                     onClick={() => setSettingsOpen(true)}
                     className="text-lime-700 hover:underline cursor-pointer"
@@ -863,10 +863,10 @@ export function ZakatCalculator() {
                   {formatCurrency(nisabThreshold)})
                 </p>
                 <p className="text-sm text-muted-foreground mt-2">
-                  ifølge {MADHAB_NAMES[madhab]}-fiqh.{" "}
+                  Beregnet efter {MADHAB_NAMES[madhab]}-fiqh.{" "}
                   <button
                     onClick={() => setSettingsOpen(true)}
-                    className="text-lime-700 hover:underline cursor-pointer"
+                    className="text-lime-700 hover:underline cursor-pointer font-medium"
                   >
                     Justér
                   </button>
