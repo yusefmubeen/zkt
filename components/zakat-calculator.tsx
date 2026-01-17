@@ -11,6 +11,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Calculator } from "lucide-react"
 
+type Madhab = "hanafi" | "maliki" | "shafii" | "hanbali"
+type PropertyIntent = "rental" | "resale"
+
 const ZAKAT_RATE = 0.025 // 2.5%
 const AMANA_RATE = 0.1 // 10%
 const QUARTER_RATE = 0.25 // 25% of stock value
@@ -18,6 +21,40 @@ const NISAB_GOLD_GRAMS = 87.48 // grams of gold
 const NISAB_SILVER_GRAMS = 612.36 // grams of silver
 const GOLD_PRICE_PER_GRAM = 550 // approximate DKK per gram
 const SILVER_PRICE_PER_GRAM = 7 // approximate DKK per gram
+
+const MADHAB_NAMES: Record<Madhab, string> = {
+  hanafi: "Hanafi",
+  maliki: "Maliki",
+  shafii: "Shafi'i",
+  hanbali: "Hanbali",
+}
+
+const DEBT_RULES: Record<Madhab, { personal: boolean; business: boolean; deferred: boolean; description: string }> = {
+  hanafi: {
+    personal: true,
+    business: true,
+    deferred: true,
+    description: "Alle typer gæld fratrækkes",
+  },
+  maliki: {
+    personal: false,
+    business: true,
+    deferred: false,
+    description: "Kun erhvervsgæld fratrækkes. Personlig gæld fratrækkes ikke",
+  },
+  shafii: {
+    personal: true,
+    business: true,
+    deferred: false,
+    description: "Kun umiddelbar gæld fratrækkes. Udskudt gæld fratrækkes ikke",
+  },
+  hanbali: {
+    personal: true,
+    business: true,
+    deferred: true,
+    description: "Umiddelbar gæld fratrækkes. Udskudt gæld fratrækkes, hvis betaling forventes snart",
+  },
+}
 
 function formatInputValue(value: string): string {
   const cleanValue = value.replace(/[^\d,-]/g, "")
@@ -55,6 +92,8 @@ function HandHeartIcon({ className }: { className?: string }) {
 export function ZakatCalculator() {
   const [nisabType, setNisabType] = useState<"silver" | "gold">("silver")
   const [stockTreatment, setStockTreatment] = useState<"quarter" | "amana" | "cash">("quarter")
+  const [madhab, setMadhab] = useState<Madhab>("hanafi")
+  const [propertyIntent, setPropertyIntent] = useState<PropertyIntent>("rental")
   const [helpOpen, setHelpOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [isCalculating, setIsCalculating] = useState(false)
@@ -68,6 +107,7 @@ export function ZakatCalculator() {
     stockGains: "",
     businessInventory: "",
     propertyInvestment: "",
+    rentalIncome: "",
     otherInvestments: "",
     receivables: "",
   })
@@ -102,14 +142,48 @@ export function ZakatCalculator() {
     const stockGainsValue = parseValue(assets.stockGains)
     const cryptoValue = parseValue(assets.otherInvestments)
 
+    const propertyValue = propertyIntent === "resale" ? parseValue(assets.propertyInvestment) : 0
+    const rentalIncomeValue = propertyIntent === "rental" ? parseValue(assets.rentalIncome) : 0
+
     const assetsWithoutStocksAndCrypto = Object.entries(assets)
-      .filter(([key]) => key !== "stocks" && key !== "stockGains" && key !== "otherInvestments")
+      .filter(
+        ([key]) =>
+          key !== "stocks" &&
+          key !== "stockGains" &&
+          key !== "otherInvestments" &&
+          key !== "propertyInvestment" &&
+          key !== "rentalIncome",
+      )
       .reduce((sum, [, val]) => sum + parseValue(val), 0)
 
-    const totalLiabilities = Object.values(liabilities).reduce((sum, val) => sum + parseValue(val), 0)
+    const personalDebt = parseValue(liabilities.debts)
+    const bankLoans = parseValue(liabilities.loans)
+    const otherLiabilities = parseValue(liabilities.otherLiabilities)
+
+    let deductibleLiabilities = 0
+    const rules = DEBT_RULES[madhab]
+
+    if (madhab === "hanafi") {
+      // Hanafi: Deduct all debts
+      deductibleLiabilities = personalDebt + bankLoans + otherLiabilities
+    } else if (madhab === "maliki") {
+      // Maliki: Only business-related debts (bank loans for business, other business liabilities)
+      // Personal debts are NOT deducted
+      deductibleLiabilities = bankLoans + otherLiabilities // Assuming bank loans are business-related
+    } else if (madhab === "shafii") {
+      // Shafi'i: Only immediate debts (not deferred)
+      // Bank loans and credit cards that are due now
+      deductibleLiabilities = bankLoans + otherLiabilities
+    } else if (madhab === "hanbali") {
+      // Hanbali: Immediate debts + deferred if expected soon
+      deductibleLiabilities = personalDebt + bankLoans + otherLiabilities
+    }
+
+    const totalLiabilitiesDisplay = personalDebt + bankLoans + otherLiabilities
 
     let stockZakat = 0
-    const totalAssetsForDisplay = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue
+    const totalAssetsForDisplay =
+      assetsWithoutStocksAndCrypto + stocksValue + cryptoValue + propertyValue + rentalIncomeValue
 
     if (stockTreatment === "cash") {
       stockZakat = stocksValue * ZAKAT_RATE
@@ -119,20 +193,30 @@ export function ZakatCalculator() {
       stockZakat = stockGainsValue > 0 ? stockGainsValue * AMANA_RATE : 0
     }
 
-    const netWorth = assetsWithoutStocksAndCrypto + stocksValue + cryptoValue - totalLiabilities
+    const netWorth =
+      assetsWithoutStocksAndCrypto +
+      stocksValue +
+      cryptoValue +
+      propertyValue +
+      rentalIncomeValue -
+      deductibleLiabilities
     const baseZakat =
-      netWorth >= nisabThreshold ? (assetsWithoutStocksAndCrypto + cryptoValue - totalLiabilities) * ZAKAT_RATE : 0
+      netWorth >= nisabThreshold
+        ? (assetsWithoutStocksAndCrypto + cryptoValue + propertyValue + rentalIncomeValue - deductibleLiabilities) *
+          ZAKAT_RATE
+        : 0
     const zakatDue = netWorth >= nisabThreshold ? Math.max(0, baseZakat + stockZakat) : 0
 
     return {
       totalAssets: totalAssetsForDisplay,
-      totalLiabilities,
+      totalLiabilities: totalLiabilitiesDisplay,
+      deductibleLiabilities,
       netWorth,
       zakatDue,
       stockZakat,
       meetsNisab: netWorth >= nisabThreshold,
     }
-  }, [assets, liabilities, nisabThreshold, stockTreatment])
+  }, [assets, liabilities, nisabThreshold, stockTreatment, madhab, propertyIntent])
 
   const handleAssetChange = (field: keyof typeof assets, value: string) => {
     setAssets((prev) => ({ ...prev, [field]: value }))
@@ -166,6 +250,7 @@ export function ZakatCalculator() {
       stockGains: "",
       businessInventory: "",
       propertyInvestment: "",
+      rentalIncome: "",
       otherInvestments: "",
       receivables: "",
     })
@@ -176,6 +261,8 @@ export function ZakatCalculator() {
     })
     setCalculated(false)
   }
+
+  const isPersonalDebtDeducted = madhab !== "maliki"
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -188,46 +275,108 @@ export function ZakatCalculator() {
               Indstillinger
             </Button>
           </DialogTrigger>
-          <DialogContent variant="bottomSheet" className="max-w-2xl">
+          <DialogContent variant="bottomSheet" className="max-w-2xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Indstillinger</DialogTitle>
             </DialogHeader>
-            <div className="py-4">
-              <h3 className="text-sm font-semibold mb-2">Nisab-beregningsmetode</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Sølv anbefales, da det
-                resulterer i en lavere tærskel.
-              </p>
-              <RadioGroup
-                value={nisabType}
-                onValueChange={(value) => setNisabType(value as "silver" | "gold")}
-                className="flex flex-col gap-3"
-              >
-                <label
-                  htmlFor="silver-setting"
-                  className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+            <div className="py-4 space-y-8">
+              <div>
+                <h3 className="text-sm font-semibold mb-2">Lovskole (Madhab)</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Vælg den islamiske lovskole, som beregningen skal følge. Dette påvirker, hvordan gæld fratrækkes.
+                </p>
+                <RadioGroup
+                  value={madhab}
+                  onValueChange={(value) => setMadhab(value as Madhab)}
+                  className="flex flex-col gap-3"
                 >
-                  <RadioGroupItem value="silver" id="silver-setting" />
-                  <div className="flex flex-col gap-0.5">
-                    <span className="flex items-center gap-2 text-sm font-medium">
-                      Sølv
-                      <Badge variant="secondary">Anbefalet</Badge>
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      Baseret på 612,36g sølv ({formatCurrency(NISAB_SILVER_GRAMS * SILVER_PRICE_PER_GRAM)})
-                    </span>
-                  </div>
-                </label>
-                <label htmlFor="gold-setting" className="flex items-center gap-3 rounded-md border p-3 cursor-pointer">
-                  <RadioGroupItem value="gold" id="gold-setting" />
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-medium">Guld</span>
-                    <span className="text-sm text-muted-foreground">
-                      Baseret på 87,48g guld ({formatCurrency(NISAB_GOLD_GRAMS * GOLD_PRICE_PER_GRAM)})
-                    </span>
-                  </div>
-                </label>
-              </RadioGroup>
+                  <label
+                    htmlFor="hanafi-setting"
+                    className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+                  >
+                    <RadioGroupItem value="hanafi" id="hanafi-setting" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="flex items-center gap-2 text-sm font-medium">
+                        Hanafi
+                        <Badge variant="secondary">Standard</Badge>
+                      </span>
+                      <span className="text-sm text-muted-foreground">Alle typer gæld fratrækkes</span>
+                    </div>
+                  </label>
+                  <label
+                    htmlFor="maliki-setting"
+                    className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+                  >
+                    <RadioGroupItem value="maliki" id="maliki-setting" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-sm font-medium">Maliki</span>
+                      <span className="text-sm text-muted-foreground">Kun erhvervsgæld fratrækkes</span>
+                    </div>
+                  </label>
+                  <label
+                    htmlFor="shafii-setting"
+                    className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+                  >
+                    <RadioGroupItem value="shafii" id="shafii-setting" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-sm font-medium">Shafi'i</span>
+                      <span className="text-sm text-muted-foreground">Kun umiddelbar gæld fratrækkes</span>
+                    </div>
+                  </label>
+                  <label
+                    htmlFor="hanbali-setting"
+                    className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+                  >
+                    <RadioGroupItem value="hanbali" id="hanbali-setting" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-sm font-medium">Hanbali</span>
+                      <span className="text-sm text-muted-foreground">Umiddelbar og forventet gæld fratrækkes</span>
+                    </div>
+                  </label>
+                </RadioGroup>
+              </div>
+
+              {/* Nisab setting */}
+              <div>
+                <h3 className="text-sm font-semibold mb-2">Nisab-beregningsmetode</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Sølv anbefales, da det
+                  resulterer i en lavere tærskel.
+                </p>
+                <RadioGroup
+                  value={nisabType}
+                  onValueChange={(value) => setNisabType(value as "silver" | "gold")}
+                  className="flex flex-col gap-3"
+                >
+                  <label
+                    htmlFor="silver-setting"
+                    className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+                  >
+                    <RadioGroupItem value="silver" id="silver-setting" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="flex items-center gap-2 text-sm font-medium">
+                        Sølv
+                        <Badge variant="secondary">Anbefalet</Badge>
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        Baseret på 612,36g sølv ({formatCurrency(NISAB_SILVER_GRAMS * SILVER_PRICE_PER_GRAM)})
+                      </span>
+                    </div>
+                  </label>
+                  <label
+                    htmlFor="gold-setting"
+                    className="flex items-center gap-3 rounded-md border p-3 cursor-pointer"
+                  >
+                    <RadioGroupItem value="gold" id="gold-setting" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-sm font-medium">Guld</span>
+                      <span className="text-sm text-muted-foreground">
+                        Baseret på 87,48g guld ({formatCurrency(NISAB_GOLD_GRAMS * GOLD_PRICE_PER_GRAM)})
+                      </span>
+                    </div>
+                  </label>
+                </RadioGroup>
+              </div>
             </div>
           </DialogContent>
         </Dialog>
@@ -256,6 +405,25 @@ export function ZakatCalculator() {
                   Nisab er den minimale formue, man skal have, før zakat bliver obligatorisk. Nisab kan beregnes baseret
                   på enten guld (87,48g) eller sølv (612,36g). Sølv-nisab anbefales, da den resulterer i en lavere
                   tærskel.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-madhab">
+                <AccordionTrigger className="cursor-pointer">Hvad er en madhab (lovskole)?</AccordionTrigger>
+                <AccordionContent>
+                  En madhab er en islamisk lovskole. De fire store sunni-lovskoler er Hanafi, Maliki, Shafi'i og
+                  Hanbali. De har forskellige fortolkninger af, hvordan gæld skal fratrækkes ved zakat-beregning:
+                  <br />
+                  <br />
+                  <span className="font-semibold">Hanafi:</span> Alle typer gæld fratrækkes fra formuen.
+                  <br />
+                  <span className="font-semibold">Maliki:</span> Kun erhvervsgæld fratrækkes. Personlig gæld fratrækkes
+                  ikke.
+                  <br />
+                  <span className="font-semibold">Shafi'i:</span> Kun umiddelbar gæld fratrækkes. Udskudt gæld
+                  fratrækkes ikke.
+                  <br />
+                  <span className="font-semibold">Hanbali:</span> Umiddelbar gæld og udskudt gæld (hvis betaling
+                  forventes snart) fratrækkes.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
@@ -291,7 +459,8 @@ export function ZakatCalculator() {
                 <AccordionTrigger className="cursor-pointer">Skal jeg betale zakat af min bolig?</AccordionTrigger>
                 <AccordionContent>
                   Nej, du skal ikke betale zakat af din primære bolig, som du bor i. Du skal kun betale zakat af
-                  investeringsejendomme, som er købt med henblik på udlejning eller salg.
+                  investeringsejendomme. Hvis ejendommen er købt med henblik på videresalg, er hele værdien
+                  zakatpligtig. Hvis den er købt med henblik på udlejning, er kun lejeindtægten zakatpligtig.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5">
@@ -370,12 +539,45 @@ export function ZakatCalculator() {
             onChange={(v) => handleAssetChange("businessInventory", v)}
             tooltip="Værdi af varer til salg i din virksomhed"
           />
-          <AssetInput
-            label="Investeringsejendomme"
-            value={formatInputValue(assets.propertyInvestment)}
-            onChange={(v) => handleAssetChange("propertyInvestment", v)}
-            tooltip="Ejendomme købt med henblik på udlejning eller salg"
-          />
+
+          <div className="space-y-3">
+            <AssetInput
+              label="Investeringsejendomme"
+              value={formatInputValue(assets.propertyInvestment)}
+              onChange={(v) => handleAssetChange("propertyInvestment", v)}
+              tooltip="Ejendomme købt med henblik på investering (ikke din primære bolig)"
+            />
+            {parseValue(assets.propertyInvestment) > 0 && (
+              <div className="ml-0 pl-4 border-l-2 border-muted">
+                <Label className="text-sm text-muted-foreground mb-2 block">Formål med ejendommen:</Label>
+                <RadioGroup
+                  value={propertyIntent}
+                  onValueChange={(value) => setPropertyIntent(value as PropertyIntent)}
+                  className="flex flex-col gap-2"
+                >
+                  <label htmlFor="rental" className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="rental" id="rental" />
+                    <span className="text-sm">Udlejning (kun lejeindtægt er zakatpligtig)</span>
+                  </label>
+                  <label htmlFor="resale" className="flex items-center gap-2 cursor-pointer">
+                    <RadioGroupItem value="resale" id="resale" />
+                    <span className="text-sm">Videresalg (hele værdien er zakatpligtig)</span>
+                  </label>
+                </RadioGroup>
+                {propertyIntent === "rental" && (
+                  <div className="mt-3">
+                    <AssetInput
+                      label="Årlig lejeindtægt"
+                      value={formatInputValue(assets.rentalIncome)}
+                      onChange={(v) => handleAssetChange("rentalIncome", v)}
+                      tooltip="Din årlige lejeindtægt fra ejendommen"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           <AssetInput
             label="Aktier og værdipapirer"
             value={formatInputValue(assets.stocks)}
@@ -400,14 +602,26 @@ export function ZakatCalculator() {
       {/* Liabilities Section */}
       <section className="mb-12">
         <h2 className="text-lg font-semibold mb-2">Gæld</h2>
-        <p className="text-sm text-muted-foreground mb-4">Indtast din gæld og forpligtelser i DKK</p>
+        <p className="text-sm text-muted-foreground mb-4">
+          Indtast din gæld og forpligtelser i DKK
+          {madhab !== "hanafi" && (
+            <span className="block mt-1 text-xs">
+              ({DEBT_RULES[madhab].description} ifølge {MADHAB_NAMES[madhab]}-fiqh)
+            </span>
+          )}
+        </p>
         <div className="space-y-6">
-          <AssetInput
-            label="Personlige lån"
-            value={formatInputValue(liabilities.debts)}
-            onChange={(v) => handleLiabilityChange("debts", v)}
-            tooltip="Lån fra familie, venner eller andre"
-          />
+          <div className="space-y-2">
+            <AssetInput
+              label="Personlige lån"
+              value={formatInputValue(liabilities.debts)}
+              onChange={(v) => handleLiabilityChange("debts", v)}
+              tooltip="Lån fra familie, venner eller andre"
+            />
+            {!isPersonalDebtDeducted && parseValue(liabilities.debts) > 0 && (
+              <p className="text-xs text-amber-600 pl-1">Fratrækkes ikke under {MADHAB_NAMES[madhab]}-fiqh</p>
+            )}
+          </div>
           <AssetInput
             label="Banklån og kreditkort"
             value={formatInputValue(liabilities.loans)}
@@ -532,7 +746,15 @@ export function ZakatCalculator() {
           <h2 className="text-lg font-semibold mb-4 text-center">Beregningsresultat</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <ResultItem label="Samlede aktiver" value={formatCurrency(calculations.totalAssets)} />
-            <ResultItem label="Samlet gæld" value={formatCurrency(calculations.totalLiabilities)} />
+            <ResultItem
+              label="Samlet gæld"
+              value={formatCurrency(calculations.totalLiabilities)}
+              subtext={
+                calculations.deductibleLiabilities !== calculations.totalLiabilities
+                  ? `(${formatCurrency(calculations.deductibleLiabilities)} fratrukket)`
+                  : undefined
+              }
+            />
             <ResultItem
               label="Nettoformue"
               value={formatCurrency(calculations.netWorth)}
@@ -562,6 +784,7 @@ export function ZakatCalculator() {
                     <>Dette beløb er 2,5% af din nettoformue på {formatCurrency(calculations.netWorth)}</>
                   )}
                 </p>
+                <p className="text-xs text-muted-foreground mt-2">Beregnet efter {MADHAB_NAMES[madhab]}-fiqh</p>
               </div>
             ) : (
               <div className="bg-muted rounded-lg p-4">
@@ -570,6 +793,7 @@ export function ZakatCalculator() {
                   Din nettoformue ({formatCurrency(calculations.netWorth)}) er under nisab-tærsklen (
                   {formatCurrency(nisabThreshold)})
                 </p>
+                <p className="text-xs text-muted-foreground mt-2">Beregnet efter {MADHAB_NAMES[madhab]}-fiqh</p>
               </div>
             )}
           </div>
@@ -631,16 +855,19 @@ function ResultItem({
   value,
   highlight = false,
   primary = false,
+  subtext,
 }: {
   label: string
   value: string
   highlight?: boolean
   primary?: boolean
+  subtext?: string
 }) {
   return (
     <div className={`text-center p-4 rounded-lg ${primary ? "bg-black" : "bg-muted"}`}>
       <p className={`text-sm mb-1 ${primary ? "text-white/80" : "text-muted-foreground"}`}>{label}</p>
       <p className={`text-xl font-semibold ${primary ? "text-white" : ""}`}>{value}</p>
+      {subtext && <p className="text-xs text-muted-foreground mt-1">{subtext}</p>}
     </div>
   )
 }
