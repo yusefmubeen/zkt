@@ -824,15 +824,23 @@ export function ZakatCalculator() {
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {stockTreatment === "quarter" ? (
-                    <>
-                      Beregnet med 2,5% på øvrige aktiver og 2,5% på 25% af aktiebeholdningen (
-                      {formatCurrency(calculations.stockZakat)})
-                    </>
+                    parseValue(assets.stocks) > 0 ? (
+                      <>
+                        Beregnet med 2,5% på øvrige aktiver og 2,5% på 25% af aktiebeholdningen (
+                        {formatCurrency(calculations.stockZakat)})
+                      </>
+                    ) : (
+                      <>Beregnet med 2,5% på aktiver</>
+                    )
                   ) : stockTreatment === "amana" ? (
-                    <>
-                      Beregnet med 2,5% på øvrige aktiver og 10% på aktiegevinst (
-                      {formatCurrency(calculations.stockZakat)})
-                    </>
+                    parseValue(assets.stocks) > 0 ? (
+                      <>
+                        Beregnet med 2,5% på øvrige aktiver og 10% på aktiegevinst (
+                        {formatCurrency(calculations.stockZakat)})
+                      </>
+                    ) : (
+                      <>Beregnet med 2,5% på aktiver</>
+                    )
                   ) : (
                     <>Dette beløb er 2,5% af din nettoformue på {formatCurrency(calculations.netWorth)}</>
                   )}
