@@ -443,20 +443,7 @@ export function ZakatCalculator() {
                 <AccordionContent>
                   En madhab er en islamisk lovskole. De fire store sunni-lovskoler er Hanafi, Maliki, Shafi'i og
                   Hanbali. De har forskellige fortolkninger af, hvordan gæld og personlige smykker skal behandles ved
-                  zakat-beregning:
-                  <br />
-                  <br />
-                  <span className="font-semibold">Hanafi:</span> Al gæld fratrækkes. Personlige guld- og sølvsmykker
-                  medregnes som zakatpligtige aktiver.
-                  <br />
-                  <span className="font-semibold">Maliki:</span> Gæld fratrækkes ikke. Personlige smykker er fritaget
-                  for zakat.
-                  <br />
-                  <span className="font-semibold">Shafi'i:</span> Kun kortfristet gæld fratrækkes. Personlige smykker er
-                  fritaget.
-                  <br />
-                  <span className="font-semibold">Hanbali:</span> Kortfristet gæld fratrækkes. Personlige smykker er
-                  fritaget.
+                  zakat-beregning.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-4">
