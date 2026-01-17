@@ -102,6 +102,7 @@ export function ZakatCalculator() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [isCalculating, setIsCalculating] = useState(false)
   const resultsRef = useRef<HTMLElement>(null)
+  const scrollPositionRef = useRef<number>(0)
   const [assets, setAssets] = useState({
     cash: "",
     bankAccounts: "",
@@ -261,6 +262,28 @@ export function ZakatCalculator() {
     setSilverPurpose("personal")
   }
 
+  const handleSettingsOpenChange = (open: boolean) => {
+    if (open) {
+      scrollPositionRef.current = window.scrollY
+    } else {
+      setTimeout(() => {
+        window.scrollTo({ top: scrollPositionRef.current, behavior: "instant" })
+      }, 0)
+    }
+    setSettingsOpen(open)
+  }
+
+  const handleHelpOpenChange = (open: boolean) => {
+    if (open) {
+      scrollPositionRef.current = window.scrollY
+    } else {
+      setTimeout(() => {
+        window.scrollTo({ top: scrollPositionRef.current, behavior: "instant" })
+      }, 0)
+    }
+    setHelpOpen(open)
+  }
+
   const isPersonalDebtDeducted = madhab !== "maliki"
   const isAnyDebtDeducted = madhab !== "maliki"
   const showDebtNote = madhab === "shafii" || madhab === "hanbali"
@@ -269,7 +292,7 @@ export function ZakatCalculator() {
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       {/* Settings and Help buttons */}
       <div className="flex justify-end gap-2 mb-4">
-        <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+        <Dialog open={settingsOpen} onOpenChange={handleSettingsOpenChange}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="cursor-pointer bg-transparent">
               <Settings className="w-4 h-4 mr-1" />
@@ -390,7 +413,7 @@ export function ZakatCalculator() {
             </div>
           </DialogContent>
         </Dialog>
-        <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
+        <Dialog open={helpOpen} onOpenChange={handleHelpOpenChange}>
           <DialogTrigger asChild>
             <Button variant="outline" size="icon" className="cursor-pointer bg-transparent">
               <HelpCircle className="w-4 h-4" />
@@ -503,16 +526,13 @@ export function ZakatCalculator() {
       </div>
 
       {/* Header */}
-      <div className="text-center mb-8">
+      <div className="mb-8 text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
           <HandHeartIcon className="w-8 h-8 text-primary" />
         </div>
         <h1 className="text-3xl font-semibold tracking-tight mb-2">Zakat-beregner</h1>
         <p className="text-sm text-muted-foreground mb-4">Beregn din årlige zakat baseret på dine aktiver og gæld.</p>
-        <p className="text-sm text-muted-foreground mt-2">
-          Nisab-tærskel: <span className="font-semibold text-foreground">{formatCurrency(nisabThreshold)}</span>{" "}
-          (baseret på {nisabType === "silver" ? "sølv" : "guld"})
-        </p>
+        
       </div>
 
       {/* Assets Section */}
