@@ -179,7 +179,7 @@ export function ZakatCalculator() {
     } else if (madhab === "maliki") {
       deductibleLiabilities = 0 // No debts are deducted under Maliki fiqh
     } else if (madhab === "shafii") {
-      deductibleLiabilities = bankLoans + otherLiabilities // Only immediate debts
+      deductibleLiabilities = personalDebt + bankLoans + otherLiabilities // Only immediate debts
     } else if (madhab === "hanbali") {
       deductibleLiabilities = personalDebt + bankLoans + otherLiabilities
     }
