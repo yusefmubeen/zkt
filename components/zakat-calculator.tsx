@@ -438,7 +438,7 @@ export function ZakatCalculator() {
                   tærskel.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-madhab">
+              <AccordionItem value="item-3">
                 <AccordionTrigger className="cursor-pointer">Hvad er en madhab (lovskole)?</AccordionTrigger>
                 <AccordionContent>
                   En madhab er en islamisk lovskole. De fire store sunni-lovskoler er Hanafi, Maliki, Shafi'i og
@@ -459,7 +459,7 @@ export function ZakatCalculator() {
                   fritaget.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-3">
+              <AccordionItem value="item-4">
                 
                 <AccordionContent>
                   <span className="font-semibold">Kvart-metoden (anbefalet):</span> Du betaler 2,5% zakat på kun 25% af
@@ -486,7 +486,7 @@ export function ZakatCalculator() {
                   </a>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-4">
+              <AccordionItem value="item-5">
                 <AccordionTrigger className="cursor-pointer">Skal jeg betale zakat af min bolig?</AccordionTrigger>
                 <AccordionContent>
                   Nej, du skal ikke betale zakat af din primære bolig, som du bor i. Du skal kun betale zakat af
@@ -494,14 +494,14 @@ export function ZakatCalculator() {
                   zakatpligtig. Hvis den er købt med henblik på udlejning, er kun lejeindtægten zakatpligtig.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-5">
+              <AccordionItem value="item-6">
                 <AccordionTrigger className="cursor-pointer">Hvornår skal jeg betale zakat?</AccordionTrigger>
                 <AccordionContent>
                   Zakat skal betales én gang om året. Mange muslimer vælger at betale i Ramadan, men du kan vælge enhver
                   dato som din årlige zakat-dato. Det vigtige er, at du er konsekvent og betaler hvert år på samme tid.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-6">
+              <AccordionItem value="item-7">
                 <AccordionTrigger className="cursor-pointer">Hvem kan modtage zakat?</AccordionTrigger>
                 <AccordionContent>
                   Koranen nævner otte kategorier af modtagere: de fattige, de nødlidende, zakat-administratorer, nye
@@ -509,7 +509,7 @@ export function ZakatCalculator() {
                   typisk til fattige og nødlidende gennem velgørenhedsorganisationer.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-7">
+              <AccordionItem value="item-8">
                 <AccordionTrigger className="cursor-pointer">Er denne beregner 100% nøjagtig?</AccordionTrigger>
                 <AccordionContent>
                   Denne beregner giver et estimat baseret på de oplysninger, du indtaster. For specifikke spørgsmål om
